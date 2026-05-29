@@ -1,4 +1,5 @@
-import { FolderGit2, Terminal, ArrowRight } from 'lucide-react';
+"use client";
+import { FolderGit2, Terminal, ArrowRight, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 

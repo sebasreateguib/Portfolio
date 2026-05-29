@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { CommitsGrid } from './commits-grid';
 import { useLanguage } from '../../context/LanguageContext';
@@ -39,7 +40,7 @@ export default function GithubIntro() {
                             {/* Pixelated State */}
                             <div className="absolute inset-0 block group-hover:opacity-0 transition-opacity duration-300 z-10">
                                 <img
-                                    src="src/assets/Anime Avatar.png"
+                                    src="/Anime Avatar.png"
                                     alt="Sebastian Reategui"
                                     className="w-full h-full object-cover"
                                     style={{ filter: 'url(#pixelate)' }}
@@ -53,7 +54,7 @@ export default function GithubIntro() {
                             {/* Normal State (Hover) */}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
                                 <img
-                                    src="src/assets/Anime Avatar.png"
+                                    src="/Anime Avatar.png"
                                     alt="Sebastian Reategui Normal"
                                     className="w-full h-full object-cover"
                                 />

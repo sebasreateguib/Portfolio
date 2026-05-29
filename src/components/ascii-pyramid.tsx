@@ -12,8 +12,7 @@
  */
 
 "use client";
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, type ReactNode } from "react";
 
 const W = 80;
 const H = 32;
@@ -58,22 +57,30 @@ const EDGE_LIST = [
 ];
 
 // Vector utilities
-const sub3 = (a, b) => [
+const sub3 = (a: number[], b: number[]) => [
     a[0] - b[0],
     a[1] - b[1],
     a[2] - b[2]
 ];
 
-const cross3 = (a, b) => [
+const cross3 = (a: number[], b: number[]) => [
     a[1] * b[2] - a[2] * b[1],
     a[2] * b[0] - a[0] * b[2],
     a[0] * b[1] - a[1] * b[0]
 ];
 
-const norm3 = (v) => {
+const norm3 = (v: number[]) => {
     const r = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     return [v[0] / r, v[1] / r, v[2] / r];
 };
+
+interface PyramidAnimationProps {
+    wireframe?: boolean;
+    color?: boolean;
+    speed?: number;
+    axis?: 'x' | 'y' | 'z';
+    edges?: boolean;
+}
 
 export default function PyramidAnimation({
     wireframe = false,
@@ -81,8 +88,8 @@ export default function PyramidAnimation({
     speed = 0.03,
     axis = 'y',
     edges = false
-}) {
-    const [frame, setFrame] = useState([]);
+}: PyramidAnimationProps) {
+    const [frame, setFrame] = useState<ReactNode[]>([]);
     const [theta, setTheta] = useState(0);
 
     useEffect(() => {

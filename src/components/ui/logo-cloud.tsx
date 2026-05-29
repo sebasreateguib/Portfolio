@@ -1,5 +1,6 @@
 'use client';
 
+"use client";
 import { motion } from 'framer-motion';
 import { Cpu } from 'lucide-react';
 import { FlowingLogos } from './flowing-logos';
@@ -27,18 +28,18 @@ const defaultLogos: Logo[] = [
     { name: 'TypeScript', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
     { name: 'React', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
     { name: 'Next.js', image: 'https://cdn.simpleicons.org/nextdotjs/white' },
-    { name: 'Node.js', image: 'src/assets/Node.svg' },
-    { name: 'Spring Boot', image: 'src/assets/spring-boot.svg' },
+    { name: 'Node.js', image: '/Node.svg' },
+    { name: 'Spring Boot', image: '/spring-boot.svg' },
     { name: 'Flask', image: 'https://cdn.simpleicons.org/flask/white' },
     { name: 'FastAPI', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
     { name: 'Express', image: 'https://cdn.simpleicons.org/express/white' },
-    { name: 'AWS', image: 'src/assets/AWS Logo.svg' },
+    { name: 'AWS', image: '/AWS Logo.svg' },
     { name: 'Docker', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' },
     { name: 'PostgreSQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
     { name: 'MySQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
     { name: 'SQLite', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg' },
     { name: 'MongoDB', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg' },
-    { name: 'DynamoDB', image: 'src/assets/AWS DynamoDB.svg' },
+    { name: 'DynamoDB', image: '/AWS DynamoDB.svg' },
 ];
 
 const workflowLogos: Logo[] = [
@@ -47,12 +48,12 @@ const workflowLogos: Logo[] = [
     { name: 'Postman', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg' },
     { name: 'Terminal', image: 'https://cdn.simpleicons.org/gnometerminal/white' },
     { name: 'Cursor', image: 'https://cdn.simpleicons.org/cursor/white' },
-    { name: 'Gemini', image: 'src/assets/Gemini Color Icon.svg' },
-    { name: 'Claude', image: 'src/assets/Claudecode Color Icon.svg' },
-    { name: 'Codex', image: 'src/assets/Codex Color Icon.svg' },
+    { name: 'Gemini', image: '/Gemini Color Icon.svg' },
+    { name: 'Claude', image: '/Claudecode Color Icon.svg' },
+    { name: 'Codex', image: '/Codex Color Icon.svg' },
     { name: 'Ollama', image: 'https://cdn.simpleicons.org/ollama/white' },
-    { name: 'Hugging Face', image: 'src/assets/Hugging Face Color Icon.svg' },
-    { name: 'Antigravity', image: 'src/assets/Antigravity.svg' },
+    { name: 'Hugging Face', image: '/Hugging Face Color Icon.svg' },
+    { name: 'Antigravity', image: '/Antigravity.svg' },
 ];
 
 export default function LogoCloudMarquee({

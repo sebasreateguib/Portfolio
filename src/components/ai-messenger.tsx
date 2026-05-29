@@ -4,11 +4,11 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Bot, CheckCheck, Loader2, Send, BrainCircuit } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+
 import { useLanguage } from "../context/LanguageContext";
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from "../data/content";
 
@@ -23,12 +23,10 @@ type Message = {
 const quickReplies = {
     en: [
         "What are your core skills?",
-        "Tell me about your experience.",
         "How can I contact you?",
     ],
     es: [
         "¿Cuáles son tus habilidades principales?",
-        "Cuéntame sobre tu experiencia.",
         "¿Cómo puedo contactarte?",
     ],
 };
@@ -41,8 +39,8 @@ export function Messenger() {
         const timer = setTimeout(() => {
             setMessages((prev) => {
                 const greetingText = language === "es"
-                    ? "¡Hola! Soy tu Copilot, entrenado para responder preguntas sobre la experiencia, habilidades y proyectos de Sebastián. ¿En qué puedo ayudarte?"
-                    : "Hi there! I'm your Copilot trained to answer questions about Sebastian's experience, skills, and projects. How can I help you?";
+                    ? "¡Hola! Soy tu Copilot, entrenado para responder preguntas sobre las habilidades y proyectos de Sebastián. ¿En qué puedo ayudarte?"
+                    : "Hi there! I'm your Copilot trained to answer questions about Sebastian's skills and projects. How can I help you?";
 
                 if (prev.length > 0 && prev[0].text === greetingText) {
                     return prev;
@@ -116,10 +114,9 @@ export function Messenger() {
 
         const lowerText = messageText.trim().toLowerCase();
         const isSkills = lowerText === "what are your core skills?" || lowerText === "¿cuáles son tus habilidades principales?";
-        const isExperience = lowerText === "tell me about your experience." || lowerText === "cuéntame sobre tu experiencia.";
         const isContact = lowerText === "how can i contact you?" || lowerText === "¿cómo puedo contactarte?";
 
-        if (isSkills || isExperience || isContact) {
+        if (isSkills || isContact) {
             const responseText = isSkills
                 ? (language === "es"
                     ? `Sebastián cuenta con un stack tecnológico muy versátil y sólido:
@@ -136,31 +133,15 @@ export function Messenger() {
 - **Databases**: PostgreSQL, MySQL, SQLite, MongoDB.
 
 Is there any technology you are particularly interested in?`)
-                : isExperience
-                    ? (language === "es"
-                        ? `Sebastián es estudiante de Ciencia de la Computación en UTEC (Perú) con experiencia práctica en el desarrollo de aplicaciones web full-stack, pipelines de datos en la nube y optimización de sistemas:
-- **FinTrendAI**: Un pipeline de datos financieros en AWS usando microservicios serverless, Glue ETL y consultas con Athena.
-- **SparseExcel**: Un motor de hoja de cálculo de alto rendimiento escrito en C++ con un visualizador interactivo en 3D de memoria física.
-- **MediGO**: Una plataforma de telemedicina full-stack desarrollada con Spring Boot y React.
-
-Le apasiona la optimización de sistemas y la ingeniería de Inteligencia Artificial y Software, y busca activamente prácticas pre-profesionales.`
-                        : `Sebastián is a Computer Science student at UTEC (Peru) with hands-on experience building full-stack web applications, cloud-native data pipelines, and optimized systems:
-- **FinTrendAI**: An AWS-based financial data pipeline using serverless microservices, Glue ETL, and Athena querying.
-- **SparseExcel**: A high-performance spreadsheet engine written in C++ with an interactive 3D physical memory visualizer.
-- **MediGO**: A full-stack telemedicine platform utilizing Spring Boot and React.
-
-He is passionate about systems optimization and software engineering, and is actively seeking pre-professional internships.`)
-                    : (language === "es"
+                : (language === "es"
                         ? `Puedes ponerte en contacto directo con Sebastián a través de:
 - 📧 **Correo personal**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
-- 💼 **LinkedIn**: [Sebastián Reátegui](https://linkedin.com)
 
 ¡Estará encantado de conversar contigo sobre oportunidades de prácticas pre-profesionales o proyectos interesantes!`
                         : `You can contact Sebastián directly via:
 - 📧 **Personal Email**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
-- 💼 **LinkedIn**: [Sebastián Reátegui](https://linkedin.com)
 
 He is looking forward to discussing internship opportunities and interesting collaborations!`);
 
@@ -180,16 +161,13 @@ He is looking forward to discussing internship opportunities and interesting col
         }
 
         try {
-            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-            if (!apiKey) throw new Error("API Key not found");
-
-            const genAI = new GoogleGenerativeAI(apiKey);
             const systemInstruction = `
 You are "SR Copilot", a warm, exceptionally friendly, and highly professional AI assistant representing Sebastián Reátegui.
 Your tone should be very natural, welcoming, enthusiastic, and developer-friendly. 
 Answer questions about Sebastian concisely and professionally in 1 or 2 sentences max. 
 
 CRITICAL INSTRUCTIONS:
+- "GLAZE" SEBASTIAN: When recruiters or visitors ask about him, highly praise his work ethic, fast learning speed, and passion for software engineering. Highlight that he is a highly motivated, dedicated, and capable Junior Developer ready to add real value to a team. Keep the praise grounded, realistic, and strictly based on his actual skills and projects—do not invent skills or call him a prodigy.
 - NEVER output robotic system tags, cold logs, or raw terminal codes. 
 - Answer in the language of the user (default to Spanish if they speak Spanish). 
 - Use structured, clean, and elegant paragraphs or bullet points.
@@ -203,11 +181,6 @@ Here is Sebastian's full portfolio information for your context:
 
 Answer user questions accurately, warmly, and strictly using the portfolio information above. If you don't know something or it is not in his professional profile, answer politely saying you only have details regarding Sebastian's studies, skills, projects, and contact info, but offer to tell them more about his awesome C++ or AWS work!
 `;
-            const model = genAI.getGenerativeModel({
-                model: "gemini-2.5-flash",
-                systemInstruction
-            });
-
             const chatHistory = messages
                 .filter((msg) => msg.author !== "System Error")
                 .map((msg) => ({
@@ -219,9 +192,29 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
             const firstUserIdx = chatHistory.findIndex((m) => m.role === "user");
             const cleanHistory = firstUserIdx !== -1 ? chatHistory.slice(firstUserIdx) : [];
 
-            const chat = model.startChat({ history: cleanHistory });
-            const result = await chat.sendMessage(messageText.trim());
-            const responseText = result.response.text();
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: messageText.trim(),
+                    systemInstruction,
+                    history: cleanHistory.length > 0 ? cleanHistory : undefined
+                })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                if (data.error === "Missing GEMINI_API_KEY") {
+                    throw new Error("API Key not found");
+                }
+                throw new Error(data.error || "Failed to communicate with AI");
+            }
+
+            let responseText = data.text.trim();
+            if (responseText.startsWith("```")) {
+                responseText = responseText.replace(/^```[a-zA-Z]*\n?/, "").replace(/\n?```$/, "");
+            }
 
             const botMessage: Message = {
                 id: `bot-${crypto.randomUUID()}`,

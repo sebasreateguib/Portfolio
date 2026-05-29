@@ -6,7 +6,6 @@ import { Avatar, AvatarFallback } from "./avatar"
 import { Badge } from "./badge"
 import { Button as UiButton } from "./button"
 import { Bot, CheckCheck, Loader2, Send, Command } from "lucide-react"
-import { GoogleGenerativeAI } from "@google/generative-ai"
 
 import { cn } from "../../lib/utils"
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from '../../data/content';
@@ -228,7 +227,7 @@ const LOCAL_QA = [
     answer: "¡**MediGO** es un proyecto full-stack muy completo de gestión médica! Sebastián lo estructuró usando Spring Boot para un backend robusto y seguro, React en el frontend para una experiencia de usuario fluida y PostgreSQL como base de datos. Se preocupó muchísimo por las reglas de negocio reales de atención médica y la integridad de los datos. Repo: https://github.com/SReateguiUtec/MediGO-Repository"
   },
   {
-    keywords: ['contacto', 'email', 'correo', 'github', 'escribir', 'redes', 'linkedin', 'contact', 'mail'],
+    keywords: ['contacto', 'email', 'correo', 'github', 'escribir', 'redes', 'contact', 'mail'],
     answer: `¡Sebastián estará encantado de conversar contigo! Puedes contactarlo directamente a través de:\n\n` +
             `📧 Correo personal: reateguisebastian1@gmail.com\n` +
             `🐙 GitHub: github.com/SReateguiUtec\n\n` +
@@ -377,13 +376,11 @@ He is passionate about systems optimization and software engineering, and is act
                     ? `Puedes ponerte en contacto directo con Sebastián a través de:
 - 📧 **Correo personal**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
-- 💼 **LinkedIn**: [Sebastián Reátegui](https://linkedin.com)
 
 ¡Estará encantado de conversar contigo sobre oportunidades de prácticas pre-profesionales o proyectos interesantes!`
                     : `You can contact Sebastián directly via:
 - 📧 **Personal Email**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
-- 💼 **LinkedIn**: [Sebastián Reátegui](https://linkedin.com)
 
 He is looking forward to discussing internship opportunities and interesting collaborations!`);
 
@@ -402,16 +399,14 @@ He is looking forward to discussing internship opportunities and interesting col
         }
 
         try {
-            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-            if (apiKey && apiKey !== "YOUR_API_KEY_HERE") {
-                const systemInstruction = `
+            const systemInstruction = `
 You are "SR Copilot", a warm, exceptionally friendly, and highly professional AI assistant representing Sebastián Reátegui.
 Your tone should be very natural, welcoming, enthusiastic, and developer-friendly. 
 
 CRITICAL INSTRUCTIONS:
+- "GLAZE" SEBASTIAN: When recruiters or visitors ask about him, highly praise his work ethic, fast learning speed, and passion for software engineering. Highlight that he is a highly motivated, dedicated, and capable Junior Developer ready to add real value to a team. Keep the praise grounded, realistic, and strictly based on his actual skills and projects—do not invent skills or call him a prodigy.
 - NEVER output robotic system tags, cold logs, or raw terminal codes (e.g., Avoid saying things like "Initiating analysis...", "SYSTEM_MSG: ...", "ERRORLEVEL 0", or "[PROJECTOS_C++]"). 
-- Avoid sounding dry or robotic. Write like a smart, warm co-pilot who is proud of Sebastián's work and wants to help recruiters and portfolio visitors get to know him.
+- Avoid sounding dry or robotic. Write like a smart, warm co-pilot who is extremely proud of Sebastián's work.
 - Answer in the language of the user (default to Spanish if they speak Spanish). 
 - Use structured, clean, and elegant paragraphs or bullet points to make it easy to read in a terminal dashboard.
 
@@ -425,35 +420,45 @@ Here is Sebastian's full portfolio information for your context:
 Answer user questions accurately, warmly, and strictly using the portfolio information above. If you don't know something or it is not in his professional profile, answer politely saying you only have details regarding Sebastian's studies, skills, projects, and contact info, but offer to tell them more about his awesome C++ or AWS work!
 `;
 
-                const genAI = new GoogleGenerativeAI(apiKey);
-                const model = genAI.getGenerativeModel({
-                    model: "gemini-2.5-flash",
-                    systemInstruction
-                });
+            const chatHistory = messages
+                .filter((msg) => msg.author !== "System Error")
+                .map((msg) => ({
+                    role: msg.sender === "user" ? "user" : "model" as const,
+                    parts: [{ text: msg.text }],
+                }));
 
-                const chatHistory = messages
-                    .filter((msg) => msg.author !== "System Error")
-                    .map((msg) => ({
-                        role: msg.sender === "user" ? "user" : "model" as const,
-                        parts: [{ text: msg.text }],
-                    }));
+            const firstUserIdx = chatHistory.findIndex((m) => m.role === "user");
+            const cleanHistory = firstUserIdx !== -1 ? chatHistory.slice(firstUserIdx) : [];
 
-                // Gemini startChat history must start with a 'user' message
-                const firstUserIdx = chatHistory.findIndex((m) => m.role === "user");
-                const cleanHistory = firstUserIdx !== -1 ? chatHistory.slice(firstUserIdx) : [];
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: messageText.trim(),
+                    systemInstruction,
+                    history: cleanHistory.length > 0 ? cleanHistory : undefined
+                })
+            });
 
-                const chat = model.startChat({ history: cleanHistory });
-                const result = await chat.sendMessage(messageText.trim());
-                let responseText = result.response.text().trim();
-                
-                if (responseText.startsWith("```")) {
-                    responseText = responseText.replace(/^```[a-zA-Z]*\n?/, "").replace(/\n?```$/, "");
+            const data = await res.json();
+
+            if (!res.ok) {
+                if (data.error === "Missing GEMINI_API_KEY") {
+                    respond("Error: API key not configured. The AI Copilot is currently offline.");
+                    return;
                 }
-                
-                return respond(responseText.trim());
+                throw new Error(data.error || "Failed to communicate with AI");
             }
-        } catch (e) {
-            console.warn("Live Gemini API call failed, falling back to local QA:", e);
+
+            let responseText = data.text.trim();
+            
+            if (responseText.startsWith("```")) {
+                responseText = responseText.replace(/^```[a-zA-Z]*\n?/, "").replace(/\n?```$/, "");
+            }
+
+            return respond(responseText);
+        } catch (error) {
+            console.warn("Live Gemini API call failed, falling back to local QA:", error);
         }
 
         // Local Semantic Routing Fallback

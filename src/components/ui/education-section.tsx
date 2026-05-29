@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { GraduationCap, Award } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -10,7 +11,7 @@ export default function EducationSection() {
     const [cameraView, setCameraView] = useState(1);
 
     const currentAscii = cameraView === 1 ? UTEC : UTEC2;
-    const currentImage = cameraView === 1 ? "src/assets/utec3.png" : "src/assets/utec4.png";
+    const currentImage = cameraView === 1 ? "/utec3.png" : "/utec4.png";
 
     return (
         <section id="education" className="bg-black pt-16 pb-4 lg:pt-24 lg:pb-16 relative overflow-hidden flex flex-col justify-center">
@@ -39,7 +40,7 @@ export default function EducationSection() {
                         {/* Cinematic Background Image (Idea 1) */}
                         <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                             <img
-                                src="src/assets/utec.jpg"
+                                src="/utec.jpg"
                                 alt="UTEC Campus"
                                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out mix-blend-luminosity"
                             />

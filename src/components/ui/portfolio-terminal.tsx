@@ -1,7 +1,8 @@
+"use client";
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { GoogleGenerativeAI } from "@google/generative-ai"
+
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from '../../data/content'
 import { useLanguage } from '../../context/LanguageContext'
 import { copilot } from './ascii'
@@ -48,7 +49,6 @@ ${lang === 'es' ? "¡Bienvenido a Copilot! Escribe 'help' para ver los comandos 
 about       Mostrar información personal
 projects    Ver el portafolio de proyectos
 skills      Mostrar habilidades técnicas
-experience  Mostrar historial de trabajo
 education   Ver historial educativo
 contact     Mostrar información de contacto
 clear       Limpiar la pantalla de la terminal
@@ -63,7 +63,6 @@ También puedes escribir cualquier pregunta en lenguaje natural (ej. "¿Cuál es
 about       Display personal information
 projects    View project portfolio
 skills      Show technical skills
-experience  Display work history
 education   View educational background
 contact     Show contact information
 clear       Clear terminal screen
@@ -86,15 +85,6 @@ ${language === 'es' ? '[PORTAFOLIO DE PROYECTOS]' : '[PROJECT PORTFOLIO]'}
 
 ` + PROJECTS_DATA.map((p, i) => `${i + 1}. ${language === 'es' ? p.name.es : p.name.en}\n   ${(language === 'es' ? p.content.es : p.content.en).replace(/\n/g, '\n   ')}`).join('\n\n'),
         'skills': () => language === 'es' ? SKILLS_CONTENT.es : SKILLS_CONTENT.en,
-        'experience': () => language === 'es' ? `
-[EXPERIENCIA LABORAL Y PROYECTOS]
-
-¡Revisa mis proyectos usando el comando 'projects', o pregúntale al AI Copilot sobre mi experiencia específica!
-    ` : `
-[WORK EXPERIENCE & PROJECTS]
-
-Check out my projects using the 'projects' command, or ask the AI Copilot about my specific experience!
-    `,
         'education': () => language === 'es' ? `
 [EDUCACIÓN]
 
@@ -114,22 +104,18 @@ Status: 3rd Year / 5th Semester
 Honors:
 • Berners Lee Contest Finalist - CS2031 Platform-Based Development
     `,
-        'contact': () => language === 'es' ? `
-[INFORMACIÓN DE CONTACTO]
+        'contact': () => language === 'es' ? `INFORMACIÓN DE CONTACTO
+-----------------------
+📧 Email:    reateguisebastian@gmail.com
+🐙 GitHub:   https://github.com/SReateguiUtec
 
-📧 Correo: ${CONTACT_INFO.email}
-🐙 GitHub: https://${CONTACT_INFO.github}
-💼 LinkedIn: https://linkedin.com
+Actualmente abierto a nuevas oportunidades, colaboraciones o simplemente para charlar sobre tecnología!
+    ` : `CONTACT INFORMATION
+-------------------
+📧 Email:    reateguisebastian@gmail.com
+🐙 GitHub:   https://github.com/SReateguiUtec
 
-¡No dudes en contactarme para oportunidades, colaboraciones o simplemente para charlar sobre tecnología!
-    ` : `
-[CONTACT INFORMATION]
-
-📧 Email: ${CONTACT_INFO.email}
-🐙 GitHub: https://${CONTACT_INFO.github}
-💼 LinkedIn: https://linkedin.com
-
-Feel free to reach out for opportunities, collaborations, or just to chat about tech!
+I'm currently open to new opportunities, collaborations, or just to chat about tech!
     `,
         'clear': () => {
             setHistory([])
@@ -174,18 +160,6 @@ Feel free to reach out for opportunities, collaborations, or just to chat about 
         setIsLoading(true)
 
         try {
-            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-            if (!apiKey || apiKey === "YOUR_API_KEY_HERE") {
-                setHistory(prev => {
-                    const newHistory = [...prev];
-                    newHistory[newHistory.length - 1].output = "Command not found. Type 'help' to see available commands.\n(AI Copilot is offline: API key not configured)";
-                    return newHistory;
-                });
-                setIsLoading(false);
-                return;
-            }
-
-            const genAI = new GoogleGenerativeAI(apiKey);
             const systemInstruction = `
 You are "Terminal Copilot", an AI terminal assistant representing Sebastián Reátegui.
 Your tone should be professional, developer-friendly, and slightly reminiscent of a command-line interface output.
@@ -197,29 +171,48 @@ Here is Sebastian's full portfolio information for your context:
 - BIO: ${language === "es" ? FULL_STACK_BIO.es : FULL_STACK_BIO.en}
 - PERSONAL INFO & HOBBIES: ${language === "es" ? PERSONAL_EXTRA.es : PERSONAL_EXTRA.en}
 - SKILLS: ${language === "es" ? SKILLS_CONTENT.es : SKILLS_CONTENT.en}
-- PROJECTS: ${PROJECTS_DATA.map((p) => language === "es" ? p.content.es : p.content.en).join('\n\n')}
+- PROJECTS: ${PROJECTS_DATA.map(p => language === "es" ? p.content.es : p.content.en).join('\n\n')}
 - CONTACT: Email: ${CONTACT_INFO.email}, GitHub: ${CONTACT_INFO.github}, Status: ${language === "es" ? CONTACT_INFO.status.es : CONTACT_INFO.status.en}
+
+Answer user questions accurately and professionally using the portfolio information above. If you don't know something, or the user asks a question unrelated to Sebastian, politely say you only have access to his professional portfolio details.
 `;
-            const model = genAI.getGenerativeModel({
-                model: "gemini-2.5-flash",
-                systemInstruction
+
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: cmdText,
+                    systemInstruction
+                })
             });
 
-            const chat = model.startChat();
-            const result = await chat.sendMessage(cmdText);
-            let responseText = result.response.text();
-            
+            const data = await res.json();
+
+            if (!res.ok) {
+                if (data.error === "Missing GEMINI_API_KEY") {
+                    setHistory(prev => {
+                        const newHistory = [...prev];
+                        newHistory[newHistory.length - 1].output = "Command not found. Type 'help' to see available commands.\n(AI Copilot is offline: API key not configured)";
+                        return newHistory;
+                    });
+                    setIsLoading(false);
+                    return;
+                }
+                throw new Error(data.error || "Failed to communicate with AI");
+            }
+
+            let responseText = data.text.trim();
             if (responseText.startsWith("```")) {
                 responseText = responseText.replace(/^```[a-zA-Z]*\n?/, "").replace(/\n?```$/, "");
             }
 
             setHistory(prev => {
                 const newHistory = [...prev];
-                newHistory[newHistory.length - 1].output = responseText.trim();
+                newHistory[newHistory.length - 1].output = responseText;
                 return newHistory;
             });
         } catch (error) {
-            console.error("AI Copilot Error:", error);
+            console.error('Error connecting to AI:', error)
             setHistory(prev => {
                 const newHistory = [...prev];
                 newHistory[newHistory.length - 1].output = "Error connecting to AI Copilot. Please try again later or type 'help'.";

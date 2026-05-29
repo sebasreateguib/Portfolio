@@ -34,7 +34,7 @@ export const translations = {
           tech: ["AWS Glue", "Athena", "S3", "Flask", "Spring Boot", "React.js"],
           github: "https://github.com/SReateguiUtec/FinTrendAI",
           live: "#",
-          image: "src/assets/fintrend-compressed.mp4",
+          image: "/fintrend-compressed.mp4",
           year: "2026"
         },
         {
@@ -44,7 +44,7 @@ export const translations = {
           tech: ["Spring Boot", "React.js", "TypeScript", "Vite", "WebSockets"],
           github: "https://github.com/SReateguiUtec/MediGO-Repository",
           live: "#",
-          image: "src/assets/medigo-compressed.mp4",
+          image: "/medigo-compressed.mp4",
           year: "2025"
         },
         {
@@ -54,7 +54,7 @@ export const translations = {
           tech: ["C++", "Javascript", "React.js", "Data Structures"],
           github: "https://github.com/SReateguiUtec/SparseExcel",
           live: "#",
-          image: "src/assets/sparse-compressed.mp4",
+          image: "/sparse-compressed.mp4",
           year: "2026"
         }
       ]
@@ -84,7 +84,14 @@ export const translations = {
       heading: "Let's build something great.",
       desc: "Currently open for new opportunities, collaborations, and interesting projects. Feel free to reach out!",
       email: "Email me",
-      github: "GitHub"
+      github: "GitHub",
+      formNamePlaceholder: "Your Name",
+      formEmailPlaceholder: "your@email.com",
+      formMessagePlaceholder: "How can I help you?",
+      formSubmit: "Send Message",
+      formSubmitting: "Sending...",
+      formSuccess: "Message sent successfully!",
+      formError: "Failed to send message. Please try again."
     },
     copilot: {
       placeholder: "Ask SR Copilot..."
@@ -125,7 +132,7 @@ export const translations = {
           tech: ["AWS Glue", "Athena", "S3", "Flask", "Spring Boot", "React.js"],
           github: "https://github.com/SReateguiUtec/FinTrendAI",
           live: "#",
-          image: "src/assets/fintrend-compressed.mp4",
+          image: "/fintrend-compressed.mp4",
           year: "2026"
         },
         {
@@ -135,7 +142,7 @@ export const translations = {
           tech: ["Spring Boot", "React.js", "TypeScript", "Vite", "WebSockets"],
           github: "https://github.com/SReateguiUtec/MediGO-Repository",
           live: "#",
-          image: "src/assets/medigo-compressed.mp4",
+          image: "/medigo-compressed.mp4",
           year: "2025"
         },
         {
@@ -145,7 +152,7 @@ export const translations = {
           tech: ["C++", "Javascript", "React.js", "Estructuras de Datos"],
           github: "https://github.com/SReateguiUtec/SparseExcel",
           live: "#",
-          image: "src/assets/sparse-compressed.mp4",
+          image: "/sparse-compressed.mp4",
           year: "2026"
         }
       ]
@@ -175,7 +182,14 @@ export const translations = {
       heading: "Construyamos algo increíble.",
       desc: "Actualmente abierto a nuevas oportunidades, colaboraciones y proyectos interesantes. ¡No dudes en contactarme!",
       email: "Escríbeme",
-      github: "GitHub"
+      github: "GitHub",
+      formNamePlaceholder: "Tu Nombre",
+      formEmailPlaceholder: "tu@correo.com",
+      formMessagePlaceholder: "¿En qué te puedo ayudar?",
+      formSubmit: "Enviar Mensaje",
+      formSubmitting: "Enviando...",
+      formSuccess: "¡Mensaje enviado con éxito!",
+      formError: "Error al enviar el mensaje. Intenta de nuevo."
     },
     copilot: {
       placeholder: "Pregúntale a SR Copilot..."
