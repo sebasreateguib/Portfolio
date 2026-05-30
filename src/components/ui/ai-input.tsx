@@ -135,7 +135,7 @@ export function MorphPanel() {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed inset-0 z-[100] w-full h-full md:hidden pointer-events-auto bg-[#0c0c0e] shadow-2xl overflow-hidden"
+                            className="fixed inset-0 z-[100] w-full h-dvh md:hidden pointer-events-auto bg-[#0c0c0e] shadow-2xl overflow-hidden"
                         >
                             <InputForm ref={textareaRef} />
                         </motion.div>
