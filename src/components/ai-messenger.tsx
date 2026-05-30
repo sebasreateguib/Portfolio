@@ -6,7 +6,8 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Bot, CheckCheck, Loader2, Send, BrainCircuit } from "lucide-react";
+import { Bot, CheckCheck, Loader2, BrainCircuit } from "lucide-react";
+import { SendIcon } from "./send";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 
 import { useLanguage } from "../context/LanguageContext";
@@ -412,7 +413,7 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
                                         className="size-10 rounded-full bg-primary text-primary-foreground shadow-lg transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60"
                                         disabled={!draft.trim() || isLoading}
                                     >
-                                        <Send className="h-4 w-4" />
+                                        <SendIcon className="h-4 w-4" size={16} />
                                     </Button>
                                 </div>
                             </div>

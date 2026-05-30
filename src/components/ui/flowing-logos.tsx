@@ -3,6 +3,7 @@ import { cn } from "../../lib/utils";
 interface Logo {
   name: string;
   image: string;
+  className?: string;
 }
 
 interface FlowingLogosProps {
@@ -32,7 +33,7 @@ export function FlowingLogos({ data, className, reverse = false }: FlowingLogosP
               <img
                 src={logo.image}
                 alt={logo.name}
-                className="h-10 w-auto object-contain opacity-40 transition-all duration-300 hover:opacity-100"
+                className={cn("h-10 w-auto object-contain opacity-40 transition-all duration-300 hover:opacity-100", logo.className)}
               />
             </div>
           ))}

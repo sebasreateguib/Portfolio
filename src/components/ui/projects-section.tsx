@@ -1,5 +1,7 @@
 "use client";
-import { FolderGit2, Terminal, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import { FolderGit2Icon } from '../git';
+import { TerminalIcon } from '../term-icon';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 
@@ -16,7 +18,7 @@ export default function ProjectsSection() {
                 {/* Section Header */}
                 <div className="mb-16">
                     <div className="flex items-center gap-4 mb-4">
-                        <FolderGit2 className="text-blue-400 w-8 h-8" />
+                        <FolderGit2Icon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.projects.title}</h2>
                     </div>
                     <div className="flex items-center gap-2 opacity-60">
@@ -86,7 +88,7 @@ export default function ProjectsSection() {
 
                             {/* Title & Desc */}
                             <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300 flex items-center gap-2 relative z-30">
-                                <Terminal className="w-5 h-5 text-blue-400 shrink-0" />
+                                <TerminalIcon className="text-blue-400 shrink-0" size={20} />
                                 {project.title}
                             </h3>
                             <p className="text-white/60 text-sm mb-8 flex-1 leading-relaxed relative z-30">

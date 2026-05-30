@@ -1,12 +1,35 @@
 "use client";
+import { useState, useEffect } from 'react';
 import { LOGO } from './ascii';
 import { Download, Mail } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
+import { FrameButton } from './frame-button';
 
 export default function HeroAscii() {
     const { language, setLanguage } = useLanguage();
     const t = translations[language];
+
+    // Scanner Effect State
+    const [tick, setTick] = useState(0);
+    const asciiLines = LOGO.split('\n');
+    const L = asciiLines.length;
+
+    useEffect(() => {
+        // 1 tick = 80ms
+        // 3 scans = L * 3 ticks
+        // 5 seconds pause = 5000 / 80 = ~63 ticks
+        const totalCycleTicks = L * 3 + 63;
+        
+        const timer = setInterval(() => {
+            setTick(t => (t + 1) % totalCycleTicks);
+        }, 80);
+        
+        return () => clearInterval(timer);
+    }, [L]);
+
+    // If we are within the first 3 scans, calculate the active row using modulo
+    const scanRow = tick < L * 3 ? tick % L : -1;
 
     return (
         <main className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
@@ -46,14 +69,19 @@ export default function HeroAscii() {
                         <div className="w-1 h-1 bg-white/20 rounded-full"></div>
                         <a href="#contact" className="hover:text-blue-400 transition-colors duration-200">{t.nav.contact}</a>
                         <div className="w-1 h-1 bg-white/20 rounded-full"></div>
-                        <button
+                        <FrameButton
+                            as="button"
+                            variant="outline"
                             onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-                            className="hover:text-blue-400 transition-colors duration-200 focus:outline-none"
+                            className="px-3 py-1 text-[10px] text-white border-transparent hover:border-transparent focus:outline-none"
+                            offset={2}
+                            hoverOffset={2}
+                            size={10}
                         >
-                            <span className={language === 'en' ? 'text-white font-bold' : 'text-white/50'}>EN</span>
+                            <span className={language === 'en' ? 'font-bold' : 'text-white/50'}>EN</span>
                             <span className="text-white/30 mx-1">/</span>
-                            <span className={language === 'es' ? 'text-white font-bold' : 'text-white/50'}>ES</span>
-                        </button>
+                            <span className={language === 'es' ? 'font-bold' : 'text-white/50'}>ES</span>
+                        </FrameButton>
                     </nav>
                 </div>
             </div>
@@ -76,15 +104,27 @@ export default function HeroAscii() {
 
                         {/* Title with dithered accent */}
                         <div className="relative">
-                            <div className="hidden lg:block absolute -left-3 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
-                            <pre className="text-blue-400 font-bold mb-6 text-[8px] md:text-[10px] lg:text-[12px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)]">
-                                {LOGO}
-                            </pre>
+                            <div className="hidden lg:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
+                            <div className="mb-7 text-[9px] md:text-[12px] lg:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
+                                {asciiLines.map((line, i) => {
+                                    const isScanning = i === scanRow;
+                                    const rowColor = 'text-blue-400';
+                                    
+                                    return (
+                                        <pre 
+                                            key={i} 
+                                            className={`${isScanning ? 'text-white drop-shadow-[0_0_12px_rgba(255,255,255,1)] brightness-150 font-black' : rowColor} transition-colors duration-75 ease-in-out m-0 p-0 leading-[1.1]`}
+                                        >
+                                            {line}
+                                        </pre>
+                                    );
+                                })}
+                            </div>
                         </div>
 
                         {/* Decorative dots pattern - desktop only */}
-                        <div className="hidden lg:flex gap-1 mb-6 opacity-40 flex-wrap max-w-[90%]">
-                            {Array.from({ length: 40 }).map((_, i) => (
+                        <div className="hidden lg:flex gap-1 mb-8 opacity-40 flex-wrap max-w-max">
+                            {Array.from({ length: 52 }).map((_, i) => (
                                 <div key={i} className="w-0.5 h-0.5 bg-white rounded-full shrink-0"></div>
                             ))}
                         </div>

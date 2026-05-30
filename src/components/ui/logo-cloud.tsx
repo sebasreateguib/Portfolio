@@ -2,7 +2,7 @@
 
 "use client";
 import { motion } from 'framer-motion';
-import { Cpu } from 'lucide-react';
+import { LayersIcon } from '../stack';
 import { FlowingLogos } from './flowing-logos';
 import { cn } from '../../lib/utils';
 import { useLanguage } from '../../context/LanguageContext';
@@ -11,6 +11,7 @@ import { translations } from '../../data/translations';
 interface Logo {
     name: string;
     image: string;
+    className?: string;
 }
 
 interface LogoCloudMarqueeProps {
@@ -33,8 +34,7 @@ const defaultLogos: Logo[] = [
     { name: 'Flask', image: 'https://cdn.simpleicons.org/flask/white' },
     { name: 'FastAPI', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
     { name: 'Express', image: 'https://cdn.simpleicons.org/express/white' },
-    { name: 'AWS', image: '/AWS Logo.svg' },
-    { name: 'Docker', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' },
+    { name: 'AWS', image: '/AWS Logo.svg', className: '!h-6' },
     { name: 'PostgreSQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
     { name: 'MySQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
     { name: 'SQLite', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg' },
@@ -45,8 +45,8 @@ const defaultLogos: Logo[] = [
 const workflowLogos: Logo[] = [
     { name: 'Git', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
     { name: 'GitHub', image: 'https://cdn.simpleicons.org/github/white' },
+    { name: 'Docker', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', className: '!h-12' },
     { name: 'Postman', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg' },
-    { name: 'Terminal', image: 'https://cdn.simpleicons.org/gnometerminal/white' },
     { name: 'Cursor', image: 'https://cdn.simpleicons.org/cursor/white' },
     { name: 'Gemini', image: '/Gemini Color Icon.svg' },
     { name: 'Claude', image: '/Claudecode Color Icon.svg' },
@@ -69,7 +69,7 @@ export default function LogoCloudMarquee({
                 {/* Section Header */}
                 <div className="mb-16">
                     <div className="flex items-center gap-4 mb-4">
-                        <Cpu className="text-blue-400 w-8 h-8" />
+                        <LayersIcon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight uppercase">{t.logoCloud.title}</h2>
                     </div>
                     <div className="flex items-center gap-2 opacity-60">

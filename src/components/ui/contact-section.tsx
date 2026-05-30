@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { Mail, Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import { Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import { SendIcon } from '../send';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { THANKS_EN_LOGO, THANKS_ES_LOGO } from '../ui/ascii';
@@ -47,7 +48,7 @@ export default function ContactSection() {
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 <div className="mb-16">
                     <div className="flex items-center gap-4 mb-4">
-                        <Mail className="w-8 h-8 text-blue-400" />
+                        <SendIcon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight uppercase">{t.contact.title}</h2>
                     </div>
                     <div className="flex items-center gap-2 opacity-60">
@@ -66,8 +67,8 @@ export default function ContactSection() {
                                 {t.contact.desc}
                             </p>
                         </div>
-                        
-                        <div className="mt-8 opacity-40 hover:opacity-100 transition-opacity duration-700 cursor-default">
+
+                        <div className="hidden lg:block mt-8 opacity-40 hover:opacity-100 transition-opacity duration-700 cursor-default">
                             <pre className="font-mono text-[5px] sm:text-[8px] md:text-[10px] text-blue-500 leading-tight">
                                 {language === 'en' ? THANKS_EN_LOGO : THANKS_ES_LOGO}
                             </pre>
@@ -147,6 +148,13 @@ export default function ContactSection() {
                             </button>
                         </form>
                     </div>
+                </div>
+
+                {/* Mobile ASCII (Below Form) */}
+                <div className="lg:hidden w-full flex justify-center mt-16 opacity-40 hover:opacity-100 transition-opacity duration-700 cursor-default">
+                    <pre className="font-mono text-[4px] sm:text-[5px] md:text-[8px] text-blue-500 leading-tight text-center overflow-hidden">
+                        {language === 'en' ? THANKS_EN_LOGO : THANKS_ES_LOGO}
+                    </pre>
                 </div>
             </div>
 

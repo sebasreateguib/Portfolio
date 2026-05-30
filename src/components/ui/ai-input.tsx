@@ -5,7 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { Avatar, AvatarFallback } from "./avatar"
 import { Badge } from "./badge"
 import { Button as UiButton } from "./button"
-import { Bot, CheckCheck, Loader2, Send, Command } from "lucide-react"
+import { Bot, CheckCheck, Loader2, Command } from "lucide-react"
+import { SendIcon } from "../send"
 
 import { cn } from "../../lib/utils"
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from '../../data/content';
@@ -138,7 +139,7 @@ export function MorphPanel() {
                         >
                             <InputForm ref={textareaRef} />
                         </motion.div>
-                        
+
                         {/* Mobile Overlay (Optional for better focus) */}
                         <motion.div
                             key="mobile-overlay"
@@ -161,14 +162,14 @@ function DockBar() {
     const t = translations[language];
 
     return (
-        <footer 
+        <footer
             onClick={triggerOpen}
             className="flex h-[48px] items-center px-4 gap-3 cursor-pointer select-none whitespace-nowrap transition-all hover:bg-white/5 w-[300px] max-w-[90vw]"
         >
             <div className="flex items-center justify-center p-1.5 bg-blue-500/20 text-blue-400 rounded-full shrink-0">
                 <Bot className="w-4 h-4" />
             </div>
-            
+
             <span className="text-[14px] text-white/50 flex-1 truncate text-left font-medium">
                 {t.copilot.placeholder}
             </span>
@@ -183,64 +184,64 @@ function DockBar() {
 
 // Built-in high-fidelity, extremely warm and friendly local QA dictionary
 const LOCAL_QA = [
-  {
-    keywords: ['edad', 'años', 'cumple', 'nacido', 'old', 'age'],
-    answer: "Sebastián tiene 26 años y actualmente cursa la carrera de Ciencia de la Computación. ¡Tiene una energía increíble, está en su mejor etapa profesional y siempre listo para afrontar nuevos retos técnicos!"
-  },
-  {
-    keywords: ['estudio', 'utec', 'universidad', 'carrera', 'educacion', 'university', 'study', 'education'],
-    answer: "Sebastián estudia Ciencia de la Computación en UTEC (Universidad de Ingeniería y Tecnología) en Lima, Perú. Le apasiona profundamente entender el funcionamiento interno del software, la arquitectura de computadoras y la optimización de sistemas. ¡Siempre está buscando aprender algo nuevo!"
-  },
-  {
-    keywords: ['skills', 'lenguajes', 'tecnologias', 'frameworks', 'habilidades', 'programacion', 'languages', 'tools'],
-    answer: `¡Sebastián tiene un stack tecnológico súper versátil e interesante! Aquí te lo cuento:\n\n` +
+    {
+        keywords: ['edad', 'años', 'cumple', 'nacido', 'old', 'age'],
+        answer: "Sebastián tiene 26 años y actualmente cursa la carrera de Ciencia de la Computación. ¡Tiene una energía increíble, está en su mejor etapa profesional y siempre listo para afrontar nuevos retos técnicos!"
+    },
+    {
+        keywords: ['estudio', 'utec', 'universidad', 'carrera', 'educacion', 'university', 'study', 'education'],
+        answer: "Sebastián estudia Ciencia de la Computación en UTEC (Universidad de Ingeniería y Tecnología) en Lima, Perú. Le apasiona profundamente entender el funcionamiento interno del software, la arquitectura de computadoras y la optimización de sistemas. ¡Siempre está buscando aprender algo nuevo!"
+    },
+    {
+        keywords: ['skills', 'lenguajes', 'tecnologias', 'frameworks', 'habilidades', 'programacion', 'languages', 'tools'],
+        answer: `¡Sebastián tiene un stack tecnológico súper versátil e interesante! Aquí te lo cuento:\n\n` +
             `💻 Lenguajes que domina: C++, Python, Java, Go, JavaScript y TypeScript.\n` +
             `🚀 Frameworks & Librerías: React.js, Next.js, Spring Boot, Flask, FastApi y Express.js.\n` +
             `☁️ Cloud & Infraestructura: AWS (especialmente S3, Glue, Athena, Amplify, API Gateway y EC2), Docker y arquitectura de microservicios.\n` +
             `🗄️ Bases de datos: SQL (PostgreSQL, MySQL, SQLite) y MongoDB.\n` +
             `🛠️ Sus herramientas del día a día: Git, GitHub, Vite, Tailwind CSS y pipelines de datos/ETL.\n\n` +
             `¿Hay alguna de estas tecnologías en particular que te interese para tu equipo?`
-  },
-  {
-    keywords: ['proyectos', 'projects', 'portafolio', 'creaciones', 'repositorios', 'github', 'trabajos'],
-    answer: `¡Sebastián ha desarrollado proyectos muy retadores y de alto nivel técnico! Aquí te presento sus favoritos:\n\n` +
+    },
+    {
+        keywords: ['proyectos', 'projects', 'portafolio', 'creaciones', 'repositorios', 'github', 'trabajos'],
+        answer: `¡Sebastián ha desarrollado proyectos muy retadores y de alto nivel técnico! Aquí te presento sus favoritos:\n\n` +
             `⭐ **FinTrendAI**: Una plataforma de analítica financiera en la nube usando microservicios en AWS (Python, Java, Node.js) y flujos ETL modernos.\n` +
             `⭐ **SparseExcel**: Un motor de matriz dispersa de alto rendimiento escrito en C++ con interfaz interactiva en React que permite inspeccionar la memoria física en 3D.\n` +
             `⭐ **AppleMusicTUI**: Un reproductor y controlador de música súper original para la terminal de macOS programado en Go.\n` +
             `⭐ **MediGO**: Una plataforma web médica integral construida de punta a punta con Spring Boot, React.js y PostgreSQL.\n\n` +
             `¿Te gustaría que te cuente más sobre el backend o la arquitectura de alguno de ellos?`
-  },
-  {
-    keywords: ['fintrend', 'finanzas', 'analytics', 'athena', 'glue', 'aws'],
-    answer: "¡**FinTrendAI** es una joya! Sebastián diseñó una arquitectura de 5 microservicios en AWS usando Python, Java y Node.js. Lo más genial es su pipeline de datos: toma la ingesta de datos de máquinas virtuales, la procesa en S3 y Glue, y permite consultas veloces mediante Athena. El frontend lo montó con AWS Amplify y React para mostrar tableros en tiempo real con señales e indicadores impulsados por IA. ¡Un proyecto en la nube súper maduro! Puedes ver su código aquí: https://github.com/SReateguiUtec/FinTrendAI"
-  },
-  {
-    keywords: ['sparseexcel', 'sparse', 'matrix', 'matriz', 'excel', 'c++'],
-    answer: "¡**SparseExcel** es un proyectazo de algoritmia y bajo nivel! Sebastián lo programó en C++ desde cero para optimizar el uso de memoria en hojas de cálculo. Implementó celdas dinámicas seguras usando `std::variant`, soporte de evaluación de fórmulas matemáticas y lo conectó con una interfaz en React que visualiza en tiempo real las direcciones de memoria física de las celdas en un visor interactivo en 3D. ¡Es perfecto para entender cómo se estructuran los datos! Repo: https://github.com/SReateguiUtec/SparseExcel"
-  },
-  {
-    keywords: ['applemusic', 'applemusictui', 'tui', 'musica', 'player', 'go'],
-    answer: "¡**AppleMusicTUI** es uno de sus proyectos más divertidos! Sebastián quería controlar su música de Apple Music sin salir de la terminal, así que construyó esta interfaz de terminal interactiva de teclado en Go para macOS. Tiene un look cyberpunk súper moderno, soporte para navegación rápida con teclado y animaciones glitch muy originales en la cabecera. ¡Es el tipo de herramientas que programas por el reto y terminas usando todos los días! Repo: https://github.com/SReateguiUtec/AppleMusicTUI"
-  },
-  {
-    keywords: ['medigo', 'medicina', 'hospital', 'spring', 'boot', 'postgres'],
-    answer: "¡**MediGO** es un proyecto full-stack muy completo de gestión médica! Sebastián lo estructuró usando Spring Boot para un backend robusto y seguro, React en el frontend para una experiencia de usuario fluida y PostgreSQL como base de datos. Se preocupó muchísimo por las reglas de negocio reales de atención médica y la integridad de los datos. Repo: https://github.com/SReateguiUtec/MediGO-Repository"
-  },
-  {
-    keywords: ['contacto', 'email', 'correo', 'github', 'escribir', 'redes', 'contact', 'mail'],
-    answer: `¡Sebastián estará encantado de conversar contigo! Puedes contactarlo directamente a través de:\n\n` +
+    },
+    {
+        keywords: ['fintrend', 'finanzas', 'analytics', 'athena', 'glue', 'aws'],
+        answer: "¡**FinTrendAI** es una joya! Sebastián diseñó una arquitectura de 5 microservicios en AWS usando Python, Java y Node.js. Lo más genial es su pipeline de datos: toma la ingesta de datos de máquinas virtuales, la procesa en S3 y Glue, y permite consultas veloces mediante Athena. El frontend lo montó con AWS Amplify y React para mostrar tableros en tiempo real con señales e indicadores impulsados por IA. ¡Un proyecto en la nube súper maduro! Puedes ver su código aquí: https://github.com/SReateguiUtec/FinTrendAI"
+    },
+    {
+        keywords: ['sparseexcel', 'sparse', 'matrix', 'matriz', 'excel', 'c++'],
+        answer: "¡**SparseExcel** es un proyectazo de algoritmia y bajo nivel! Sebastián lo programó en C++ desde cero para optimizar el uso de memoria en hojas de cálculo. Implementó celdas dinámicas seguras usando `std::variant`, soporte de evaluación de fórmulas matemáticas y lo conectó con una interfaz en React que visualiza en tiempo real las direcciones de memoria física de las celdas en un visor interactivo en 3D. ¡Es perfecto para entender cómo se estructuran los datos! Repo: https://github.com/SReateguiUtec/SparseExcel"
+    },
+    {
+        keywords: ['applemusic', 'applemusictui', 'tui', 'musica', 'player', 'go'],
+        answer: "¡**AppleMusicTUI** es uno de sus proyectos más divertidos! Sebastián quería controlar su música de Apple Music sin salir de la terminal, así que construyó esta interfaz de terminal interactiva de teclado en Go para macOS. Tiene un look cyberpunk súper moderno, soporte para navegación rápida con teclado y animaciones glitch muy originales en la cabecera. ¡Es el tipo de herramientas que programas por el reto y terminas usando todos los días! Repo: https://github.com/SReateguiUtec/AppleMusicTUI"
+    },
+    {
+        keywords: ['medigo', 'medicina', 'hospital', 'spring', 'boot', 'postgres'],
+        answer: "¡**MediGO** es un proyecto full-stack muy completo de gestión médica! Sebastián lo estructuró usando Spring Boot para un backend robusto y seguro, React en el frontend para una experiencia de usuario fluida y PostgreSQL como base de datos. Se preocupó muchísimo por las reglas de negocio reales de atención médica y la integridad de los datos. Repo: https://github.com/SReateguiUtec/MediGO-Repository"
+    },
+    {
+        keywords: ['contacto', 'email', 'correo', 'github', 'escribir', 'redes', 'contact', 'mail'],
+        answer: `¡Sebastián estará encantado de conversar contigo! Puedes contactarlo directamente a través de:\n\n` +
             `📧 Correo personal: reateguisebastian1@gmail.com\n` +
             `🐙 GitHub: github.com/SReateguiUtec\n\n` +
             `Actualmente se encuentra buscando activamente prácticas pre-profesionales y nuevas oportunidades donde pueda aportar su fuerte base en programación de sistemas, backend y nube. ¡No dudes en escribirle!`
-  },
-  {
-    keywords: ['intereses', 'gustos', 'hobbies', 'interesa', 'interests'],
-    answer: "A Sebastián le apasiona todo lo relacionado con la Inteligencia Artificial (IA), FinTech, desarrollo backend y de sistemas distribuidos, optimización de infraestructura de nube, sistemas operativos y arquitectura de computadoras. ¡Le encanta entender cómo las cosas funcionan bajo el capó!"
-  },
-  {
-    keywords: ['hola', 'quien eres', 'presentate', 'saludo', 'presentacion', 'hello', 'whoami', 'hi'],
-    answer: "¡Hola! Qué gusto saludarte. 😊 Soy **SR Copilot**, el asistente virtual de Sebastián. Estoy aquí para contarte todo lo que quieras saber sobre él: sus estudios en UTEC, sus proyectos de desarrollo favoritos, sus habilidades y cómo puedes ponerte en contacto con él. ¿Sobre qué te gustaría charlar hoy?"
-  }
+    },
+    {
+        keywords: ['intereses', 'gustos', 'hobbies', 'interesa', 'interests'],
+        answer: "A Sebastián le apasiona todo lo relacionado con la Inteligencia Artificial (IA), FinTech, desarrollo backend y de sistemas distribuidos, optimización de infraestructura de nube, sistemas operativos y arquitectura de computadoras. ¡Le encanta entender cómo las cosas funcionan bajo el capó!"
+    },
+    {
+        keywords: ['hola', 'quien eres', 'presentate', 'saludo', 'presentacion', 'hello', 'whoami', 'hi'],
+        answer: "¡Hola! Qué gusto saludarte. 😊 Soy **SR Copilot**, el asistente virtual de Sebastián. Estoy aquí para contarte todo lo que quieras saber sobre él: sus estudios en UTEC, sus proyectos de desarrollo favoritos, sus habilidades y cómo puedes ponerte en contacto con él. ¿Sobre qué te gustaría charlar hoy?"
+    }
 ];
 
 const quickReplies = {
@@ -359,26 +360,26 @@ function InputForm({ ref }: { ref: React.Ref<HTMLTextAreaElement> }) {
 
 Is there any technology you are particularly interested in?`)
                 : isExperience
-                ? (language === "es"
-                    ? `Sebastián es estudiante de Ciencia de la Computación en UTEC (Perú) con experiencia práctica en el desarrollo de aplicaciones web full-stack, pipelines de datos en la nube y optimización de sistemas:
+                    ? (language === "es"
+                        ? `Sebastián es estudiante de Ciencia de la Computación en UTEC (Perú) con experiencia práctica en el desarrollo de aplicaciones web full-stack, pipelines de datos en la nube y optimización de sistemas:
 - **FinTrendAI**: Un pipeline de datos financieros en AWS usando microservicios serverless, Glue ETL y consultas con Athena.
 - **SparseExcel**: Un motor de hoja de cálculo de alto rendimiento escrito en C++ con un visualizador interactivo en 3D de memoria física.
 - **MediGO**: Una plataforma de telemedicina full-stack desarrollada con Spring Boot y React.
 
 Le apasiona la optimización de sistemas y la ingeniería de software, y busca activamente prácticas pre-profesionales.`
-                    : `Sebastián is a Computer Science student at UTEC (Peru) with hands-on experience building full-stack web applications, cloud-native data pipelines, and optimized systems:
+                        : `Sebastián is a Computer Science student at UTEC (Peru) with hands-on experience building full-stack web applications, cloud-native data pipelines, and optimized systems:
 - **FinTrendAI**: An AWS-based financial data pipeline using serverless microservices, Glue ETL, and Athena querying.
 - **SparseExcel**: A high-performance spreadsheet engine written in C++ with an interactive 3D physical memory visualizer.
 - **MediGO**: A full-stack telemedicine platform utilizing Spring Boot and React.
 
 He is passionate about systems optimization and software engineering, and is actively seeking pre-professional internships.`)
-                : (language === "es"
-                    ? `Puedes ponerte en contacto directo con Sebastián a través de:
+                    : (language === "es"
+                        ? `Puedes ponerte en contacto directo con Sebastián a través de:
 - 📧 **Correo personal**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
 
 ¡Estará encantado de conversar contigo sobre oportunidades de prácticas pre-profesionales o proyectos interesantes!`
-                    : `You can contact Sebastián directly via:
+                        : `You can contact Sebastián directly via:
 - 📧 **Personal Email**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
 
@@ -389,7 +390,7 @@ He is looking forward to discussing internship opportunities and interesting col
 
         // Security Guardrail: Prevent leaking credentials, secrets, or system configuration
         const sensitiveKeywords = [
-            'variable de entorno', 'environment variable', 'api_key', 'apikey', 'api key', 
+            'variable de entorno', 'environment variable', 'api_key', 'apikey', 'api key',
             'contraseña', 'password', 'token', 'secret', 'secreto', 'credenciales', 'credentials',
             '.env', 'credential', 'llave de api', 'llave api', 'env var'
         ];
@@ -451,7 +452,7 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
             }
 
             let responseText = data.text.trim();
-            
+
             if (responseText.startsWith("```")) {
                 responseText = responseText.replace(/^```[a-zA-Z]*\n?/, "").replace(/\n?```$/, "");
             }
@@ -638,7 +639,7 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
                             className="size-10 rounded-full bg-blue-600 text-white shadow-lg transition hover:bg-blue-500 focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60"
                             disabled={isLoading}
                         >
-                            <Send className="h-4 w-4" />
+                            <SendIcon className="h-4 w-4" size={16} />
                         </UiButton>
                     </div>
                 </div>

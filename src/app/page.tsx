@@ -1,3 +1,4 @@
+import TopBanner from '../components/ui/top-banner';
 import HeroAscii from '../components/ui/hero-ascii';
 import GithubIntro from '../components/ui/github-intro';
 import ProjectsSection from '../components/ui/projects-section';
@@ -10,6 +11,7 @@ export default function Home() {
 
     return (
         <div className="bg-black min-h-screen">
+            <TopBanner />
             <HeroAscii />
             <GithubIntro />
             <ProjectsSection />

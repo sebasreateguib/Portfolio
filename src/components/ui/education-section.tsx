@@ -1,6 +1,8 @@
 "use client";
 import { useState } from 'react';
-import { GraduationCap, Award } from 'lucide-react';
+import { Award } from 'lucide-react';
+import { GraduationCapIcon } from '../grad-cap';
+import { CpuIcon } from '../cpu';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { UTEC, UTEC2 } from './ascii';
@@ -22,7 +24,7 @@ export default function EducationSection() {
                 {/* Section Header */}
                 <div className="mb-6 md:mb-16">
                     <div className="flex items-center gap-4 mb-4">
-                        <GraduationCap className="text-blue-400 w-8 h-8" />
+                        <GraduationCapIcon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.education.title}</h2>
                     </div>
                     <div className="flex items-center gap-2 opacity-60">
@@ -58,7 +60,7 @@ export default function EducationSection() {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-3 text-xl md:text-2xl font-bold text-white hover:text-teal-400 transition-colors duration-300"
                             >
-                                <GraduationCap className="w-6 h-6 text-teal-500 group-hover:scale-110 transition-transform duration-300" />
+                                <CpuIcon className="text-teal-500 group-hover:scale-110 transition-transform duration-300" size={24} />
                                 {t.education.utec}
                             </a>
 

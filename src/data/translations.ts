@@ -64,7 +64,7 @@ export const translations = {
       background: "ACADEMIC_BACKGROUND",
       utec: "Universidad de Ingeniería y Tecnología (UTEC)",
       degree: "Bachelor of Science in Computer Science",
-      award: "Berners Lee Contest Finalist - CS2031 Platform-Based Development",
+      award: "Tim Berners Lee Contest Finalist - CS2031 Platform-Based Development",
       inProgress: "IN_PROGRESS"
     },
     skills: {
@@ -76,7 +76,7 @@ export const translations = {
     logoCloud: {
       title: "SKILLS",
       badge: "TECHSTACK_&_TOOLS",
-      description: "Languages, frameworks, and infrastructure I use to build scalable applications."
+      description: "Languages, frameworks, tools and infrastructure I use to build scalable applications."
     },
     contact: {
       title: "CONTACT",
@@ -95,6 +95,9 @@ export const translations = {
     },
     copilot: {
       placeholder: "Ask SR Copilot..."
+    },
+    banner: {
+      text: "Have more questions about me? SR Copilot is here to help!"
     }
   },
   es: {
@@ -162,7 +165,7 @@ export const translations = {
       background: "HISTORIAL_ACADÉMICO",
       utec: "Universidad de Ingeniería y Tecnología (UTEC)",
       degree: "Bachiller en Ciencia de la Computación",
-      award: "Finalista Concurso Berners Lee - CS2031 Desarrollo Basado en Plataformas",
+      award: "Finalista Concurso Tim Berners Lee - CS2031 Desarrollo Basado en Plataformas",
       inProgress: "EN_CURSO"
     },
     skills: {
@@ -174,7 +177,7 @@ export const translations = {
     logoCloud: {
       title: "HABILIDADES",
       badge: "TECNOLOGÍAS_Y_HERRAMIENTAS",
-      description: "Lenguajes, frameworks e infraestructura que uso para construir aplicaciones escalables."
+      description: "Lenguajes, frameworks, herramientas e infraestructura que uso para construir aplicaciones escalables."
     },
     contact: {
       title: "CONTACTO",
@@ -193,6 +196,9 @@ export const translations = {
     },
     copilot: {
       placeholder: "Pregúntale a SR Copilot..."
+    },
+    banner: {
+      text: "¿Tienes más preguntas sobre mí? SR Copilot está listo para atenderte!"
     }
   }
 };
