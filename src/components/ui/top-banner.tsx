@@ -29,7 +29,7 @@ export default function TopBanner() {
                 <span className="w-1.5 h-1.5 md:w-2 md:h-2 shrink-0 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_2px_rgba(59,130,246,0.5)]" />
                 
                 {/* Text */}
-                <span className="font-mono text-[7px] sm:text-[9px] md:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-white/70 whitespace-nowrap truncate">
+                <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-white/70 whitespace-nowrap truncate">
                     {t.banner.text}
                 </span>
             </div>
