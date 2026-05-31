@@ -22,7 +22,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-white/10 bg-black/50 backdrop-blur-md py-8 mt-12">
+    <footer className="w-full border-t border-white/10 bg-black/50 backdrop-blur-md pt-8 pb-32 md:pb-8 mt-12">
       <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
 
         {/* Left side: Copyright */}
@@ -41,7 +41,7 @@ export default function Footer() {
             href="https://github.com/SReateguiUtec"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors duration-200"
+            className="text-white md:text-gray-400 md:hover:text-white transition-colors duration-200"
             aria-label="GitHub"
           >
             <GithubIcon size={20} />
@@ -50,14 +50,14 @@ export default function Footer() {
             href="https://wa.me/51947546421?text=Hola%20Sebastián,%20vi%20tu%20portfolio..."
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#25D366] transition-colors duration-200"
+            className="text-[#25D366] md:text-gray-400 md:hover:text-[#25D366] transition-colors duration-200"
             aria-label="WhatsApp"
           >
             <WhatsAppIcon size={20} />
           </a>
           <a
             href="mailto:sebastian.reategui@utec.edu.pe"
-            className="hover:text-red-500 transition-colors duration-200"
+            className="text-red-500 md:text-gray-400 md:hover:text-red-500 transition-colors duration-200"
             aria-label="Email"
           >
             <Mail size={20} />
