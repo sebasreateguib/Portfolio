@@ -48,7 +48,7 @@ export default function GithubIntro() {
                         <div className="absolute inset-0 bg-blue-500/30 blur-xl rounded-full transition-opacity duration-300 group-hover:bg-blue-500/50"></div>
 
                         {/* Profile Image Container */}
-                        <div className="relative w-full h-full rounded-full border border-white/20 overflow-hidden shadow-lg">
+                        <div className="relative w-full h-full rounded-full border-2 border-[#3b82f6]/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] overflow-hidden bg-black">
                             <img
                                 src="/main.jpeg"
                                 alt="Sebastian Reategui"
