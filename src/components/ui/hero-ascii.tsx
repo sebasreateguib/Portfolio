@@ -1,16 +1,24 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { LOGO } from './ascii';
 import { Download, Mail, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { FrameButton } from './frame-button';
+import { ViewportVideo } from './viewport-video';
 
 export default function HeroAscii() {
     const { language, setLanguage } = useLanguage();
     const t = translations[language];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [, startTransition] = useTransition();
+
+    const toggleLanguage = () => {
+        startTransition(() => {
+            setLanguage(language === 'en' ? 'es' : 'en');
+        });
+    };
 
     // Scanner Effect State
     const [tick, setTick] = useState(0);
@@ -37,15 +45,12 @@ export default function HeroAscii() {
         <main className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
             {/* Hero video background */}
             <div className="absolute inset-0 w-full h-full z-0 opacity-30 md:opacity-60 flex items-center justify-center p-4 md:p-8 lg:p-16">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                <ViewportVideo
+                    wrapperClassName="w-full h-full"
                     className="w-full h-full object-cover lg:object-contain object-center scale-115"
                 >
                     <source src="/Herov2.mp4" type="video/mp4" />
-                </video>
+                </ViewportVideo>
             </div>
 
             {/* Mobile stars background */}
@@ -76,7 +81,7 @@ export default function HeroAscii() {
                         <FrameButton
                             as="button"
                             variant="outline"
-                            onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+                            onClick={toggleLanguage}
                             className="px-3 py-1 text-[10px] text-white border-transparent hover:border-transparent focus:outline-none"
                             offset={2}
                             hoverOffset={2}
@@ -125,7 +130,7 @@ export default function HeroAscii() {
                                 <FrameButton
                                     as="button"
                                     variant="outline"
-                                    onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+                                    onClick={toggleLanguage}
                                     className="px-4 py-2 text-sm text-white border-transparent hover:border-transparent focus:outline-none"
                                     offset={2}
                                     hoverOffset={2}

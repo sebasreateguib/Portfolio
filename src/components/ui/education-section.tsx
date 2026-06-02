@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import Image from 'next/image';
 import { Award } from 'lucide-react';
 import { GraduationCapIcon } from '../grad-cap';
 import { CpuIcon } from '../cpu';
@@ -41,10 +42,13 @@ export default function EducationSection() {
 
                         {/* Cinematic Background Image (Idea 1) */}
                         <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                            <img
+                            <Image
                                 src="/utec.jpg"
                                 alt="UTEC Campus"
-                                className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out mix-blend-luminosity"
+                                fill
+                                sizes="768px"
+                                loading="lazy"
+                                className="object-cover grayscale opacity-30 scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out mix-blend-luminosity"
                             />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/95" />
                             <div className="absolute inset-0 bg-teal-900/20 mix-blend-color" />
@@ -96,10 +100,13 @@ export default function EducationSection() {
                         </pre>
 
                         {/* Real Image Flash (Glitch Layer) */}
-                        <img
+                        <Image
                             src={currentImage}
                             alt="UTEC True Image"
-                            className="absolute inset-0 w-full h-full object-contain mix-blend-screen opacity-0 animate-glitch-1 group-hover/glitch:opacity-0 z-10 brightness-[1.5] contrast-[1.5] saturate-150"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 600px"
+                            loading="lazy"
+                            className="object-contain mix-blend-screen opacity-0 animate-glitch-1 group-hover/glitch:opacity-0 z-10 brightness-[1.5] contrast-[1.5] saturate-150"
                         />
 
                         {/* Glitch Layer 1 */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 type Language = 'en' | 'es';
@@ -15,8 +15,10 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('en');
 
+  const value = useMemo(() => ({ language, setLanguage }), [language]);
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

@@ -5,7 +5,7 @@ import ProjectsSection from '../components/ui/projects-section';
 import EducationSection from '../components/ui/education-section';
 import LogoCloudMarquee from '../components/ui/logo-cloud';
 import ContactSection from '../components/ui/contact-section';
-import MorphPanel from '../components/ui/ai-input';
+import LazyMorphPanel from '../components/ui/lazy-morph-panel';
 import Footer from '../components/ui/footer';
 
 export default function Home() {
@@ -26,7 +26,7 @@ export default function Home() {
             <Footer />
 
             {/* Floating AI Input */}
-            <MorphPanel />
+            <LazyMorphPanel />
         </div>
     );
 }

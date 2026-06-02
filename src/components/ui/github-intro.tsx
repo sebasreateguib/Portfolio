@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { Pin } from 'lucide-react';
 import { UserIcon } from '../user';
 import { CommitsGrid } from './commits-grid';
@@ -63,10 +64,12 @@ export default function GithubIntro() {
 
                             {/* Pixelated State */}
                             <div className="absolute inset-0 block group-hover:opacity-0 transition-opacity duration-300 z-10">
-                                <img
+                                <Image
                                     src="/Anime Avatar.png"
                                     alt="Sebastian Reategui"
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    sizes="128px"
+                                    className="object-cover"
                                     style={{ filter: 'url(#pixelate)' }}
                                 />
                                 {/* Retro Scanline Overlay */}
@@ -77,10 +80,12 @@ export default function GithubIntro() {
 
                             {/* Normal State (Hover) */}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
-                                <img
+                                <Image
                                     src="/Anime Avatar.png"
                                     alt="Sebastian Reategui Normal"
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    sizes="128px"
+                                    className="object-cover"
                                 />
                             </div>
                         </div>
@@ -91,6 +96,15 @@ export default function GithubIntro() {
                             {t.intro.hi}
                         </h2>
 
+                        <div className="flex items-center gap-2 text-[10px] font-mono -mt-1 mb-3">
+                            <span className="px-2 py-0.5 rounded border border-white/10 bg-white/5 text-gray-400 flex items-center gap-1.5">
+                                <span>🌐</span>
+                                <span>ES (Native)</span>
+                                <span className="text-gray-600">·</span>
+                                <span>EN (C1)</span>
+                            </span>
+                        </div>
+
                         <p className="text-gray-400 border-l-2 border-[#3b82f6] pl-4 italic leading-relaxed">
                             {t.intro.bio}
                         </p>
@@ -99,6 +113,10 @@ export default function GithubIntro() {
                             <li className="flex items-start gap-3">
                                 <span className="w-6 flex justify-center shrink-0 text-xl">🚀</span>
                                 <span dangerouslySetInnerHTML={{ __html: t.intro.bullet2 }}></span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="w-6 flex justify-center shrink-0 text-xl">🎯</span>
+                                <span dangerouslySetInnerHTML={{ __html: t.intro.bullet4 }}></span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <span className="w-6 flex justify-center shrink-0 text-xl">💼</span>

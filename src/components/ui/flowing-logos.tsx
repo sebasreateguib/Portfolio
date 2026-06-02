@@ -33,7 +33,11 @@ export function FlowingLogos({ data, className, reverse = false }: FlowingLogosP
               <img
                 src={logo.image}
                 alt={logo.name}
-                className={cn("h-10 w-auto object-contain opacity-40 transition-all duration-300 group-hover/item:opacity-100", logo.className)}
+                loading="lazy"
+                className={cn(
+                  "h-10 w-auto object-contain opacity-40 transition-all duration-300 group-hover/item:opacity-100",
+                  logo.className
+                )}
               />
               <span className="text-xs font-mono text-white/40 transition-all duration-300 group-hover/item:text-white/100">
                 {logo.name}

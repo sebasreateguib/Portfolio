@@ -11,19 +11,19 @@ export default function AgenticWorkflow() {
 
     return (
         <VortexPage>
-            <div className="w-full max-w-4xl mx-auto px-6 py-6 md:py-12 flex flex-col items-center justify-center text-center">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight drop-shadow-lg text-center">
+            <div className="w-full max-w-4xl mx-auto px-6 py-4 md:py-12 flex flex-col items-center justify-center text-center">
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight drop-shadow-lg text-center">
                     {t.agentic.title}
                 </h2>
                 
-                <div className="inline-block bg-[#d97757] px-4 py-1.5 rounded-full border-2 border-[#d97757] mb-8 shadow-[0_0_15px_rgba(217,119,87,0.5)] transform rotate-1">
+                <div className="inline-block bg-[#d97757] px-4 py-1.5 rounded-full border-2 border-[#d97757] mb-5 md:mb-8 shadow-[0_0_15px_rgba(217,119,87,0.5)] transform rotate-1">
                     <p className="text-white font-mono text-xs md:text-sm tracking-widest uppercase font-bold flex items-center gap-2">
                         <Zap size={14} className="fill-white text-white" />
                         {t.agentic.subtitle}
                     </p>
                 </div>
                 
-                <p className="text-gray-300 font-mono text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-6 md:mb-10 drop-shadow-md">
+                <p className="text-gray-300 font-mono text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-0 md:mb-10 drop-shadow-md">
                     {t.agentic.desc}
                 </p>
 

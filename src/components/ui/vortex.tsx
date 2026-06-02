@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-
-// Collection of mathematical expressions
 const expressions = [
     // Square Rotation
     'sin(x*cos(t) - y*sin(t))*8 * (1-max(abs(x), abs(y)))',
@@ -111,6 +109,8 @@ const expressions = [
 ]
 
 export function VortexPage({ children }: { children?: React.ReactNode }) {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const isVisibleRef = useRef(false)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const getContext = () => canvasRef.current?.getContext('2d')
     const [highResolution, setHighResolution] = useState(false)
@@ -161,6 +161,19 @@ export function VortexPage({ children }: { children?: React.ReactNode }) {
     }, [])
 
     useEffect(() => {
+        const container = containerRef.current
+        if (!container) return
+
+        const observer = new IntersectionObserver(
+            ([entry]) => { isVisibleRef.current = entry.isIntersecting },
+            { threshold: 0.05 }
+        )
+
+        observer.observe(container)
+        return () => observer.disconnect()
+    }, [])
+
+    useEffect(() => {
         const ctx = getContext()
         if (!ctx) return
 
@@ -180,11 +193,6 @@ export function VortexPage({ children }: { children?: React.ReactNode }) {
 
         let frameId: number
         const startTime = Date.now()
-        const size = 400
-
-        // Define center coordinates
-        const centerX = canvasRef.current!.width / 2
-        const centerY = canvasRef.current!.height / 2
 
         // Extended function definition
         type ExtendedFunction = (params: {
@@ -247,10 +255,20 @@ export function VortexPage({ children }: { children?: React.ReactNode }) {
         }
 
         const draw = () => {
+            frameId = requestAnimationFrame(draw)
+
+            if (!isVisibleRef.current) return
+
+            const canvas = canvasRef.current!
+            if (!canvas) return
+
             const t = (Date.now() - startTime) / 1000
-            ctx.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height)
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
 
             const baseHue = isDarkMode ? currentColorTheme.dark : currentColorTheme.light
+            const size = Math.min(canvas.width, canvas.height) * 0.85
+            const centerX = canvas.width / 2
+            const centerY = canvas.height / 2
 
             const resolution = highResolution ? 2 : 4
             for (let px = -size / 2; px < size / 2; px += resolution) {
@@ -297,7 +315,6 @@ export function VortexPage({ children }: { children?: React.ReactNode }) {
                 }
             }
 
-            frameId = requestAnimationFrame(draw)
         }
 
         draw()
@@ -309,7 +326,7 @@ export function VortexPage({ children }: { children?: React.ReactNode }) {
     }, [getContext, canvasRef, currentExpression, currentColorTheme, highResolution])
 
     return (
-        <div className="relative w-full h-[350px] md:h-[500px] bg-black overflow-hidden flex items-center justify-center">
+        <div ref={containerRef} className="relative w-full h-[260px] sm:h-[340px] md:h-[500px] bg-black overflow-hidden flex items-center justify-center">
             <canvas
                 ref={canvasRef}
                 className="absolute inset-0 w-full h-full z-0 opacity-60"
