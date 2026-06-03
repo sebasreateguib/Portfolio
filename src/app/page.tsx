@@ -7,6 +7,7 @@ import LogoCloudMarquee from '../components/ui/logo-cloud';
 import ContactSection from '../components/ui/contact-section';
 import LazyMorphPanel from '../components/ui/lazy-morph-panel';
 import Footer from '../components/ui/footer';
+import { ScrollReveal } from '../components/ui/scroll-reveal';
 
 export default function Home() {
 
@@ -14,16 +15,26 @@ export default function Home() {
         <div className="bg-black min-h-screen">
             <TopBanner />
             <HeroAscii />
-            <GithubIntro />
-            <ProjectsSection />
-            <EducationSection />
+            <ScrollReveal>
+                <GithubIntro />
+            </ScrollReveal>
+            <ScrollReveal>
+                <ProjectsSection />
+            </ScrollReveal>
+            <ScrollReveal>
+                <EducationSection />
+            </ScrollReveal>
 
-            <div id="Skills">
+            <ScrollReveal id="Skills">
                 <LogoCloudMarquee />
-            </div>
+            </ScrollReveal>
 
-            <ContactSection />
-            <Footer />
+            <ScrollReveal>
+                <ContactSection />
+            </ScrollReveal>
+            <ScrollReveal>
+                <Footer />
+            </ScrollReveal>
 
             {/* Floating AI Input */}
             <LazyMorphPanel />
