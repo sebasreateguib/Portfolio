@@ -1,11 +1,11 @@
 "use client";
-'use client'
 
 import { useState, useRef, useEffect } from 'react'
 
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from '../../data/content'
 import { useLanguage } from '../../context/LanguageContext'
 import { copilot } from './ascii'
+import { TerminalMarkdown } from './terminal-markdown'
 
 interface PortfolioTerminalProps {
     onClose?: () => void;
@@ -21,7 +21,7 @@ ${lang === 'es' ? '[SISTEMA INICIALIZADO] - AI Terminal Copilot v1.0' : '[SYSTEM
 
 ${lang === 'es' ? "¡Bienvenido a Copilot! Escribe 'help' para ver los comandos disponibles, o hazme cualquier pregunta en lenguaje natural y la IA te responderá." : "Welcome to Copilot! Type 'help' to see available commands, or ask any question in natural language and the AI Copilot will answer it."}`;
 
-    const [history, setHistory] = useState<Array<{ command: string; output: string }>>([
+    const [history, setHistory] = useState<Array<{ command: string; output: string; isAI?: boolean }>>([
         {
             command: '/welcome',
             output: getWelcomeMessage('en') // This gets overridden dynamically during render below
@@ -154,7 +154,7 @@ I'm currently open to new opportunities, collaborations, or just to chat about t
         }
 
         // AI Copilot Integration
-        setHistory(prev => [...prev, { command: cmdText, output: '' }])
+        setHistory(prev => [...prev, { command: cmdText, output: '', isAI: true }])
         setCurrentCommand('')
         historyIndex.current = -1
         setIsLoading(true)
@@ -271,33 +271,14 @@ Answer user questions accurately and professionally using the portfolio informat
         }
     }, [])
 
-    const renderOutput = (output: string) => {
+    const renderOutput = (output: string, isAI?: boolean) => {
         if (!output) return null;
-
-        const urlRegex = /(https?:\/\/[^\s]+)/g
-        const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g
-
-        let parts = output.split(urlRegex)
-        parts = parts.flatMap(part =>
-            urlRegex.test(part) ? [part] : part.split(emailRegex)
-        )
-
-        return parts.map((part, index) => {
-            if (urlRegex.test(part)) {
-                return (
-                    <a key={index} href={part} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline hover:text-cyan-300 transition-colors">
-                        {part}
-                    </a>
-                )
-            } else if (emailRegex.test(part)) {
-                return (
-                    <a key={index} href={`mailto:${part}`} className="text-cyan-400 hover:underline hover:text-cyan-300 transition-colors">
-                        {part}
-                    </a>
-                )
-            }
-            return <span key={index}>{part}</span>
-        })
+        if (isAI) return <TerminalMarkdown text={output} />;
+        return (
+            <span className="whitespace-pre-wrap text-gray-300 leading-relaxed text-sm">
+                {output}
+            </span>
+        );
     }
 
     return (
@@ -330,8 +311,8 @@ Answer user questions accurately and professionally using the portfolio informat
                             <span className="text-cyan-400 font-semibold shrink-0">sreategui@copilot:~$</span>
                             <span className="text-white break-all">{entry.command}</span>
                         </div>
-                        <div className="whitespace-pre-wrap text-gray-300 pl-6 leading-relaxed text-sm">
-                            {renderOutput(entry.output)}
+                        <div className="pl-6">
+                            {renderOutput(entry.output, entry.isAI)}
                         </div>
                     </div>
                 ))}
