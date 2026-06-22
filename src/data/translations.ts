@@ -102,10 +102,20 @@ export const translations = {
       formError: "Failed to send message. Please try again."
     },
     copilot: {
-      placeholder: "Ask SR Copilot..."
+      placeholder: "Ask SR Copilot...",
+      dockTitle: "Chat with SR Copilot",
+      dockSubtitle: "Projects, skills & contact",
+      tapToOpen: "Tap to open",
+      heroCta: "Talk to SR Copilot",
+      coachmarkTitle: "Curious about my work?",
+      coachmarkBody: "Tap below to chat with SR Copilot",
+      coachmarkDismiss: "Got it"
     },
     banner: {
-      text: "Have more questions about me? SR Copilot is here to help!"
+      text: "SR Copilot can answer questions about projects, stack & contact",
+      textShort: "Ask SR Copilot about my work",
+      live: "Live",
+      cta: "Try it"
     },
     agentic: {
       title: "Agentic Development Workflow",
@@ -224,10 +234,20 @@ export const translations = {
       formError: "Error al enviar el mensaje. Intenta de nuevo."
     },
     copilot: {
-      placeholder: "Pregúntale a SR Copilot..."
+      placeholder: "Pregúntale a SR Copilot...",
+      dockTitle: "Chatea con SR Copilot",
+      dockSubtitle: "Proyectos, skills y contacto",
+      tapToOpen: "Toca para abrir",
+      heroCta: "Hablar con SR Copilot",
+      coachmarkTitle: "¿Curioso sobre mi trabajo?",
+      coachmarkBody: "Toca abajo para chatear con SR Copilot",
+      coachmarkDismiss: "Entendido"
     },
     banner: {
-      text: "¿Tienes más preguntas sobre mí? ¡SR Copilot está aquí para ayudarte!"
+      text: "SR Copilot responde sobre proyectos, stack y contacto",
+      textShort: "Pregúntale a SR Copilot sobre mí",
+      live: "En vivo",
+      cta: "Probar"
     },
     agentic: {
       title: "Agentic Development Workflow",

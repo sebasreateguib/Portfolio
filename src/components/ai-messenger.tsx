@@ -9,6 +9,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Bot, CheckCheck, Loader2, BrainCircuit } from "lucide-react";
 import { SendIcon } from "./send";
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import { BotMarkdown } from "./ui/bot-markdown";
+
 
 import { useLanguage } from "../context/LanguageContext";
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from "../data/content";
@@ -336,12 +338,13 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
                                             <p className="font-medium text-foreground/80 sm:text-sm mb-1">
                                                 {message.author}
                                             </p>
-                                            <p className={cn(
-                                                "text-[0.95rem]",
-                                                message.sender === "user" ? "text-primary-foreground/90" : "text-foreground/90"
-                                            )}>
-                                                {message.text}
-                                            </p>
+                                            {message.sender === "user" ? (
+                                                <p className="text-[0.95rem] text-primary-foreground/90">
+                                                    {message.text}
+                                                </p>
+                                            ) : (
+                                                <BotMarkdown text={message.text} />
+                                            )}
                                             <div className="mt-2 sm:mt-3 flex items-center justify-end gap-2 text-[0.7rem]">
                                                 <span className={cn(
                                                     "text-muted-foreground",

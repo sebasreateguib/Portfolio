@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { Avatar, AvatarFallback } from "./avatar"
 import { Badge } from "./badge"
 import { Button as UiButton } from "./button"
-import { Bot, CheckCheck, Loader2, Command } from "lucide-react"
+import { Bot, CheckCheck, Loader2, Command, X } from "lucide-react"
 import { SendIcon } from "../send"
 
 import { cn } from "../../lib/utils"
@@ -13,6 +13,12 @@ import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_E
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import PortfolioTerminal from './portfolio-terminal';
+import { BotMarkdown } from './bot-markdown';
+import {
+    COPILOT_OPEN_EVENT,
+    dismissCopilotCoachmark,
+    hasSeenCopilotCoachmark,
+} from '../../lib/copilot-events';
 
 type Message = {
     id: string;
@@ -33,11 +39,12 @@ interface ContextShape {
 const FormContext = React.createContext({} as ContextShape)
 const useFormContext = () => React.useContext(FormContext)
 
-export function MorphPanel() {
-    const wrapperRef = React.useRef<HTMLDivElement>(null)
+export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
     const textareaRef = React.useRef<HTMLTextAreaElement | null>(null)
 
     const [showForm, setShowForm] = React.useState(false)
+    const [showCoachmark, setShowCoachmark] = React.useState(false)
+    const shouldReduceMotion = useReducedMotion()
 
     const triggerClose = React.useCallback(() => {
         setShowForm(false)
@@ -46,22 +53,42 @@ export function MorphPanel() {
 
     const triggerOpen = React.useCallback(() => {
         setShowForm(true)
+        setShowCoachmark(false)
+        dismissCopilotCoachmark()
         setTimeout(() => {
             textareaRef.current?.focus()
         })
     }, [])
 
-
+    React.useEffect(() => {
+        if (openOnMount) {
+            triggerOpen()
+        }
+    }, [openOnMount, triggerOpen])
 
     React.useEffect(() => {
-        function clickOutsideHandler(e: MouseEvent) {
-            if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && showForm) {
-                triggerClose()
-            }
+        const handleOpen = () => triggerOpen()
+        window.addEventListener(COPILOT_OPEN_EVENT, handleOpen)
+        return () => window.removeEventListener(COPILOT_OPEN_EVENT, handleOpen)
+    }, [triggerOpen])
+
+    React.useEffect(() => {
+        if (showForm || hasSeenCopilotCoachmark()) return
+
+        const showTimer = window.setTimeout(() => {
+            setShowCoachmark(true)
+        }, 2500)
+
+        const hideTimer = window.setTimeout(() => {
+            setShowCoachmark(false)
+            dismissCopilotCoachmark()
+        }, 10500)
+
+        return () => {
+            window.clearTimeout(showTimer)
+            window.clearTimeout(hideTimer)
         }
-        document.addEventListener("mousedown", clickOutsideHandler)
-        return () => document.removeEventListener("mousedown", clickOutsideHandler)
-    }, [showForm, triggerClose])
+    }, [showForm])
 
     // Atajo de teclado global (cmd+k o ctrl+k) para abrir/cerrar el panel
     React.useEffect(() => {
@@ -86,15 +113,31 @@ export function MorphPanel() {
 
     return (
         <FormContext.Provider value={ctx}>
-            {/* Barra tipo Comando Flotante */}
-            <div className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+            <div
+                className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-3"
+            >
+                <CopilotCoachmark
+                    visible={showCoachmark && !showForm}
+                    onDismiss={() => {
+                        setShowCoachmark(false)
+                        dismissCopilotCoachmark()
+                    }}
+                />
+
                 <AnimatePresence>
                     {!showForm && (
                         <motion.div
+                            id="sr-copilot-dock"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
-                            className="pointer-events-auto bg-[#0c0c0e]/80 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full overflow-hidden"
+                            className={cn(
+                                "pointer-events-auto overflow-hidden rounded-full border bg-[#0c0c0e]/80 shadow-2xl backdrop-blur-xl",
+                                showCoachmark
+                                    ? "border-blue-400/30"
+                                    : "border-white/10",
+                                showCoachmark && !shouldReduceMotion && "animate-[copilot-dock-pulse_2s_ease-in-out_3]"
+                            )}
                         >
                             <DockBar />
                         </motion.div>
@@ -156,29 +199,90 @@ export function MorphPanel() {
     )
 }
 
+function CopilotCoachmark({
+    visible,
+    onDismiss,
+}: {
+    visible: boolean
+    onDismiss: () => void
+}) {
+    const { language } = useLanguage()
+    const t = translations[language]
+
+    return (
+        <AnimatePresence>
+            {visible && (
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.2 }}
+                    className="pointer-events-auto w-[min(92vw,360px)] rounded-xl border border-blue-400/30 bg-[#0a0a0c]/95 backdrop-blur-xl px-4 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <div className="flex items-start justify-between gap-3">
+                        <div>
+                            <p className="text-sm font-semibold text-white">
+                                {t.copilot.coachmarkTitle}
+                            </p>
+                            <p className="mt-1 text-xs text-white/60 leading-relaxed">
+                                {t.copilot.coachmarkBody}
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={onDismiss}
+                            className="shrink-0 rounded-md p-1 text-white/50 transition-colors hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 cursor-pointer"
+                            aria-label={t.copilot.coachmarkDismiss}
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between gap-2">
+                        <button
+                            type="button"
+                            onClick={onDismiss}
+                            className="text-[11px] font-mono uppercase tracking-wider text-blue-300 hover:text-white transition-colors cursor-pointer"
+                        >
+                            {t.copilot.coachmarkDismiss}
+                        </button>
+                        <span className="text-lg text-blue-400/80 leading-none" aria-hidden="true">
+                            ↓
+                        </span>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    )
+}
+
 function DockBar() {
     const { triggerOpen } = useFormContext()
     const { language } = useLanguage();
     const t = translations[language];
 
     return (
-        <footer
+        <button
+            type="button"
+            id="sr-copilot-dock-trigger"
             onClick={triggerOpen}
-            className="flex h-[48px] items-center px-4 gap-3 cursor-pointer select-none whitespace-nowrap transition-all hover:bg-white/5 w-[300px] max-w-[90vw]"
+            className="flex h-[48px] w-[300px] max-w-[90vw] items-center gap-3 px-4 cursor-pointer select-none text-left whitespace-nowrap transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0c0e]"
+            aria-label={`${t.copilot.dockTitle}. ${t.copilot.dockSubtitle}`}
         >
-            <div className="flex items-center justify-center p-1.5 bg-blue-500/20 text-blue-400 rounded-full shrink-0">
-                <Bot className="w-4 h-4" />
+            <div className="flex shrink-0 items-center justify-center rounded-full bg-blue-500/20 p-1.5 text-blue-400">
+                <Bot className="h-4 w-4" aria-hidden="true" />
             </div>
 
-            <span className="text-[14px] text-white/50 flex-1 truncate text-left font-medium">
+            <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-white/50">
                 {t.copilot.placeholder}
             </span>
 
-            <div className="hidden sm:flex items-center gap-1 shrink-0 bg-white/10 px-2 py-1 rounded-md text-xs text-white/40 font-mono">
-                <Command className="w-3 h-3" />
+            <div className="hidden shrink-0 items-center gap-1 rounded-md bg-white/10 px-2 py-1 font-mono text-xs text-white/40 sm:flex">
+                <Command className="h-3 w-3" aria-hidden="true" />
                 <span>K</span>
             </div>
-        </footer>
+        </button>
     )
 }
 
@@ -570,12 +674,13 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
                                 <p className="font-medium text-white/80 text-xs mb-1">
                                     {message.author}
                                 </p>
-                                <p className={cn(
-                                    "text-[0.95rem]",
-                                    message.sender === "user" ? "text-white" : "text-white/90"
-                                )}>
-                                    {message.text}
-                                </p>
+                                {message.sender === "user" ? (
+                                    <p className="text-[0.95rem] text-white">
+                                        {message.text}
+                                    </p>
+                                ) : (
+                                    <BotMarkdown text={message.text} />
+                                )}
                                 <div className="mt-2 flex items-center justify-end gap-2 text-[0.65rem]">
                                     <span className={cn(
                                         "text-white/50",

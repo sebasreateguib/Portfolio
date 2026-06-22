@@ -305,9 +305,9 @@ Answer user questions accurately and professionally using the portfolio informat
             {/* Terminal Header */}
             <div className="flex items-center gap-2 p-3 bg-gray-900 border-b border-white/5 select-none text-xs text-gray-400">
                 <div className="flex gap-1.5">
-                    <div onClick={onClose} className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer" />
-                    <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors cursor-pointer" />
+                    <button type="button" onClick={onClose} aria-label="Close terminal" className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer" />
+                    <button type="button" onClick={onClose} aria-label="Close terminal" className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer" />
+                    <button type="button" onClick={onClose} aria-label="Close terminal" className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors cursor-pointer" />
                 </div>
                 <div className="flex-1 text-center font-semibold tracking-wider text-white/50">sreategui@copilot-terminal:~$ | AI Copilot v1.0</div>
                 <div className="text-xs flex items-center gap-1">

@@ -160,3 +160,16 @@
     animation: flash 8s ease-in-out infinite;
   }
 }
+
+@keyframes copilot-dock-pulse {
+  0%,
+  100% {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(96, 165, 250, 0.25);
+    border-color: rgba(96, 165, 250, 0.35);
+  }
+}
