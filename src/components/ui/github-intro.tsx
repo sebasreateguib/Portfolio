@@ -6,6 +6,7 @@ import { UserIcon } from '../user';
 import { CommitsGrid } from './commits-grid';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
+import { SectionDivider } from './section-divider';
 
 export default function GithubIntro() {
     const { language } = useLanguage();
@@ -23,11 +24,7 @@ export default function GithubIntro() {
                         <UserIcon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.nav.about}</h2>
                     </div>
-                    <div className="flex items-center gap-2 opacity-60">
-                        <div className="w-12 h-px bg-white"></div>
-                        <span className="text-white text-[10px] font-mono tracking-widest uppercase">{badgeText}</span>
-                        <div className="flex-1 h-px bg-white"></div>
-                    </div>
+                    <SectionDivider label={badgeText} />
                 </div>
 
                 {/* Luz pulsante de fondo */}

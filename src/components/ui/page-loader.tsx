@@ -4,8 +4,30 @@ import React, { useState, useEffect } from 'react';
 import TypingKeyboard from './typing-keyboard';
 import { AnimatePresence, motion } from 'framer-motion';
 
+const TYPING_SPEED: [number, number] = [40, 90];
+
+const BOOT_SEQUENCE = [
+    "Loading kernel modules...",
+    "Mounting root filesystem... OK",
+    "Initializing web components...",
+    "Establishing secure connection...",
+    "Starting portfolio interface..."
+];
+
+
 export default function PageLoader({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
+    const [isTypingDone, setIsTypingDone] = useState(false);
+
+    const handleTypingComplete = React.useCallback(() => {
+        setIsTypingDone(true);
+    }, []);
+
+    useEffect(() => {
+        if (!isTypingDone) return;
+        const timer = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, [isTypingDone]);
 
     return (
         <>
@@ -16,35 +38,27 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.5, ease: 'easeInOut' }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black min-h-screen overflow-hidden"
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-[#0a0a0a] min-h-screen overflow-hidden"
                     >
-                        {/* Subtle Grid Background */}
+                        {/* Scanlines Overlay */}
                         <div 
                             className="absolute inset-0 z-0 pointer-events-none opacity-30"
                             style={{
-                                backgroundImage: `
-                                    linear-gradient(to right, #333 1px, transparent 1px),
-                                    linear-gradient(to bottom, #333 1px, transparent 1px)
-                                `,
-                                backgroundSize: '40px 40px',
-                                maskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)',
-                                WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)'
+                                backgroundImage: `repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.8) 2px, rgba(0, 0, 0, 0.8) 4px)`
                             }}
                         />
 
-                        <div className="relative z-10">
-                            <TypingKeyboard 
-                                autoTypeText="npm run dev" 
+                        <div className="relative z-10 flex flex-col items-center">
+                            <TypingKeyboard
+                                autoTypeText="init"
                                 loop={false}
                                 initialDelay={400}
                                 accentColor="#111111"
                                 secondaryAccent="#60a5fa"
-                                screenColor="#0f172a"
-                                onComplete={() => {
-                                    // Add a small delay after typing completes before hiding loader
-                                    setTimeout(() => setIsLoading(false), 500);
-                                }}
-                                typingSpeed={[40, 90]}
+                                screenColor="#111111"
+                                onComplete={handleTypingComplete}
+                                typingSpeed={TYPING_SPEED}
+                                bootSequence={BOOT_SEQUENCE}
                             />
                         </div>
                     </motion.div>

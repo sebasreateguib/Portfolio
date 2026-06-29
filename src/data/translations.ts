@@ -70,7 +70,7 @@ export const translations = {
     education: {
       title: "Education",
       background: "Academic_Background",
-      utec: "Universidad de Ingeniería y Tecnología (UTEC)",
+      utec: "Universidad de Ingeniería y Tecnología - UTEC",
       degree: "Bachelor of Science in Computer Science",
       award: "Tim Berners Lee Contest Finalist - CS2031 Platform-Based Development",
       inProgress: "IN_PROGRESS"
@@ -202,7 +202,7 @@ export const translations = {
     education: {
       title: "Educación",
       background: "Historial_Académico",
-      utec: "Universidad de Ingeniería y Tecnología (UTEC)",
+      utec: "Universidad de Ingeniería y Tecnología - UTEC",
       degree: "Bachiller en Ciencia de la Computación",
       award: "Finalista Concurso Tim Berners Lee - CS2031 Desarrollo Basado en Plataformas",
       inProgress: "EN_CURSO"

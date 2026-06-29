@@ -8,6 +8,7 @@ import { THANKS_EN_LOGO, THANKS_ES_LOGO } from '../ui/ascii';
 import { FrameButton } from './frame-button';
 
 import { GradientTracing } from './gradient-tracing';
+import { SectionDivider } from './section-divider';
 
 export default function ContactSection() {
     const { language } = useLanguage();
@@ -54,11 +55,7 @@ export default function ContactSection() {
                         <SendIcon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.contact.title}</h2>
                     </div>
-                    <div className="flex items-center gap-2 opacity-60">
-                        <div className="w-12 h-px bg-white"></div>
-                        <span className="text-white text-[10px] font-mono tracking-widest">{t.contact.getInTouch}</span>
-                        <div className="flex-1 h-px bg-white"></div>
-                    </div>
+                    <SectionDivider label={t.contact.getInTouch} />
                 </div>
 
                 <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24 items-start justify-between w-full">
@@ -69,13 +66,13 @@ export default function ContactSection() {
                                 <h3 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{t.contact.heading}</h3>
                                 <div className="absolute bottom-0 left-0 w-full">
                                     <div className="hidden xl:block">
-                                        <GradientTracing 
-                                            width={450} 
-                                            height={2} 
-                                            baseColor="rgba(255,255,255,0.1)" 
-                                            gradientColors={['transparent', '#3b82f6', 'transparent']} 
-                                            animationDuration={3} 
-                                            strokeWidth={3} 
+                                        <GradientTracing
+                                            width={450}
+                                            height={2}
+                                            baseColor="rgba(255,255,255,0.1)"
+                                            gradientColors={['transparent', '#3b82f6', 'transparent']}
+                                            animationDuration={3}
+                                            strokeWidth={3}
                                         />
                                     </div>
                                 </div>

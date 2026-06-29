@@ -4,7 +4,8 @@
 import { motion } from 'framer-motion';
 import { LayersIcon } from '../stack';
 import { FlowingLogos } from './flowing-logos';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
+import { SectionDivider } from './section-divider';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import AgenticWorkflow from './agentic-workflow';
@@ -75,11 +76,7 @@ export default function LogoCloudMarquee({
                         <LayersIcon className="text-blue-400" size={32} />
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.logoCloud.title}</h2>
                     </div>
-                    <div className="flex items-center gap-2 opacity-60">
-                        <div className="w-12 h-px bg-white"></div>
-                        <span className="text-white text-[10px] font-mono tracking-widest">{t.logoCloud.badge}</span>
-                        <div className="flex-1 h-px bg-white"></div>
-                    </div>
+                    <SectionDivider label={t.logoCloud.badge} />
                 </div>
 
                 <div className="w-screen relative left-1/2 ml-[-50vw] -mt-8 mb-4">

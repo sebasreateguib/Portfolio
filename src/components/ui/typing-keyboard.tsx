@@ -24,6 +24,8 @@ export interface TypingKeyboardProps extends React.HTMLAttributes<HTMLDivElement
     initialDelay?: number;
     /** Screen background color (defaults to accentColor) */
     screenColor?: string;
+    /** Lines of text to display rapidly after typing is complete */
+    bootSequence?: string[];
 }
 
 // ─── Key sub-component ──────────────────────────────────────────────────────
@@ -66,6 +68,7 @@ export function TypingKeyboard({
     onComplete,
     initialDelay = 500,
     screenColor,
+    bootSequence,
     ...props
 }: TypingKeyboardProps) {
     const mainRef = useRef<HTMLDivElement>(null);
@@ -117,16 +120,45 @@ export function TypingKeyboard({
 
             idx++;
             if (idx >= autoTypeText.length) {
-                if (onComplete) onComplete();
-                
-                if (!loop) return;
-                
-                timer = setTimeout(() => {
-                    if (!alive) return;
-                    resetScreen();
-                    idx = 0;
-                    timer = setTimeout(typeNext, 1000);
-                }, 2000);
+                if (bootSequence && bootSequence.length > 0) {
+                    let bootIdx = 0;
+                    pressKey(13); // Press enter
+
+                    const runBootSequence = () => {
+                        if (!alive || !screen) return;
+                        const line = bootSequence[bootIdx];
+                        
+                        const newText = document.createElement("div");
+                        newText.style.marginTop = "2px";
+                        newText.innerHTML = `<span style="color: ${secondaryAccent}; opacity: 0.8;">></span> <span style="color: #a1a1aa;">${line}</span>`;
+                        screen.appendChild(newText);
+                        
+                        // Keep scroll at bottom if it exceeds height
+                        screen.scrollTop = screen.scrollHeight;
+                        
+                        bootIdx++;
+                        if (bootIdx < bootSequence.length) {
+                            timer = setTimeout(runBootSequence, 30 + Math.random() * 80);
+                        } else {
+                            setTimeout(() => {
+                                if (alive && onComplete) onComplete();
+                            }, 400);
+                        }
+                    };
+                    
+                    timer = setTimeout(runBootSequence, 200);
+                } else {
+                    if (onComplete) onComplete();
+                    
+                    if (!loop) return;
+                    
+                    timer = setTimeout(() => {
+                        if (!alive) return;
+                        resetScreen();
+                        idx = 0;
+                        timer = setTimeout(typeNext, 1000);
+                    }, 2000);
+                }
             } else {
                 const delay = typingSpeed[0] + Math.random() * (typingSpeed[1] - typingSpeed[0]);
                 timer = setTimeout(typeNext, delay);
@@ -135,7 +167,7 @@ export function TypingKeyboard({
 
         timer = setTimeout(typeNext, initialDelay);
         return () => { alive = false; clearTimeout(timer); };
-    }, [autoTypeText, typingSpeed, loop, onComplete, initialDelay]);
+    }, [autoTypeText, typingSpeed, loop, onComplete, initialDelay, bootSequence]);
 
     return (
         <div className={cn("tk-container", className)} {...props}>
@@ -204,8 +236,8 @@ export function TypingKeyboard({
           font-size: 14px; line-height: 1.5;
           word-wrap: break-word; white-space: pre-wrap; overflow: hidden;
           text-transform: none; letter-spacing: 0px; color: #fff;
-          align-items: flex-start !important;
-          justify-content: flex-start !important;
+          display: block !important;
+          text-align: left;
           box-shadow:
             0 0 5px color-mix(in srgb, ${secondaryAccent} 80%, transparent),
             0 0 10px color-mix(in srgb, ${secondaryAccent} 70%, transparent),
