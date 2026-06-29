@@ -12,7 +12,7 @@ export default function GithubIntro() {
     const t = translations[language];
 
     // Format badge text depending on language
-    const badgeText = language === 'es' ? 'Sobre_Mi' : 'About_Me';
+    const badgeText = 'README.md';
 
     return (
         <section id="about" className="container mx-auto px-4 lg:px-8 py-10 flex justify-center relative z-10">
@@ -45,7 +45,7 @@ export default function GithubIntro() {
                         {t.intro.readme}
                     </div>
 
-                    <div className="shrink-0 w-24 h-24 md:w-32 md:h-32 relative group cursor-pointer">
+                    <div className="hidden md:block shrink-0 w-24 h-24 md:w-32 md:h-32 relative group cursor-pointer">
                         <div className="absolute inset-0 bg-blue-500/30 blur-xl rounded-full transition-opacity duration-300 group-hover:bg-blue-500/50"></div>
 
                         {/* Pixelate SVG Filter Def */}
@@ -62,8 +62,19 @@ export default function GithubIntro() {
                         {/* 8-bit Pixel Container */}
                         <div className="relative w-full h-full rounded-full border-2 border-[#3b82f6]/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] overflow-hidden bg-black">
 
-                            {/* Pixelated State */}
-                            <div className="absolute inset-0 block group-hover:opacity-0 transition-opacity duration-300 z-10">
+                            {/* Normal photo - always rendered underneath */}
+                            <div className="absolute inset-0 z-0">
+                                <Image
+                                    src="/Anime Avatar.png"
+                                    alt="Sebastian Reategui Normal"
+                                    fill
+                                    sizes="128px"
+                                    className="object-cover"
+                                />
+                            </div>
+
+                            {/* Pixelated State - only on desktop, fades out on hover */}
+                            <div className="absolute inset-0 z-10 hidden md:block group-hover:opacity-0 transition-opacity duration-300">
                                 <Image
                                     src="/Anime Avatar.png"
                                     alt="Sebastian Reategui"
@@ -77,22 +88,11 @@ export default function GithubIntro() {
                                     style={{ backgroundImage: 'repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.8) 2px, rgba(0,0,0,0.8) 4px)' }}
                                 />
                             </div>
-
-                            {/* Normal State (Hover) */}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
-                                <Image
-                                    src="/Anime Avatar.png"
-                                    alt="Sebastian Reategui Normal"
-                                    fill
-                                    sizes="128px"
-                                    className="object-cover"
-                                />
-                            </div>
                         </div>
                     </div>
 
                     <div className="grow space-y-3 font-mono text-xs md:text-sm text-gray-300 w-full">
-                        <h2 className="text-xl md:text-2xl font-bold text-white mb-3 border-b border-white/10 pb-2">
+                        <h2 className="text-xl md:text-2xl font-bold text-white mt-6 md:mt-0 mb-3 border-b border-white/10 pb-2">
                             {t.intro.hi}
                         </h2>
 
