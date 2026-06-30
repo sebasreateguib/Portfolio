@@ -26,6 +26,8 @@ export interface TypingKeyboardProps extends React.HTMLAttributes<HTMLDivElement
     screenColor?: string;
     /** Lines of text to display rapidly after typing is complete */
     bootSequence?: string[];
+    /** Progress 0–1 and status message for external loader UI */
+    onProgressUpdate?: (progress: number, status: string) => void;
 }
 
 // ─── Key sub-component ──────────────────────────────────────────────────────
@@ -69,6 +71,7 @@ export function TypingKeyboard({
     initialDelay = 500,
     screenColor,
     bootSequence,
+    onProgressUpdate,
     ...props
 }: TypingKeyboardProps) {
     const mainRef = useRef<HTMLDivElement>(null);
@@ -97,6 +100,12 @@ export function TypingKeyboard({
         };
         resetScreen();
 
+        const reportProgress = (progress: number, status: string) => {
+            onProgressUpdate?.(Math.min(1, Math.max(0, progress)), status);
+        };
+
+        reportProgress(0, "Initializing...");
+
         const pressKey = (kc: number) => {
             const domIdx = KC_MAP[kc];
             const el = allKeys[domIdx];
@@ -119,6 +128,15 @@ export function TypingKeyboard({
             }
 
             idx++;
+
+            const typingWeight = bootSequence?.length ? 0.15 : 1;
+            reportProgress(
+                (idx / autoTypeText.length) * typingWeight,
+                idx >= autoTypeText.length
+                    ? `> ${autoTypeText}`
+                    : `guest@sreategui:~$ ${autoTypeText.slice(0, idx)}`
+            );
+
             if (idx >= autoTypeText.length) {
                 if (bootSequence && bootSequence.length > 0) {
                     let bootIdx = 0;
@@ -135,11 +153,17 @@ export function TypingKeyboard({
                         
                         // Keep scroll at bottom if it exceeds height
                         screen.scrollTop = screen.scrollHeight;
+
+                        reportProgress(
+                            0.15 + (0.85 * (bootIdx + 1)) / bootSequence.length,
+                            line
+                        );
                         
                         bootIdx++;
                         if (bootIdx < bootSequence.length) {
                             timer = setTimeout(runBootSequence, 30 + Math.random() * 80);
                         } else {
+                            reportProgress(1, "Portfolio ready.");
                             setTimeout(() => {
                                 if (alive && onComplete) onComplete();
                             }, 400);
@@ -148,6 +172,7 @@ export function TypingKeyboard({
                     
                     timer = setTimeout(runBootSequence, 200);
                 } else {
+                    reportProgress(1, "Ready.");
                     if (onComplete) onComplete();
                     
                     if (!loop) return;
@@ -167,7 +192,7 @@ export function TypingKeyboard({
 
         timer = setTimeout(typeNext, initialDelay);
         return () => { alive = false; clearTimeout(timer); };
-    }, [autoTypeText, typingSpeed, loop, onComplete, initialDelay, bootSequence]);
+    }, [autoTypeText, typingSpeed, loop, onComplete, initialDelay, bootSequence, onProgressUpdate, secondaryAccent]);
 
     return (
         <div className={cn("tk-container", className)} {...props}>

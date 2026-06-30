@@ -4,6 +4,7 @@ import { LOGO } from './ascii';
 import { Download, Mail, Menu, X, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
+import { useLoaderTransition } from '../../context/LoaderTransitionContext';
 import { translations } from '../../data/translations';
 import { FrameButton } from './frame-button';
 import { ViewportVideo } from './viewport-video';
@@ -11,6 +12,7 @@ import { openCopilot } from '../../lib/copilot-events';
 
 export default function HeroAscii() {
     const { language, setLanguage } = useLanguage();
+    const { phase, skipHeroTypewriter } = useLoaderTransition();
     const t = translations[language];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [, startTransition] = useTransition();
@@ -27,6 +29,24 @@ export default function HeroAscii() {
     const [roleDisplayText, setRoleDisplayText] = useState('');
 
     useEffect(() => {
+        if (phase === "loading") return;
+
+        if (skipHeroTypewriter) {
+            setCommandText("whoami");
+            setRoleDisplayText("");
+            setShowResponse(false);
+
+            if (phase === "revealed") {
+                const responseTimer = window.setTimeout(() => {
+                    setShowResponse(true);
+                }, 280);
+                return () => window.clearTimeout(responseTimer);
+            }
+            return;
+        }
+
+        if (phase !== "revealed") return;
+
         setCommandText('');
         setShowResponse(false);
         setRoleDisplayText('');
@@ -48,7 +68,7 @@ export default function HeroAscii() {
         return () => {
             clearInterval(cmdInterval);
         };
-    }, [language]);
+    }, [language, phase, skipHeroTypewriter]);
 
     useEffect(() => {
         if (!showResponse) return;
@@ -87,24 +107,37 @@ export default function HeroAscii() {
 
     // If we are within the first 3 scans, calculate the active row using modulo
     const scanRow = tick < L * 3 ? tick % L : -1;
+    const heroVisible = phase !== "loading";
 
     return (
         <main className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
             {/* Hero video background */}
-            <div className="absolute inset-0 w-full h-full z-0 opacity-30 md:opacity-60 flex items-center justify-center p-4 md:p-8 lg:p-16">
-                <ViewportVideo
-                    wrapperClassName="w-full h-full"
-                    className="w-full h-full object-cover lg:object-contain object-center scale-115"
-                >
-                    <source src="/Herov2.mp4" type="video/mp4" />
-                </ViewportVideo>
-            </div>
+            <motion.div
+                initial={false}
+                animate={{ opacity: heroVisible ? 1 : 0 }}
+                transition={{ duration: 0.55, ease: "easeOut" }}
+                className="absolute inset-0 z-0 flex h-full w-full items-center justify-center p-4 md:p-8 lg:p-16"
+            >
+                <div className="h-full w-full opacity-30 md:opacity-60">
+                    <ViewportVideo
+                        wrapperClassName="w-full h-full"
+                        className="h-full w-full object-cover object-center scale-115 lg:object-contain"
+                    >
+                        <source src="/Herov2.mp4" type="video/mp4" />
+                    </ViewportVideo>
+                </div>
+            </motion.div>
 
             {/* Mobile stars background */}
             <div className="absolute inset-0 w-full h-full lg:hidden stars-bg"></div>
 
             {/* Top Header */}
-            <div className="absolute top-0 left-0 right-0 z-20 border-b border-white/20">
+            <motion.div
+                initial={false}
+                animate={{ opacity: heroVisible ? 1 : 0, y: heroVisible ? 0 : -12 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                className="absolute top-0 left-0 right-0 z-20 border-b border-white/20"
+            >
                 <div className="container mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2 lg:gap-4 group cursor-pointer">
                         <div className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12 group-hover:text-blue-400 transition-colors duration-300">
@@ -148,7 +181,7 @@ export default function HeroAscii() {
                         <Menu size={20} />
                     </button>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Mobile Menu Overlay */}
             <AnimatePresence>
@@ -201,7 +234,19 @@ export default function HeroAscii() {
 
             <div className="relative z-10 flex min-h-[70vh] lg:min-h-[90vh] items-center pt-16 lg:pt-0" style={{ marginTop: '2vh' }}>
                 <div className="container mx-auto px-6 lg:px-8 lg:ml-[2%] xl:ml-[5%]">
-                    <div className="max-w-lg relative">
+                    <motion.div
+                        initial={false}
+                        animate={{
+                            opacity: heroVisible ? 1 : 0,
+                            y: heroVisible ? 0 : 28,
+                        }}
+                        transition={{
+                            duration: 0.55,
+                            ease: [0.22, 1, 0.36, 1],
+                            delay: phase === "transitioning" ? 0.16 : 0,
+                        }}
+                        className="max-w-lg relative"
+                    >
                         {/* Top decorative line */}
                         <div className="flex items-center gap-2 mb-3 opacity-60">
                             <div className="w-8 h-px bg-white"></div>
@@ -321,12 +366,18 @@ export default function HeroAscii() {
                             <div className="flex-1 h-px bg-white"></div>
                             <span className="text-white text-[9px] font-mono">SYS.ACT</span>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Bottom Footer */}
-            <div className="absolute left-0 right-0 z-20 border-t border-white/20 bg-black/40 backdrop-blur-sm" style={{ bottom: '2vh' }}>
+            <motion.div
+                initial={false}
+                animate={{ opacity: heroVisible ? 1 : 0, y: heroVisible ? 0 : 12 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.12 }}
+                className="absolute left-0 right-0 z-20 border-t border-white/20 bg-black/40 backdrop-blur-sm"
+                style={{ bottom: '2vh' }}
+            >
                 <div className="container mx-auto px-4 lg:px-8 py-2 lg:py-3 flex items-center justify-between">
                     <div className="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-mono text-white/50">
                         <span className="hidden lg:inline">SYSTEM.ACTIVE</span>
@@ -349,7 +400,7 @@ export default function HeroAscii() {
                         <span className="hidden lg:inline">FRAME: ∞</span>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             <style>{`
         .dither-pattern {

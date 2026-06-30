@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, useInView } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
+import { useLoaderTransition } from '../../context/LoaderTransitionContext';
 
 interface ScrollRevealProps {
     children: ReactNode;
@@ -11,34 +12,37 @@ interface ScrollRevealProps {
     delay?: number;
 }
 
-const MOBILE_MAX_WIDTH = 768;
-
-function useIsMobile() {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
-        const update = () => setIsMobile(mq.matches);
-        update();
-        mq.addEventListener('change', update);
-        return () => mq.removeEventListener('change', update);
-    }, []);
-
-    return isMobile;
-}
-
 export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevealProps) {
     const shouldReduceMotion = useReducedMotion();
-    const isMobile = useIsMobile();
+    const { phase } = useLoaderTransition();
     const triggerRef = useRef<HTMLDivElement>(null);
-    const isInView = useInView(triggerRef, { once: true, amount: 0.15 });
+    const [isInView, setIsInView] = useState(false);
     const [hasRevealed, setHasRevealed] = useState(false);
 
-    const blurPx = isMobile ? 8 : 12;
-    const blur = `blur(${blurPx}px)`;
-    const duration = isMobile ? 0.55 : 0.7;
-    const filterDuration = isMobile ? 0.4 : 0.55;
-    const filterDelay = delay + (isMobile ? 0.06 : 0.1);
+    /*
+     * Only start observing AFTER the loader finishes.
+     * This prevents `isInView` from being set to `true` while the loader
+     * is still covering the screen, which would cause sections to appear
+     * instantly with no animation when the loader exits.
+     */
+    useEffect(() => {
+        if (phase !== 'revealed') return;
+        const el = triggerRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.12 },
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [phase]);
 
     if (shouldReduceMotion) {
         return (
@@ -49,7 +53,7 @@ export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevea
     }
 
     const hidden = {
-        filter: blur,
+        filter: 'blur(12px)',
         clipPath: 'inset(8% 12% 8% 12% round 12px)',
         opacity: 0.35,
     };
@@ -67,10 +71,10 @@ export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevea
                 initial={hidden}
                 animate={isInView ? visible : hidden}
                 transition={{
-                    duration,
+                    duration: 0.7,
                     delay,
                     ease: [0.25, 1, 0.5, 1],
-                    filter: { duration: filterDuration, delay: filterDelay },
+                    filter: { duration: 0.55, delay: delay + 0.1 },
                 }}
                 onAnimationComplete={() => {
                     if (isInView) setHasRevealed(true);
