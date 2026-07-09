@@ -52,9 +52,9 @@ export default function ContactSection() {
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 <div className="mb-16">
                     <div className="mb-4">
-                        <SectionTitle>{t.contact.title}</SectionTitle>
+                        <SectionTitle index="05">{t.contact.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={t.contact.getInTouch} />
+                    <SectionDivider label={t.contact.getInTouch} index="05" />
                 </div>
 
                 <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24 items-start justify-between w-full">

@@ -36,6 +36,16 @@ export const translations = {
       featured: "Featured_Projects",
       list: [
         {
+          id: 4,
+          title: "SanaFlow",
+          description: "Intelligent Medical Triage Platform. Designed a 100% Serverless, event-driven architecture using AWS (Lambda, SQS, DynamoDB). Engineered an automated data pipeline that processes massive clinical notes in real-time, leveraging Llama 3 via Groq API for extraction and urgency prioritization.",
+          tech: ["React.js", "Serverless", "Python", "AWS", "Groq", "WebSockets"],
+          github: "https://github.com/SReateguiUtec/Sanaflow",
+          live: "#",
+          image: "/sanaflow-compressed.mp4",
+          year: "2026"
+        },
+        {
           id: 1,
           title: "FinTrend AI",
           description: "Cloud-Native Financial Data Pipeline & Analytics developed with a microservices architecture. Designed and built an end-to-end serverless data pipeline using AWS Glue to automate ETL workflows and structured analytical querying.",
@@ -167,6 +177,16 @@ export const translations = {
       title: "Proyectos",
       featured: "Proyectos_Destacados",
       list: [
+        {
+          id: 4,
+          title: "SanaFlow",
+          description: "Plataforma de Triaje Médico Inteligente. Arquitectura 100% Serverless orientada a eventos usando AWS (Lambda, SQS, DynamoDB). Diseñé un pipeline automático que procesa notas clínicas masivamente en tiempo real usando Llama 3 (vía Groq) para extraer síntomas y priorizar la urgencia médica.",
+          tech: ["React.js", "Serverless", "Python", "AWS", "Groq", "WebSockets"],
+          github: "https://github.com/SReateguiUtec/Sanaflow",
+          live: "#",
+          image: "/sanaflow-compressed.mp4",
+          year: "2026"
+        },
         {
           id: 1,
           title: "FinTrend AI",

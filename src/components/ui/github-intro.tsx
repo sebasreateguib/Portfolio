@@ -21,9 +21,9 @@ export default function GithubIntro() {
                 {/* Section Header */}
                 <div className="mb-12">
                     <div className="mb-4">
-                        <SectionTitle>{t.nav.about}</SectionTitle>
+                        <SectionTitle index="01">{t.nav.about}</SectionTitle>
                     </div>
-                    <SectionDivider label={badgeText} />
+                    <SectionDivider label={badgeText} index="01" />
                 </div>
 
                 {/* Luz pulsante de fondo */}

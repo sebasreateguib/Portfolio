@@ -26,9 +26,9 @@ export default function EducationSection() {
                 {/* Section Header */}
                 <div className="mb-6 md:mb-16">
                     <div className="mb-4">
-                        <SectionTitle>{t.education.title}</SectionTitle>
+                        <SectionTitle index="03">{t.education.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={t.education.background} />
+                    <SectionDivider label={t.education.background} index="03" />
                 </div>
 
 

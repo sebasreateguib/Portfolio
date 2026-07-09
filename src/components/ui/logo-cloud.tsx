@@ -38,7 +38,7 @@ const defaultLogos: Logo[] = [
     { name: 'FastAPI', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
     { name: 'Express', image: 'https://cdn.simpleicons.org/express/white' },
     { name: 'AWS', image: '/AWS Logo.svg', className: '!h-8' },
-    { name: 'Vercel', image: '/Vercel.svg', className: 'invert' },
+    { name: 'GCP', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg' },
     { name: 'PostgreSQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
     { name: 'MySQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
     { name: 'SQLite', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg' },
@@ -73,9 +73,9 @@ export default function LogoCloudMarquee({
                 {/* Section Header */}
                 <div className="mb-16">
                     <div className="mb-4">
-                        <SectionTitle>{t.logoCloud.title}</SectionTitle>
+                        <SectionTitle index="04">{t.logoCloud.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={t.logoCloud.badge} />
+                    <SectionDivider label={t.logoCloud.badge} index="04" />
                 </div>
 
                 <div className="w-screen relative left-1/2 ml-[-50vw] -mt-8 mb-4">

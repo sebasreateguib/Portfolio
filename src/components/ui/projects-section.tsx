@@ -36,6 +36,11 @@ const projectDetails = {
                 role: 'Core Developer',
                 signals: ['Sparse matrix core', 'Formula support', '2D / 3D visualization'],
             },
+            4: {
+                category: 'Intelligent Medical Triage',
+                role: 'Core Serverless Engineer',
+                signals: ['Event-driven architecture', 'SQS decoupled queues', 'Llama 3 AI extraction'],
+            },
         },
     },
     es: {
@@ -64,6 +69,11 @@ const projectDetails = {
                 role: 'Core Developer',
                 signals: ['Núcleo matriz dispersa', 'Soporte de fórmulas', 'Visualización 2D / 3D'],
             },
+            4: {
+                category: 'Triaje Médico Inteligente',
+                role: 'Core Serverless Engineer',
+                signals: ['Arquitectura orientada a eventos', 'Colas desacopladas (SQS)', 'Extracción IA con Llama 3'],
+            },
         },
     },
 } as const;
@@ -84,18 +94,42 @@ export default function ProjectsSection() {
                 {/* Section Header */}
                 <div className="mb-10 md:mb-16">
                     <div className="mb-4">
-                        <SectionTitle>{t.projects.title}</SectionTitle>
+                        <SectionTitle index="02">{t.projects.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={t.projects.featured} className="mb-0" />
+                    <SectionDivider label={t.projects.featured} className="mb-0" index="02" />
                 </div>
 
-                <div className="mb-6 flex items-center justify-between rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-[10px] tracking-widest text-white/50 md:hidden">
-                    <span>SWIPE_PROJECTS</span>
-                    <ArrowRight className="h-4 w-4 animate-pulse text-blue-300" />
+                {/* Swipe Marquee Ticker */}
+                <div className="mb-6 w-full border-y border-white/[0.07] bg-white/[0.015] py-3 overflow-hidden relative">
+                    {/* Edge fades */}
+                    <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000, transparent)' }} />
+                    <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000, transparent)' }} />
+
+                    {/* Scrolling track */}
+                    <div className="flex whitespace-nowrap" style={{ animation: 'ticker-scroll 8s linear infinite' }}>
+                        {/* Repeat enough copies to fill any screen */}
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <span key={i} className="flex items-center gap-4 px-4 font-mono text-[10px] md:text-[11px] tracking-[0.18em] uppercase select-none shrink-0">
+                                <span className="text-white/30">{language === 'es' ? 'Desliza para explorar' : 'Swipe to explore'}</span>
+                                <span className="text-blue-400/50">→</span>
+                                <span className="text-white/20">{language === 'es' ? 'Más proyectos disponibles' : 'More projects available'}</span>
+                                <span className="text-blue-400/50">→</span>
+                                <span className="text-white/30">{language === 'es' ? 'Arrastra hacia la derecha' : 'Drag to the right'}</span>
+                                <span className="text-blue-400/50">→</span>
+                            </span>
+                        ))}
+                    </div>
                 </div>
+
+                <style>{`
+                    @keyframes ticker-scroll {
+                        0%   { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+                `}</style>
 
                 {/* Projects Grid / Mobile Carousel */}
-                <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+                <div className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
                     {t.projects.list.map((project, index) => {
                         const meta = copy.projects[project.id as keyof typeof copy.projects];
                         const isExpanded = expandedProject === project.id;
@@ -104,7 +138,7 @@ export default function ProjectsSection() {
                         return (
                             <div
                                 key={project.id}
-                                className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/10 bg-[#050505] shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_80px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-auto"
+                                className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/10 bg-[#050505] shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_80px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-16px)]"
                             >
                                 <div className="absolute top-0 left-0 z-30 h-3 w-3 border-l border-t border-white/40 transition-colors duration-300 group-hover:border-blue-300"></div>
                                 <div className="absolute top-0 right-0 z-30 h-3 w-3 border-r border-t border-white/40 transition-colors duration-300 group-hover:border-blue-300"></div>

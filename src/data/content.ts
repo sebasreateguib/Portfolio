@@ -62,6 +62,25 @@ ESTUDIANTE DE CC @ UTEC
 
 export const PROJECTS_DATA = [
   {
+    id: 'project-sanaflow.txt',
+    name: {
+      en: 'SanaFlow – Intelligent Medical Triage Platform',
+      es: 'SanaFlow – Plataforma de Triaje Médico Inteligente'
+    },
+    content: {
+      en: `SANAFLOW:
+Stack: Serverless Framework · Python · AWS (Lambda, SQS, DynamoDB, API Gateway WebSocket) · React · Groq Llama 3
+Challenge: Build a resilient system to process, classify, and prioritize massive patient clinical notes automatically.
+Solution: Designed a 100% Serverless, event-driven architecture using SQS decoupled queues. Built an automated pipeline that queries Llama 3 to extract symptoms and urgency. Integrated a realtime WebSocket dashboard for live updates.
+Repo: https://github.com/SReateguiUtec/Sanaflow`,
+      es: `SANAFLOW:
+Stack: Serverless Framework · Python · AWS (Lambda, SQS, DynamoDB, API Gateway WebSocket) · React · Groq Llama 3
+Desafío: Construir un sistema resiliente para procesar, clasificar y priorizar notas clínicas masivamente.
+Solución: Diseñé una arquitectura orientada a eventos 100% Serverless con colas desacopladas (SQS). Implementé un pipeline que consulta a Llama 3 para extraer síntomas y urgencia, y un dashboard con WebSockets en tiempo real.
+Repo: https://github.com/SReateguiUtec/Sanaflow`
+    }
+  },
+  {
     id: 'project-fintrend.txt',
     name: {
       en: 'FinTrendAI – Cloud-Native Financial Analytics',
