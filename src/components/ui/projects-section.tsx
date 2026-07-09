@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { ArrowRight, ChevronDown, ExternalLink } from 'lucide-react';
-import { FolderGit2Icon } from '../git';
 import { TerminalIcon } from '../term-icon';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { ViewportVideo } from './viewport-video';
 import { SectionDivider } from './section-divider';
+import { SectionTitle } from './section-title';
 
 const projectDetails = {
     en: {
@@ -83,9 +83,8 @@ export default function ProjectsSection() {
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
                 <div className="mb-10 md:mb-16">
-                    <div className="flex items-center gap-4 mb-4">
-                        <FolderGit2Icon className="text-blue-400" size={32} />
-                        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.projects.title}</h2>
+                    <div className="mb-4">
+                        <SectionTitle>{t.projects.title}</SectionTitle>
                     </div>
                     <SectionDivider label={t.projects.featured} className="mb-0" />
                 </div>

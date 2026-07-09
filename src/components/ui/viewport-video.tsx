@@ -7,28 +7,31 @@ import { cn } from '../../lib/utils'
 interface ViewportVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     src?: string
     wrapperClassName?: string
+    eager?: boolean
 }
 
 export function ViewportVideo({
     src,
     className,
     wrapperClassName,
+    eager = false,
     children,
     ...props
 }: ViewportVideoProps) {
     const { ref, isInViewport } = useInViewport<HTMLDivElement>(0.25, '50px')
     const videoRef = useRef<HTMLVideoElement>(null)
+    const shouldPlay = eager || isInViewport
 
     useEffect(() => {
         const video = videoRef.current
         if (!video) return
 
-        if (isInViewport) {
+        if (shouldPlay) {
             video.play().catch(() => {})
         } else {
             video.pause()
         }
-    }, [isInViewport])
+    }, [shouldPlay])
 
     return (
         <div ref={ref} className={cn('relative w-full h-full', wrapperClassName)}>
@@ -38,7 +41,7 @@ export function ViewportVideo({
                 muted
                 loop
                 playsInline
-                preload="none"
+                preload={eager ? 'auto' : 'none'}
                 className={className}
                 {...props}
             >

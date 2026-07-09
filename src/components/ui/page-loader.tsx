@@ -7,11 +7,13 @@ import {
     type LoaderPhase,
 } from "@/context/LoaderTransitionContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { TextAnimate } from "@/components/ui/text-animate";
+import { DiaTextReveal } from "@/components/ui/dia-text";
 
 const LOADER_DISPLAY_MS = 2000;
 const REDUCED_MOTION_DELAY_MS = 450;
 const TRANSITION_DURATION_MS = 650;
+
+const LOADER_COLORS = ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#ffffff"];
 
 const loaderCopy = {
     en: "Projects, code & a bit of me inside.",
@@ -140,23 +142,18 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                             }}
                             className="relative z-10 max-w-md px-6 text-center md:max-w-xl lg:max-w-2xl"
                         >
-                            {prefersReducedMotion ? (
-                                <p className="text-base text-white/80 sm:text-lg md:text-xl lg:text-2xl">
-                                    {line}
-                                </p>
-                            ) : (
-                                <TextAnimate
-                                    as="p"
-                                    by="word"
-                                    animation="blurInUp"
+                            <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium tracking-tight">
+                                <DiaTextReveal
+                                    key={line}
+                                    text={line}
+                                    colors={LOADER_COLORS}
+                                    textColor="#ffffff"
+                                    duration={1.4}
+                                    delay={0.15}
                                     startOnView={false}
                                     once
-                                    duration={0.45}
-                                    className="text-base text-white/80 sm:text-lg md:text-xl lg:text-2xl"
-                                >
-                                    {line}
-                                </TextAnimate>
-                            )}
+                                />
+                            </p>
                         </motion.div>
                     </motion.div>
                 )}

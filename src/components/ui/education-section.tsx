@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Award } from 'lucide-react';
-import { GraduationCapIcon } from '../grad-cap';
 import { CpuIcon } from '../cpu';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { UTEC, UTEC2 } from './ascii';
 import { SectionDivider } from './section-divider';
+import { SectionTitle } from './section-title';
 
 export default function EducationSection() {
     const { language } = useLanguage();
@@ -25,15 +25,14 @@ export default function EducationSection() {
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
                 <div className="mb-6 md:mb-16">
-                    <div className="flex items-center gap-4 mb-4">
-                        <GraduationCapIcon className="text-blue-400" size={32} />
-                        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.education.title}</h2>
+                    <div className="mb-4">
+                        <SectionTitle>{t.education.title}</SectionTitle>
                     </div>
                     <SectionDivider label={t.education.background} />
                 </div>
 
 
-                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-4 lg:gap-16 pt-0 md:pt-8">
+                <div className="max-w-[95%] mx-auto flex flex-col lg:flex-row items-center gap-4 lg:gap-16 pt-0 md:pt-8">
                     {/* Education Info (Inspired) */}
                     <div className="flex-[2] w-full">
                         <div className="group flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative px-6 md:px-8 py-6 rounded-2xl hover:bg-white/[0.02] overflow-hidden transition-all duration-500 border border-transparent hover:border-white/5">

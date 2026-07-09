@@ -2,10 +2,10 @@
 
 "use client";
 import { motion } from 'framer-motion';
-import { LayersIcon } from '../stack';
 import { FlowingLogos } from './flowing-logos';
 import { cn } from '@/lib/utils';
 import { SectionDivider } from './section-divider';
+import { SectionTitle } from './section-title';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import AgenticWorkflow from './agentic-workflow';
@@ -72,9 +72,8 @@ export default function LogoCloudMarquee({
             <div className='container mx-auto px-6 lg:px-8 relative z-10'>
                 {/* Section Header */}
                 <div className="mb-16">
-                    <div className="flex items-center gap-4 mb-4">
-                        <LayersIcon className="text-blue-400" size={32} />
-                        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.logoCloud.title}</h2>
+                    <div className="mb-4">
+                        <SectionTitle>{t.logoCloud.title}</SectionTitle>
                     </div>
                     <SectionDivider label={t.logoCloud.badge} />
                 </div>

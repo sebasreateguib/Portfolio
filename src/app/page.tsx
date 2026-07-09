@@ -6,6 +6,7 @@ import EducationSection from '../components/ui/education-section';
 import LogoCloudMarquee from '../components/ui/logo-cloud';
 import ContactSection from '../components/ui/contact-section';
 import LazyMorphPanel from '../components/ui/lazy-morph-panel';
+import { FloatingSectionNav } from '../components/ui/floating-section-nav';
 import Footer from '../components/ui/footer';
 import { ScrollReveal } from '../components/ui/scroll-reveal';
 import PageLoader from '../components/ui/page-loader';
@@ -17,7 +18,7 @@ export default function Home() {
             <PageLoader>
                 <div className="bg-black min-h-screen">
                     <TopBanner />
-                    <HeroAscii />
+                    <HeroAscii />           
                     <ScrollReveal>
                         <GithubIntro />
                     </ScrollReveal>
@@ -38,6 +39,8 @@ export default function Home() {
                     <ScrollReveal>
                         <Footer />
                     </ScrollReveal>
+
+                    <FloatingSectionNav />
                 </div>
             </PageLoader>
 

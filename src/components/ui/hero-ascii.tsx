@@ -9,6 +9,7 @@ import { translations } from '../../data/translations';
 import { FrameButton } from './frame-button';
 import { ViewportVideo } from './viewport-video';
 import { openCopilot } from '../../lib/copilot-events';
+import { Waveform } from './audiovisualizer';
 
 export default function HeroAscii() {
     const { language, setLanguage } = useLanguage();
@@ -110,7 +111,7 @@ export default function HeroAscii() {
     const heroVisible = phase !== "loading";
 
     return (
-        <main className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
+        <main id="hero" className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
             {/* Hero video background */}
             <motion.div
                 initial={false}
@@ -118,13 +119,13 @@ export default function HeroAscii() {
                 transition={{ duration: 0.55, ease: "easeOut" }}
                 className="absolute inset-0 z-0 flex h-full w-full items-center justify-center p-4 md:p-8 lg:p-16"
             >
-                <div className="h-full w-full opacity-30 md:opacity-60">
+                <div className="h-full w-full opacity-[0.40] md:opacity-[0.60]">
                     <ViewportVideo
+                        eager
+                        src="/Herov2.mp4"
                         wrapperClassName="w-full h-full"
                         className="h-full w-full object-cover object-center scale-115 lg:object-contain"
-                    >
-                        <source src="/Herov2.mp4" type="video/mp4" />
-                    </ViewportVideo>
+                    />
                 </div>
             </motion.div>
 
@@ -382,11 +383,13 @@ export default function HeroAscii() {
                     <div className="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-mono text-white/50">
                         <span className="hidden lg:inline">SYSTEM.ACTIVE</span>
                         <span className="lg:hidden">SYS.ACT</span>
-                        <div className="hidden lg:flex gap-1">
-                            {[8, 12, 5, 14, 7, 10, 6, 15].map((height, i) => (
-                                <div key={i} className="w-1 bg-white/30" style={{ height: `${height}px` }}></div>
-                            ))}
-                        </div>
+                        <Waveform
+                            bars={8}
+                            intensity="low"
+                            playing={heroVisible}
+                            compact
+                            className="hidden lg:block"
+                        />
                         <span>V1.0.0</span>
                     </div>
 

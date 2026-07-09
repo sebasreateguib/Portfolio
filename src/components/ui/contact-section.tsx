@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import { Loader2, CheckCircle2, XCircle } from 'lucide-react';
-import { SendIcon } from '../send';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { THANKS_EN_LOGO, THANKS_ES_LOGO } from '../ui/ascii';
@@ -9,6 +8,7 @@ import { FrameButton } from './frame-button';
 
 import { GradientTracing } from './gradient-tracing';
 import { SectionDivider } from './section-divider';
+import { SectionTitle } from './section-title';
 
 export default function ContactSection() {
     const { language } = useLanguage();
@@ -51,9 +51,8 @@ export default function ContactSection() {
         <section id="contact" className="relative w-full pt-16 pb-8 lg:pt-24 lg:pb-12 overflow-hidden border-t border-white/10 bg-black">
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 <div className="mb-16">
-                    <div className="flex items-center gap-4 mb-4">
-                        <SendIcon className="text-blue-400" size={32} />
-                        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.contact.title}</h2>
+                    <div className="mb-4">
+                        <SectionTitle>{t.contact.title}</SectionTitle>
                     </div>
                     <SectionDivider label={t.contact.getInTouch} />
                 </div>

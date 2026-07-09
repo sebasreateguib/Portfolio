@@ -4,7 +4,28 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { COPILOT_OPEN_EVENT } from '../../lib/copilot-events';
 
-const MorphPanel = dynamic(() => import('./ai-input'), {
+async function importMorphPanel() {
+    try {
+        return await import('./ai-input');
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        const isChunkError = /ChunkLoadError|Failed to load chunk/i.test(message);
+
+        if (isChunkError && typeof window !== 'undefined') {
+            const retryKey = 'morph-panel-chunk-retry';
+            if (!sessionStorage.getItem(retryKey)) {
+                sessionStorage.setItem(retryKey, '1');
+                window.location.reload();
+                return new Promise<never>(() => {});
+            }
+            sessionStorage.removeItem(retryKey);
+        }
+
+        throw error;
+    }
+}
+
+const MorphPanel = dynamic(() => importMorphPanel(), {
     ssr: false,
 });
 

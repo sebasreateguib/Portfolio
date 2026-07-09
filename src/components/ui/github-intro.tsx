@@ -2,11 +2,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { Pin } from 'lucide-react';
-import { UserIcon } from '../user';
 import { CommitsGrid } from './commits-grid';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { SectionDivider } from './section-divider';
+import { SectionTitle } from './section-title';
 
 export default function GithubIntro() {
     const { language } = useLanguage();
@@ -20,9 +20,8 @@ export default function GithubIntro() {
             <div className="relative w-full">
                 {/* Section Header */}
                 <div className="mb-12">
-                    <div className="flex items-center gap-4 mb-4">
-                        <UserIcon className="text-blue-400" size={32} />
-                        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{t.nav.about}</h2>
+                    <div className="mb-4">
+                        <SectionTitle>{t.nav.about}</SectionTitle>
                     </div>
                     <SectionDivider label={badgeText} />
                 </div>

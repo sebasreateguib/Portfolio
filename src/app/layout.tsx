@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { Chakra_Petch } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css";
+
+const chakraPetch = Chakra_Petch({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-chakra-petch",
+});
 
 export const metadata: Metadata = {
   title: "Sebastian Reategui - CS Student",
@@ -23,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth bg-background text-foreground">
+    <html lang="en" className={`scroll-smooth bg-background text-foreground ${chakraPetch.variable}`}>
       <body className="antialiased bg-background min-h-screen">
         <LanguageProvider>
           {children}
