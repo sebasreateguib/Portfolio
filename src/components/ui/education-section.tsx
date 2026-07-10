@@ -59,13 +59,13 @@ export default function EducationSection() {
                                     href="https://utec.edu.pe"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 text-xl md:text-2xl font-bold text-white hover:text-teal-400 transition-colors duration-300"
+                                    className="flex items-center gap-3 text-xl md:text-2xl font-section font-bold text-white hover:text-teal-400 transition-colors duration-300"
                                 >
                                     <CpuIcon className="text-teal-500 group-hover:scale-110 transition-transform duration-300" size={24} />
                                     {t.education.utec}
                                 </a>
 
-                                <div className="text-white/50 font-medium text-sm md:text-base flex items-center gap-3 pl-9 mb-1">
+                                <div className="text-white/50 font-section font-medium text-sm md:text-base flex items-center gap-3 pl-9 mb-1">
                                     <span>{t.education.degree}</span>
                                     <span className="w-1 h-1 rounded-full bg-white/20" />
                                     <span className="font-mono text-white/40">2024 - 2029</span>

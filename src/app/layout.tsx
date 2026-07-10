@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Chakra_Petch } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css";
 
-const chakraPetch = Chakra_Petch({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["600"],
-  variable: "--font-chakra-petch",
+  weight: ["500", "600", "700"],
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth bg-background text-foreground ${chakraPetch.variable}`}>
+    <html lang="en" className={`scroll-smooth bg-background text-foreground ${spaceGrotesk.variable}`}>
       <body className="antialiased bg-background min-h-screen">
         <LanguageProvider>
           {children}

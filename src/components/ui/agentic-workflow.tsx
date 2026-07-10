@@ -32,7 +32,7 @@ export default function AgenticWorkflow() {
                          speed={60}
                      >
                          <div className="flex flex-col items-center justify-center text-center">
-                             <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-white mb-3 md:mb-6 tracking-tight drop-shadow-lg text-center">
+                             <h2 className="text-xl sm:text-2xl md:text-4xl font-section font-bold text-white mb-3 md:mb-6 tracking-tight drop-shadow-lg text-center">
                                  {t.agentic.title}
                              </h2>
                              

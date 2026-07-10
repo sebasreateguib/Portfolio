@@ -6,7 +6,6 @@ import { translations } from '../../data/translations';
 import { THANKS_EN_LOGO, THANKS_ES_LOGO } from '../ui/ascii';
 import { FrameButton } from './frame-button';
 
-import { GradientTracing } from './gradient-tracing';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
 
@@ -62,19 +61,7 @@ export default function ContactSection() {
                     <div className="flex flex-col gap-10 w-full lg:w-1/2">
                         <div className="flex flex-col gap-4">
                             <div className="relative inline-block self-start">
-                                <h3 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{t.contact.heading}</h3>
-                                <div className="absolute bottom-0 left-0 w-full">
-                                    <div className="hidden xl:block">
-                                        <GradientTracing
-                                            width={450}
-                                            height={2}
-                                            baseColor="rgba(255,255,255,0.1)"
-                                            gradientColors={['transparent', '#3b82f6', 'transparent']}
-                                            animationDuration={3}
-                                            strokeWidth={3}
-                                        />
-                                    </div>
-                                </div>
+                                <h3 className="text-2xl md:text-4xl font-section font-bold text-white mb-2 leading-tight">{t.contact.heading}</h3>
                             </div>
                             <p className="text-white/60 font-mono text-sm md:text-base max-w-md leading-relaxed">
                                 {t.contact.desc}
