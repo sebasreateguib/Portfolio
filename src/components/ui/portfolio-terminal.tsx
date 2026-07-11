@@ -107,13 +107,13 @@ Honors:
         'contact': () => language === 'es' ? `INFORMACIÓN DE CONTACTO
 -----------------------
 📧 Email:    reateguisebastian@gmail.com
-🐙 GitHub:   https://github.com/SReateguiUtec
+🐙 GitHub:   https://github.com/sebasreateguib
 
 Actualmente abierto a nuevas oportunidades, colaboraciones o simplemente para charlar sobre tecnología!
     ` : `CONTACT INFORMATION
 -------------------
 📧 Email:    reateguisebastian@gmail.com
-🐙 GitHub:   https://github.com/SReateguiUtec
+🐙 GitHub:   https://github.com/sebasreateguib
 
 I'm currently open to new opportunities, collaborations, or just to chat about tech!
     `,

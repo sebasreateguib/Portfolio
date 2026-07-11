@@ -139,12 +139,12 @@ Is there any technology you are particularly interested in?`)
                 : (language === "es"
                         ? `Puedes ponerte en contacto directo con Sebastián a través de:
 - 📧 **Correo personal**: reateguisebastian1@gmail.com
-- 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
+- 🐙 **GitHub**: [github.com/sebasreateguib](https://github.com/sebasreateguib)
 
 ¡Estará encantado de conversar contigo sobre oportunidades de prácticas pre-profesionales o proyectos interesantes!`
                         : `You can contact Sebastián directly via:
 - 📧 **Personal Email**: reateguisebastian1@gmail.com
-- 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
+- 🐙 **GitHub**: [github.com/sebasreateguib](https://github.com/sebasreateguib)
 
 He is looking forward to discussing internship opportunities and interesting collaborations!`);
 

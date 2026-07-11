@@ -38,7 +38,7 @@ export default function Footer() {
         {/* Right side: Social Links */}
         <div className="flex items-center gap-6 text-gray-400">
           <a
-            href="https://github.com/SReateguiUtec"
+            href="https://github.com/sebasreateguib"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white md:text-gray-400 md:hover:text-white transition-colors duration-200"

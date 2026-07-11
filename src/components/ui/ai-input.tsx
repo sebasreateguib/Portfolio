@@ -317,25 +317,25 @@ const LOCAL_QA = [
     },
     {
         keywords: ['fintrend', 'finanzas', 'analytics', 'athena', 'glue', 'aws'],
-        answer: "¡**FinTrendAI** es una joya! Sebastián diseñó una arquitectura de 5 microservicios en AWS usando Python, Java y Node.js. Lo más genial es su pipeline de datos: toma la ingesta de datos de máquinas virtuales, la procesa en S3 y Glue, y permite consultas veloces mediante Athena. El frontend lo montó con AWS Amplify y React para mostrar tableros en tiempo real con señales e indicadores impulsados por IA. ¡Un proyecto en la nube súper maduro! Puedes ver su código aquí: https://github.com/SReateguiUtec/FinTrendAI"
+        answer: "¡**FinTrendAI** es una joya! Sebastián diseñó una arquitectura de 5 microservicios en AWS usando Python, Java y Node.js. Lo más genial es su pipeline de datos: toma la ingesta de datos de máquinas virtuales, la procesa en S3 y Glue, y permite consultas veloces mediante Athena. El frontend lo montó con AWS Amplify y React para mostrar tableros en tiempo real con señales e indicadores impulsados por IA. ¡Un proyecto en la nube súper maduro! Puedes ver su código aquí: https://github.com/sebasreateguib/FinTrendAI"
     },
     {
         keywords: ['sparseexcel', 'sparse', 'matrix', 'matriz', 'excel', 'c++'],
-        answer: "¡**SparseExcel** es un proyectazo de algoritmia y bajo nivel! Sebastián lo programó en C++ desde cero para optimizar el uso de memoria en hojas de cálculo. Implementó celdas dinámicas seguras usando `std::variant`, soporte de evaluación de fórmulas matemáticas y lo conectó con una interfaz en React que visualiza en tiempo real las direcciones de memoria física de las celdas en un visor interactivo en 3D. ¡Es perfecto para entender cómo se estructuran los datos! Repo: https://github.com/SReateguiUtec/SparseExcel"
+        answer: "¡**SparseExcel** es un proyectazo de algoritmia y bajo nivel! Sebastián lo programó en C++ desde cero para optimizar el uso de memoria en hojas de cálculo. Implementó celdas dinámicas seguras usando `std::variant`, soporte de evaluación de fórmulas matemáticas y lo conectó con una interfaz en React que visualiza en tiempo real las direcciones de memoria física de las celdas en un visor interactivo en 3D. ¡Es perfecto para entender cómo se estructuran los datos! Repo: https://github.com/sebasreateguib/SparseExcel"
     },
     {
         keywords: ['applemusic', 'applemusictui', 'tui', 'musica', 'player', 'go'],
-        answer: "¡**AppleMusicTUI** es uno de sus proyectos más divertidos! Sebastián quería controlar su música de Apple Music sin salir de la terminal, así que construyó esta interfaz de terminal interactiva de teclado en Go para macOS. Tiene un look cyberpunk súper moderno, soporte para navegación rápida con teclado y animaciones glitch muy originales en la cabecera. ¡Es el tipo de herramientas que programas por el reto y terminas usando todos los días! Repo: https://github.com/SReateguiUtec/AppleMusicTUI"
+        answer: "¡**AppleMusicTUI** es uno de sus proyectos más divertidos! Sebastián quería controlar su música de Apple Music sin salir de la terminal, así que construyó esta interfaz de terminal interactiva de teclado en Go para macOS. Tiene un look cyberpunk súper moderno, soporte para navegación rápida con teclado y animaciones glitch muy originales en la cabecera. ¡Es el tipo de herramientas que programas por el reto y terminas usando todos los días! Repo: https://github.com/sebasreateguib/AppleMusicTUI"
     },
     {
         keywords: ['medigo', 'medicina', 'hospital', 'spring', 'boot', 'postgres'],
-        answer: "¡**MediGO** es un proyecto full-stack muy completo de gestión médica! Sebastián lo estructuró usando Spring Boot para un backend robusto y seguro, React en el frontend para una experiencia de usuario fluida y PostgreSQL como base de datos. Se preocupó muchísimo por las reglas de negocio reales de atención médica y la integridad de los datos. Repo: https://github.com/SReateguiUtec/MediGO-Repository"
+        answer: "¡**MediGO** es un proyecto full-stack muy completo de gestión médica! Sebastián lo estructuró usando Spring Boot para un backend robusto y seguro, React en el frontend para una experiencia de usuario fluida y PostgreSQL como base de datos. Se preocupó muchísimo por las reglas de negocio reales de atención médica y la integridad de los datos. Repo: https://github.com/sebasreateguib/MediGO-Repository"
     },
     {
         keywords: ['contacto', 'email', 'correo', 'github', 'escribir', 'redes', 'contact', 'mail'],
         answer: `¡Sebastián estará encantado de conversar contigo! Puedes contactarlo directamente a través de:\n\n` +
             `📧 Correo personal: reateguisebastian1@gmail.com\n` +
-            `🐙 GitHub: github.com/SReateguiUtec\n\n` +
+            `🐙 GitHub: github.com/sebasreateguib\n\n` +
             `Actualmente se encuentra buscando activamente prácticas pre-profesionales y nuevas oportunidades donde pueda aportar su fuerte base en programación de sistemas, backend y nube. ¡No dudes en escribirle!`
     },
     {
@@ -484,12 +484,12 @@ He is passionate about systems optimization and software engineering, and is act
                     : (language === "es"
                         ? `Puedes ponerte en contacto directo con Sebastián a través de:
 - 📧 **Correo personal**: reateguisebastian1@gmail.com
-- 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
+- 🐙 **GitHub**: [github.com/sebasreateguib](https://github.com/sebasreateguib)
 
 ¡Estará encantado de conversar contigo sobre oportunidades de prácticas pre-profesionales o proyectos interesantes!`
                         : `You can contact Sebastián directly via:
 - 📧 **Personal Email**: reateguisebastian1@gmail.com
-- 🐙 **GitHub**: [github.com/SReateguiUtec](https://github.com/SReateguiUtec)
+- 🐙 **GitHub**: [github.com/sebasreateguib](https://github.com/sebasreateguib)
 
 He is looking forward to discussing internship opportunities and interesting collaborations!`);
 

@@ -28,7 +28,7 @@ CS STUDENT @ UTEC
 
 💻 LANGUAGES & FRAMEWORKS
 • C++, Python, Go, Java, JavaScript, TypeScript
-• React.js, Next.js, Spring Boot, Flask, FastApi, Express.js
+• React.js, Vue.js, Next.js, Spring Boot, Flask, FastApi, Express.js
 
 ☁️ CLOUD & INFRASTRUCTURE
 • AWS (S3, Glue, Athena, Amplify, API Gateway, EC2)
@@ -46,7 +46,7 @@ ESTUDIANTE DE CC @ UTEC
 
 💻 LENGUAJES Y FRAMEWORKS
 • C++, Python, Java, Go, JavaScript, TypeScript
-• React.js, Next.js, Spring Boot, Flask, FastApi, Express.js
+• React.js, Vue.js, Next.js, Spring Boot, Flask, FastApi, Express.js
 
 ☁️ NUBE E INFRAESTRUCTURA
 • AWS (S3, Glue, Athena, Amplify, API Gateway, EC2)
@@ -72,12 +72,12 @@ export const PROJECTS_DATA = [
 Stack: Serverless Framework · Python · AWS (Lambda, SQS, DynamoDB, API Gateway WebSocket) · React · Groq Llama 3
 Challenge: Build a resilient system to process, classify, and prioritize massive patient clinical notes automatically.
 Solution: Designed a 100% Serverless, event-driven architecture using SQS decoupled queues. Built an automated pipeline that queries Llama 3 to extract symptoms and urgency. Integrated a realtime WebSocket dashboard for live updates.
-Repo: https://github.com/SReateguiUtec/Sanaflow`,
+Repo: https://github.com/sebasreateguib/Sanaflow`,
       es: `SANAFLOW:
 Stack: Serverless Framework · Python · AWS (Lambda, SQS, DynamoDB, API Gateway WebSocket) · React · Groq Llama 3
 Desafío: Construir un sistema resiliente para procesar, clasificar y priorizar notas clínicas masivamente.
 Solución: Diseñé una arquitectura orientada a eventos 100% Serverless con colas desacopladas (SQS). Implementé un pipeline que consulta a Llama 3 para extraer síntomas y urgencia, y un dashboard con WebSockets en tiempo real.
-Repo: https://github.com/SReateguiUtec/Sanaflow`
+Repo: https://github.com/sebasreateguib/Sanaflow`
     }
   },
   {
@@ -93,14 +93,14 @@ Challenge: Build a scalable financial analytics platform on cloud infrastructure
 Solution: Architected 5 microservices (Python, Java, Node.js) deployed on AWS.
 Integrated a full data pipeline: VM Ingesta → S3 → Glue → Athena → API Gateway.
 Frontend on AWS Amplify with real-time market dashboards and AI-driven signals.
-Repo: https://github.com/SReateguiUtec/FinTrendAI`,
+Repo: https://github.com/sebasreateguib/FinTrendAI`,
       es: `FINTRENDAI:
 Stack: Python · Java · Node.js · AWS · React.js · TypeScript
 Desafío: Construir una plataforma de analítica financiera escalable en infraestructura cloud.
 Solución: Arquitecturé 5 microservicios (Python, Java, Node.js) desplegados en AWS.
 Integré un pipeline de datos completo: VM Ingesta → S3 → Glue → Athena → API Gateway.
 Frontend en AWS Amplify con dashboards de mercado en tiempo real y señales impulsadas por IA.
-Repo: https://github.com/SReateguiUtec/FinTrendAI`
+Repo: https://github.com/sebasreateguib/FinTrendAI`
     }
   },
   {
@@ -115,13 +115,13 @@ Stack: Spring Boot · React.js · PostgreSQL
 Challenge: Build a production-ready healthcare management platform for a university course.
 Solution: Developed MediGO from scratch as a full-stack project, covering frontend,
 backend, and database layers with a focus on usability and real-world constraints.
-Repo: https://github.com/SReateguiUtec/MediGO-Repository`,
+Repo: https://github.com/sebasreateguib/MediGO-Repository`,
       es: `MEDIGO:
 Stack: Spring Boot · React.js · PostgreSQL
 Desafío: Construir una plataforma de gestión de salud lista para producción para un curso universitario.
 Solución: Desarrollé MediGO desde cero como un proyecto full-stack, cubriendo las capas de frontend,
 backend y base de datos con un enfoque en la usabilidad y restricciones del mundo real.
-Repo: https://github.com/SReateguiUtec/MediGO-Repository`
+Repo: https://github.com/sebasreateguib/MediGO-Repository`
     }
   },
   {
@@ -137,14 +137,14 @@ Challenge: Implement an efficient sparse matrix from scratch for Algorithms & Da
 Solution: Built a full sparse matrix engine in C++ using std::variant for type-safe cell values,
 with support for formulas, memory-efficient node storage, and a visual GUI frontend
 to inspect the matrix state, memory addresses, and 3D structure in real time.
-Repo: https://github.com/SReateguiUtec/SparseExcel`,
+Repo: https://github.com/sebasreateguib/SparseExcel`,
       es: `SPARSEEXCEL:
 Stack: C++ · React.js
 Desafío: Implementar una matriz dispersa eficiente desde cero para Algoritmos y Estructuras de Datos.
 Solución: Construí un motor completo de matriz dispersa en C++ usando std::variant para valores de celda seguros,
 con soporte para formulas, almacenamiento de nodos eficiente en memoria y un frontend visual GUI
 para inspeccionar el estado de la matriz, direcciones de memoria y la estructura 3D en tiempo real.
-Repo: https://github.com/SReateguiUtec/SparseExcel`
+Repo: https://github.com/sebasreateguib/SparseExcel`
     }
   },
   {
@@ -160,28 +160,28 @@ Challenge: Control Apple Music from the command line with a keyboard-driven inte
 Solution: Built a sleek TUI in Go that interfaces with the Apple Music library on macOS.
 Features full keyboard navigation, a glitch-animated header, and a red-themed aesthetic.
 The kind of tool you build because you can — and then actually use every day.
-Repo: https://github.com/SReateguiUtec/AppleMusicTUI`,
+Repo: https://github.com/sebasreateguib/AppleMusicTUI`,
       es: `APPLEMUSICTUI:
 Stack: Go · macOS · Terminal UI
 Desafío: Controlar Apple Music desde la línea de comandos con una interfaz guiada por teclado.
 Solución: Construí una elegante TUI en Go que se conecta con la biblioteca de Apple Music en macOS.
 Cuenta con navegación completa por teclado, un encabezado animado con glitch y una estética temática roja.
 El tipo de herramienta que construyes porque puedes, y luego terminas usando todos los días.
-Repo: https://github.com/SReateguiUtec/AppleMusicTUI`
+Repo: https://github.com/sebasreateguib/AppleMusicTUI`
     }
   }
 ];
 
 export const CONTACT_INFO = {
   email: 'reateguisebastian1@gmail.com',
-  github: 'github.com/SReateguiUtec',
+  github: 'github.com/sebasreateguib',
   status: {
     en: 'Open to internships & new opportunities',
     es: 'Abierto a pasantías y nuevas oportunidades'
   }
 };
 
-export const RESUME_URL = 'https://github.com/SReateguiUtec';
+export const RESUME_URL = 'https://github.com/sebasreateguib';
 
 export const PERSONAL_EXTRA = {
   en: `

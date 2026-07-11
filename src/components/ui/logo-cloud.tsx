@@ -31,6 +31,7 @@ const defaultLogos: Logo[] = [
     { name: 'JavaScript', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
     { name: 'TypeScript', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
     { name: 'React', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+    { name: 'Vue.js', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg' },
     { name: 'Next.js', image: 'https://cdn.simpleicons.org/nextdotjs/white' },
     { name: 'Node.js', image: '/Node.svg' },
     { name: 'Spring Boot', image: '/spring-boot.svg' },

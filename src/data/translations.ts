@@ -40,7 +40,7 @@ export const translations = {
           title: "SanaFlow",
           description: "Intelligent Medical Triage Platform. Designed a 100% Serverless, event-driven architecture using AWS (Lambda, SQS, DynamoDB). Engineered an automated data pipeline that processes massive clinical notes in real-time, leveraging Llama 3 via Groq API for extraction and urgency prioritization.",
           tech: ["React.js", "Serverless", "Python", "AWS", "Groq", "WebSockets"],
-          github: "https://github.com/SReateguiUtec/Sanaflow",
+          github: "https://github.com/sebasreateguib/Sanaflow",
           live: "https://main.d3lsjzv5me8n6j.amplifyapp.com/",
           image: "/sanaflow-compressed.mp4",
           year: "2026"
@@ -50,7 +50,7 @@ export const translations = {
           title: "FinTrend AI",
           description: "Cloud-Native Financial Data Pipeline & Analytics developed with a microservices architecture. Designed and built an end-to-end serverless data pipeline using AWS Glue to automate ETL workflows and structured analytical querying.",
           tech: ["AWS Glue", "Athena", "S3", "Flask", "Spring Boot", "Express.js", "React.js", "MongoDB", "Postgres", "MySQL"],
-          github: "https://github.com/SReateguiUtec/FinTrendAI",
+          github: "https://github.com/sebasreateguib/FinTrendAI",
           live: "#",
           image: "/fintrend-compressed.mp4",
           year: "2026"
@@ -60,7 +60,7 @@ export const translations = {
           title: "MediGO",
           description: "Full-Stack Telemedicine Platform. Architected a secure REST API with JWT authentication. Developed a responsive SPA using React 19, integrated real-time video via Whereby SDK, Stripe sandbox payments, an AI chatbot powered by Gemini, and real-time WebSocket chat between patients and doctors.",
           tech: ["Spring Boot", "Postgres", "React.js", "TypeScript", "Whereby", "Stripe", "Gemini", "WebSockets"],
-          github: "https://github.com/SReateguiUtec/MediGO-Repository",
+          github: "https://github.com/sebasreateguib/MediGO-Repository",
           live: "#",
           image: "/medigo-compressed.mp4",
           year: "2025"
@@ -70,7 +70,7 @@ export const translations = {
           title: "SparseExcel",
           description: "Memory-Optimized Spreadsheet Engine. Implemented a memory-efficient backend in C++ leveraging custom Sparse Matrix representations, paired with a frontend featuring dual 2D and 3D data visualization.",
           tech: ["C++", "Javascript", "React.js", "Data Structures"],
-          github: "https://github.com/SReateguiUtec/SparseExcel",
+          github: "https://github.com/sebasreateguib/SparseExcel",
           live: "#",
           image: "/sparse-compressed.mp4",
           year: "2026"
@@ -182,7 +182,7 @@ export const translations = {
           title: "SanaFlow",
           description: "Plataforma de Triaje Médico Inteligente. Arquitectura 100% Serverless orientada a eventos usando AWS (Lambda, SQS, DynamoDB). Diseñé un pipeline automático que procesa notas clínicas masivamente en tiempo real usando Llama 3 (vía Groq) para extraer síntomas y priorizar la urgencia médica.",
           tech: ["React.js", "Serverless", "Python", "AWS", "Groq", "WebSockets"],
-          github: "https://github.com/SReateguiUtec/Sanaflow",
+          github: "https://github.com/sebasreateguib/Sanaflow",
           live: "https://main.d3lsjzv5me8n6j.amplifyapp.com/",
           image: "/sanaflow-compressed.mp4",
           year: "2026"
@@ -192,7 +192,7 @@ export const translations = {
           title: "FinTrend AI",
           description: "Analítica Financiera Nube-Nativa desarrollada con una arquitectura de microservicios. Diseñé y construí un pipeline de datos serverless usando AWS Glue para automatizar flujos ETL y consultas analíticas estructuradas.",
           tech: ["AWS Glue", "Athena", "S3", "Flask", "Spring Boot", "Express.js", "React.js", "MongoDB", "Postgres", "MySQL"],
-          github: "https://github.com/SReateguiUtec/FinTrendAI",
+          github: "https://github.com/sebasreateguib/FinTrendAI",
           live: "#",
           image: "/fintrend-compressed.mp4",
           year: "2026"
@@ -202,7 +202,7 @@ export const translations = {
           title: "MediGO",
           description: "Plataforma Full-Stack de Telemedicina. Diseñé una API REST segura con autenticación JWT. Desarrollé la SPA usando React 19, integrando consultas por video vía Whereby SDK, pagos en modo sandbox con Stripe, un chatbot con Gemini y chat en tiempo real con WebSockets entre pacientes y médicos.",
           tech: ["Spring Boot", "Postgres", "React.js", "TypeScript", "Whereby", "Stripe", "Gemini", "WebSockets"],
-          github: "https://github.com/SReateguiUtec/MediGO-Repository",
+          github: "https://github.com/sebasreateguib/MediGO-Repository",
           live: "#",
           image: "/medigo-compressed.mp4",
           year: "2025"
@@ -212,7 +212,7 @@ export const translations = {
           title: "SparseExcel",
           description: "Motor de Hoja de Cálculo Optimizado en Memoria. Implementé un backend eficiente en C++ utilizando representaciones personalizadas de Matrices Dispersas, junto a un frontend con visualización de datos dual en 2D y 3D.",
           tech: ["C++", "Javascript", "React.js", "Estructuras de Datos"],
-          github: "https://github.com/SReateguiUtec/SparseExcel",
+          github: "https://github.com/sebasreateguib/SparseExcel",
           live: "#",
           image: "/sparse-compressed.mp4",
           year: "2026"
