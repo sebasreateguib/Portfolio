@@ -310,7 +310,9 @@ const LOCAL_QA = [
         keywords: ['proyectos', 'projects', 'portafolio', 'creaciones', 'repositorios', 'github', 'trabajos'],
         answer: `¡Sebastián ha desarrollado proyectos muy retadores y de alto nivel técnico! Aquí te presento sus favoritos:\n\n` +
             `⭐ **FinTrendAI**: Una plataforma de analítica financiera en la nube usando microservicios en AWS (Python, Java, Node.js) y flujos ETL modernos.\n` +
+            `⭐ **Plataforma de Pedidos Mr Sushi**: Un backend serverless y orientado a eventos en AWS (Lambda, Step Functions, EventBridge) para gestionar una plataforma de restaurante.\n` +
             `⭐ **SparseExcel**: Un motor de matriz dispersa de alto rendimiento escrito en C++ con interfaz interactiva en React que permite inspeccionar la memoria física en 3D.\n` +
+            `⭐ **QuadTree**: Un motor físico de colisiones 2D de alto rendimiento en C++ con visualización en tiempo real usando Vue.js y SSE.\n` +
             `⭐ **AppleMusicTUI**: Un reproductor y controlador de música súper original para la terminal de macOS programado en Go.\n` +
             `⭐ **MediGO**: Una plataforma web médica integral construida de punta a punta con Spring Boot, React.js y PostgreSQL.\n\n` +
             `¿Te gustaría que te cuente más sobre el backend o la arquitectura de alguno de ellos?`
@@ -320,8 +322,16 @@ const LOCAL_QA = [
         answer: "¡**FinTrendAI** es una joya! Sebastián diseñó una arquitectura de 5 microservicios en AWS usando Python, Java y Node.js. Lo más genial es su pipeline de datos: toma la ingesta de datos de máquinas virtuales, la procesa en S3 y Glue, y permite consultas veloces mediante Athena. El frontend lo montó con AWS Amplify y React para mostrar tableros en tiempo real con señales e indicadores impulsados por IA. ¡Un proyecto en la nube súper maduro! Puedes ver su código aquí: https://github.com/sebasreateguib/FinTrendAI"
     },
     {
+        keywords: ['mrsushi', 'sushi', 'serverless', 'eventbridge', 'step functions', 'restaurant'],
+        answer: "¡La **Plataforma de Pedidos Mr Sushi** es un gran ejemplo de arquitectura orientada a eventos! Sebastián construyó este backend 100% serverless usando Node.js, AWS Lambda, API Gateway y DynamoDB. Lo más interesante es que orquestó el flujo de vida de los pedidos usando AWS Step Functions con el patrón Wait for Callback y desacopló los servicios usando EventBridge. ¡Es un sistema súper escalable! Repo: https://github.com/sebasreateguib/MrSushiClone"
+    },
+    {
         keywords: ['sparseexcel', 'sparse', 'matrix', 'matriz', 'excel', 'c++'],
         answer: "¡**SparseExcel** es un proyectazo de algoritmia y bajo nivel! Sebastián lo programó en C++ desde cero para optimizar el uso de memoria en hojas de cálculo. Implementó celdas dinámicas seguras usando `std::variant`, soporte de evaluación de fórmulas matemáticas y lo conectó con una interfaz en React que visualiza en tiempo real las direcciones de memoria física de las celdas en un visor interactivo en 3D. ¡Es perfecto para entender cómo se estructuran los datos! Repo: https://github.com/sebasreateguib/SparseExcel"
+    },
+    {
+        keywords: ['quadtree', 'colisiones', 'physics', 'fisica', 'vue'],
+        answer: "¡**QuadTree** es un excelente ejemplo de optimización de algoritmos! Sebastián implementó un árbol cuaternario (QuadTree) desde cero en C++ para simular colisiones de partículas en 2D, reduciendo la complejidad de O(N²) a O(log N). Además, conectó el backend en C++ con un dashboard interactivo en Vue.js usando Server-Sent Events (SSE) para enviar la simulación en tiempo real. Repo: https://github.com/sebasreateguib/QuadTreeParticleSimulator"
     },
     {
         keywords: ['applemusic', 'applemusictui', 'tui', 'musica', 'player', 'go'],
@@ -471,13 +481,17 @@ Is there any technology you are particularly interested in?`)
                     ? (language === "es"
                         ? `Sebastián es estudiante de Ciencia de la Computación en UTEC (Perú) con experiencia práctica en el desarrollo de aplicaciones web full-stack, pipelines de datos en la nube y optimización de sistemas:
 - **FinTrendAI**: Un pipeline de datos financieros en AWS usando microservicios serverless, Glue ETL y consultas con Athena.
+- **Plataforma de Pedidos Mr Sushi**: Un backend serverless orientado a eventos para restaurantes usando AWS Lambda, Step Functions y EventBridge.
 - **SparseExcel**: Un motor de hoja de cálculo de alto rendimiento escrito en C++ con un visualizador interactivo en 3D de memoria física.
+- **QuadTree**: Un motor físico de colisiones en C++ con streaming en tiempo real (SSE) hacia un cliente web en Vue.js.
 - **MediGO**: Una plataforma de telemedicina full-stack desarrollada con Spring Boot y React.
 
 Le apasiona la optimización de sistemas y la ingeniería de software, y busca activamente prácticas pre-profesionales.`
                         : `Sebastián is a Computer Science student at UTEC (Peru) with hands-on experience building full-stack web applications, cloud-native data pipelines, and optimized systems:
 - **FinTrendAI**: An AWS-based financial data pipeline using serverless microservices, Glue ETL, and Athena querying.
+- **Mr Sushi Order Platform**: A serverless event-driven backend for restaurants using AWS Lambda, Step Functions, and EventBridge.
 - **SparseExcel**: A high-performance spreadsheet engine written in C++ with an interactive 3D physical memory visualizer.
+- **QuadTree**: A C++ physics engine for 2D collisions streaming in real-time (via SSE) to a Vue.js web client.
 - **MediGO**: A full-stack telemedicine platform utilizing Spring Boot and React.
 
 He is passionate about systems optimization and software engineering, and is actively seeking pre-professional internships.`)

@@ -41,6 +41,16 @@ const projectDetails = {
                 role: 'Core Serverless Engineer',
                 signals: ['Event-driven architecture', 'SQS decoupled queues', 'Llama 3 AI extraction'],
             },
+            5: {
+                category: 'Restaurant Platform',
+                role: 'Backend Serverless Engineer',
+                signals: ['Event-driven architecture', 'AWS Step Functions', 'Wait for Callback pattern'],
+            },
+            6: {
+                category: 'Algorithms / Physics Engine',
+                role: 'C++ Systems Programmer',
+                signals: ['QuadTree algorithm', 'Server-Sent Events (SSE)', 'Vue.js interactive canvas'],
+            },
         },
     },
     es: {
@@ -73,6 +83,16 @@ const projectDetails = {
                 category: 'Triaje Médico Inteligente',
                 role: 'Core Serverless Engineer',
                 signals: ['Arquitectura orientada a eventos', 'Colas desacopladas (SQS)', 'Extracción IA con Llama 3'],
+            },
+            5: {
+                category: 'Plataforma de Restaurante',
+                role: 'Backend Serverless Engineer',
+                signals: ['Arquitectura orientada a eventos', 'AWS Step Functions', 'Patrón Wait for Callback'],
+            },
+            6: {
+                category: 'Algoritmos / Motor Físico',
+                role: 'C++ Systems Programmer',
+                signals: ['Algoritmo QuadTree', 'Server-Sent Events (SSE)', 'Canvas interactivo Vue.js'],
             },
         },
     },

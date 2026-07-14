@@ -104,6 +104,25 @@ Repo: https://github.com/sebasreateguib/FinTrendAI`
     }
   },
   {
+    id: 'project-mrsushi.txt',
+    name: {
+      en: 'Mr Sushi Order Platform – Serverless EDA Backend',
+      es: 'Plataforma de Pedidos Mr Sushi – Backend Serverless EDA'
+    },
+    content: {
+      en: `MR SUSHI ORDER PLATFORM:
+Stack: Node.js · Serverless Framework · AWS (Lambda, API Gateway, DynamoDB, Step Functions, EventBridge)
+Challenge: Build a scalable, event-driven restaurant order management system.
+Solution: Designed a 100% Serverless architecture with decoupled microservices using EventBridge. Managed complex order lifecycles (Kitchen ➔ Packing ➔ Delivery) using AWS Step Functions with the Wait for Callback (Task Token) pattern. Implemented custom JWT security for both clients and workers.
+Repo: https://github.com/sebasreateguib/MrSushiClone`,
+      es: `PLATAFORMA DE PEDIDOS MR SUSHI:
+Stack: Node.js · Serverless Framework · AWS (Lambda, API Gateway, DynamoDB, Step Functions, EventBridge)
+Desafío: Construir un sistema escalable y orientado a eventos para la gestión de pedidos de un restaurante.
+Solución: Diseñé una arquitectura 100% Serverless con microservicios desacoplados mediante EventBridge. Orquesté flujos de vida de pedidos (Cocina ➔ Empaque ➔ Entrega) usando AWS Step Functions con el patrón Wait for Callback (Task Token). Implementé seguridad JWT a medida para clientes y trabajadores.
+Repo: https://github.com/sebasreateguib/MrSushiClone`
+    }
+  },
+  {
     id: 'project-medigo.txt',
     name: {
       en: 'MediGO – Healthcare Platform (CS 2031 @ UTEC)',
@@ -145,6 +164,25 @@ Solución: Construí un motor completo de matriz dispersa en C++ usando std::var
 con soporte para formulas, almacenamiento de nodos eficiente en memoria y un frontend visual GUI
 para inspeccionar el estado de la matriz, direcciones de memoria y la estructura 3D en tiempo real.
 Repo: https://github.com/sebasreateguib/SparseExcel`
+    }
+  },
+  {
+    id: 'project-quadtree.txt',
+    name: {
+      en: 'QuadTree Simulation – 2D Collision Physics Engine',
+      es: 'QuadTree Simulation – Motor Físico de Colisiones 2D'
+    },
+    content: {
+      en: `QUADTREE SIMULATION:
+Stack: C++ · Vue.js · Tailwind CSS
+Challenge: Optimize 2D particle collision detection beyond naive O(N²) brute force.
+Solution: Built a physics engine in C++ implementing a QuadTree spatial partitioning algorithm. Connected the high-performance backend to a Vue.js web client using Server-Sent Events (SSE) to stream physics computations at ~30 FPS for real-time visualization and performance comparison.
+Repo: https://github.com/sebasreateguib/QuadTreeParticleSimulator`,
+      es: `QUADTREE SIMULATION:
+Stack: C++ · Vue.js · Tailwind CSS
+Desafío: Optimizar la detección de colisiones 2D más allá de la fuerza bruta O(N²).
+Solución: Construí un motor físico en C++ implementando el algoritmo QuadTree de partición espacial. Conecté el backend de alto rendimiento a un cliente web en Vue.js usando Server-Sent Events (SSE) para enviar la simulación física a ~30 FPS para visualización en tiempo real y comparación empírica.
+Repo: https://github.com/sebasreateguib/QuadTreeParticleSimulator`
     }
   },
   {

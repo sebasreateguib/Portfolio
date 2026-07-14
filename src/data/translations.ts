@@ -56,6 +56,16 @@ export const translations = {
           year: "2026"
         },
         {
+          id: 5,
+          title: "Mr Sushi Order Platform",
+          description: "Modern Serverless and Event-Driven architecture backend for a restaurant platform. Built with Serverless Framework utilizing AWS Lambda, API Gateway, DynamoDB, Step Functions (Wait for Callback pattern) and EventBridge.",
+          tech: ["Serverless", "AWS Lambda", "DynamoDB", "Step Functions", "EventBridge"],
+          github: "https://github.com/sebasreateguib/MrSushiClone",
+          live: "#",
+          image: "/mrsushi-compressed.mp4",
+          year: "2026"
+        },
+        {
           id: 2,
           title: "MediGO",
           description: "Full-Stack Telemedicine Platform. Architected a secure REST API with JWT authentication. Developed a responsive SPA using React 19, integrated real-time video via Whereby SDK, Stripe sandbox payments, an AI chatbot powered by Gemini, and real-time WebSocket chat between patients and doctors.",
@@ -74,6 +84,16 @@ export const translations = {
           live: "#",
           image: "/sparse-compressed.mp4",
           year: "2026"
+        },
+        {
+          id: 6,
+          title: "QuadTree Simulation",
+          description: "High-performance 2D particle collision engine. Implemented a custom QuadTree in C++ for O(log N) neighbor detection. Used Server-Sent Events (SSE) to stream physics computations in real-time to a Vue.js web dashboard.",
+          tech: ["C++", "Vue.js", "Tailwind CSS", "Data Structures", "Algorithms"],
+          github: "https://github.com/sebasreateguib/QuadTreeParticleSimulator",
+          live: "#",
+          image: "/quadtree-compressed.jpg",
+          year: "2026"
         }
       ]
     },
@@ -83,6 +103,8 @@ export const translations = {
       utec: "Universidad de Ingeniería y Tecnología - UTEC",
       degree: "Bachelor of Science in Computer Science",
       award: "Tim Berners Lee Contest Finalist - CS2031 Platform-Based Development",
+      hackathonTitle: "Cloud Computing Hackathon Participant",
+      hackathonDesc: "Developed SanaFlow, a scalable cloud solution using serverless technologies, during an intensive 24-hour hackathon.",
       inProgress: "IN_PROGRESS"
     },
     skills: {
@@ -198,6 +220,16 @@ export const translations = {
           year: "2026"
         },
         {
+          id: 5,
+          title: "Plataforma de Pedidos Mr Sushi",
+          description: "Backend Serverless y Orientado a Eventos (EDA) moderno y robusto para una plataforma de restaurante. Construido con Serverless Framework utilizando AWS Lambda, API Gateway, DynamoDB, Step Functions y EventBridge.",
+          tech: ["Serverless", "AWS Lambda", "DynamoDB", "Step Functions", "EventBridge"],
+          github: "https://github.com/sebasreateguib/MrSushiClone",
+          live: "#",
+          image: "/mrsushi-compressed.mp4",
+          year: "2026"
+        },
+        {
           id: 2,
           title: "MediGO",
           description: "Plataforma Full-Stack de Telemedicina. Diseñé una API REST segura con autenticación JWT. Desarrollé la SPA usando React 19, integrando consultas por video vía Whereby SDK, pagos en modo sandbox con Stripe, un chatbot con Gemini y chat en tiempo real con WebSockets entre pacientes y médicos.",
@@ -210,11 +242,21 @@ export const translations = {
         {
           id: 3,
           title: "SparseExcel",
-          description: "Motor de Hoja de Cálculo Optimizado en Memoria. Implementé un backend eficiente en C++ utilizando representaciones personalizadas de Matrices Dispersas, junto a un frontend con visualización de datos dual en 2D y 3D.",
+          description: "Motor de Hoja de Cálculo Optimizado en Memoria. Implementé un backend eficiente en C++ aprovechando representaciones personalizadas de Matrices Dispersas, junto a un frontend con visualización dual 2D y 3D.",
           tech: ["C++", "Javascript", "React.js", "Estructuras de Datos"],
           github: "https://github.com/sebasreateguib/SparseExcel",
           live: "#",
           image: "/sparse-compressed.mp4",
+          year: "2026"
+        },
+        {
+          id: 6,
+          title: "QuadTree Simulation",
+          description: "Motor físico de colisiones 2D de alto rendimiento. Implementé un QuadTree en C++ para detección de vecinos en O(log N). Utiliza Server-Sent Events (SSE) para enviar la simulación física en tiempo real a un dashboard interactivo en Vue.js.",
+          tech: ["C++", "Vue.js", "Tailwind CSS", "Estructuras de Datos", "Algoritmos"],
+          github: "https://github.com/sebasreateguib/QuadTreeParticleSimulator",
+          live: "#",
+          image: "/quadtree-compressed.jpg",
           year: "2026"
         }
       ]
@@ -223,8 +265,10 @@ export const translations = {
       title: "Educación",
       background: "Historial_Académico",
       utec: "Universidad de Ingeniería y Tecnología - UTEC",
-      degree: "Bachiller en Ciencia de la Computación",
+      degree: "Bachiller en Ciencias de la Computación",
       award: "Finalista Concurso Tim Berners Lee - CS2031 Desarrollo Basado en Plataformas",
+      hackathonTitle: "Participante de Hackathon de Cloud Computing",
+      hackathonDesc: "Desarrollé SanaFlow, una solución cloud escalable usando tecnologías serverless, durante un hackathon intensivo de 24 horas.",
       inProgress: "EN_CURSO"
     },
     skills: {

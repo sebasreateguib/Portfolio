@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Image from 'next/image';
-import { Award } from 'lucide-react';
+import { Award, Cloud } from 'lucide-react';
 import { CpuIcon } from '../cpu';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
@@ -71,9 +71,18 @@ export default function EducationSection() {
                                     <span className="font-mono text-white/40">2024 - 2029</span>
                                 </div>
 
-                                <div className="text-teal-400/80 font-medium text-xs md:text-sm flex items-center gap-2 pl-9">
-                                    <Award className="w-4 h-4" />
-                                    <span>{t.education.award}</span>
+                                <div className="text-teal-400/80 font-medium text-xs md:text-sm flex flex-col gap-2 pl-9 mt-3">
+                                    <div className="flex items-start gap-2">
+                                        <Award className="w-4 h-4 shrink-0 mt-0.5" />
+                                        <span>{t.education.award}</span>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                        <Cloud className="w-4 h-4 shrink-0 mt-0.5" />
+                                        <div className="flex flex-col gap-0.5">
+                                            <span>{t.education.hackathonTitle}</span>
+                                            <span className="text-[10.5px] leading-tight md:text-xs text-white/60 font-normal">{t.education.hackathonDesc}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
