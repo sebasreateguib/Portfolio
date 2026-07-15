@@ -29,10 +29,10 @@ export default function ClippedVideoTab() {
             icon: Cloud,
             label: "Cloud-Native Infrastructure",
             title: "Cloud-Native Infrastructure",
-            description: language === "es" 
+            description: language === "es"
                 ? "Diseño e implementación de sistemas escalables y resilientes en la nube. Orientado a eventos, sin preocuparse por la infraestructura subyacente y optimizando costos."
                 : "Design and implementation of scalable and resilient cloud systems. Event-driven approach, zero infrastructure management, and cost optimization.",
-            video: "/cloud-compressed.mp4",
+            video: "/cloud2.jpg",
             card: {
                 heading: "CLOUD-NATIVE",
                 badge: "AWS",
@@ -327,7 +327,7 @@ export default function ClippedVideoTab() {
                                     ))}
 
                                 </div>
-                                
+
                                 {/* CATEGORY BADGE */}
                                 <div className="mt-5 flex items-center justify-start gap-2">
                                     <span className="text-[11px] bg-blue-900/30 text-blue-400 px-2 py-1 rounded-md font-mono tracking-wide">
