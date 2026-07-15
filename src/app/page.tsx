@@ -124,17 +124,18 @@ export default function Home() {
             <GithubIntro />
           </ScrollReveal>
           <ScrollReveal>
-            <ProjectsSection />
-          </ScrollReveal>
-          <ScrollReveal>
             <ClippedVideoTab />
           </ScrollReveal>
           <ScrollReveal>
-            <EducationSection />
+            <ProjectsSection />
           </ScrollReveal>
 
           <ScrollReveal id="Skills">
             <LogoCloudMarquee />
+          </ScrollReveal>
+
+          <ScrollReveal>
+            <EducationSection />
           </ScrollReveal>
 
           <ScrollReveal>
