@@ -32,9 +32,9 @@ export default function EducationSection() {
                 </div>
 
 
-                <div className="max-w-[95%] mx-auto flex flex-col lg:flex-row items-center gap-4 lg:gap-16 pt-0 md:pt-8">
+                <div className="max-w-[95%] mx-auto flex flex-col items-center gap-8 md:gap-16 pt-0 md:pt-8">
                     {/* Education Info (Inspired) */}
-                    <div className="flex-[2] w-full">
+                    <div className="w-full">
                         <div className="group flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative px-6 md:px-8 py-6 rounded-2xl hover:bg-white/[0.02] overflow-hidden transition-all duration-500 border border-transparent hover:border-white/5">
 
                             {/* Cinematic Background Image (Idea 1) */}
@@ -43,7 +43,7 @@ export default function EducationSection() {
                                     src="/utec.jpg"
                                     alt="UTEC Campus"
                                     fill
-                                    sizes="768px"
+                                    sizes="100vw"
                                     loading="lazy"
                                     className="object-cover grayscale opacity-30 scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out mix-blend-luminosity"
                                 />
@@ -93,8 +93,8 @@ export default function EducationSection() {
                         </div>
                     </div>
 
-                    {/* UTEC Glitch ASCII - Side by Side */}
-                    <div className="flex-[0.6] w-full flex justify-center lg:mt-0 overflow-hidden">
+                    {/* UTEC Glitch ASCII - Below */}
+                    <div className="w-full flex justify-center overflow-hidden">
                         <div
                             className="relative group/glitch cursor-pointer transition-transform hover:scale-105 flex justify-center"
                             onClick={() => setCameraView(prev => prev === 1 ? 2 : 1)}
