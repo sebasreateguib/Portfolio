@@ -127,16 +127,16 @@ export default function Home() {
             <ProjectsSection />
           </ScrollReveal>
 
-          <ScrollReveal id="Skills">
-            <LogoCloudMarquee />
+          <ScrollReveal>
+            <EducationSection />
           </ScrollReveal>
 
           <ScrollReveal>
             <ClippedVideoTab />
           </ScrollReveal>
 
-          <ScrollReveal>
-            <EducationSection />
+          <ScrollReveal id="Skills">
+            <LogoCloudMarquee />
           </ScrollReveal>
 
           <ScrollReveal>
