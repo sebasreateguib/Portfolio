@@ -19,6 +19,7 @@ import { SectionTitle } from "./section-title";
 import { SectionDivider } from "./section-divider";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../data/translations";
+import { ViewportVideo } from "./viewport-video";
 
 export default function ClippedVideoTab() {
     const { language } = useLanguage();
@@ -39,7 +40,7 @@ export default function ClippedVideoTab() {
                 goal: "RESILIENCY & SCALE",
                 tasks: [
                     { title: "Event-Driven", meta: "Practice", status: "completed" },
-                    { title: "Microservicios", meta: "Practice", status: "completed" },
+                    { title: "Microservices", meta: "Practice", status: "completed" },
                     { title: "Infra as Code", meta: "Practice", status: "completed" },
                     { title: "Serverless Framework", meta: "Practice", status: "completed" },
                 ],
@@ -113,9 +114,9 @@ export default function ClippedVideoTab() {
             {/* TOP HEADER */}
             <div className="max-w-7xl mx-auto px-6 mb-12">
                 <div className="mb-4">
-                    <SectionTitle index="04">{language === "es" ? "Filosofía de Trabajo" : "Work Philosophy"}</SectionTitle>
+                    <SectionTitle index="02">{language === "es" ? "Filosofía de Trabajo" : "Work Philosophy"}</SectionTitle>
                 </div>
-                <SectionDivider label={language === "es" ? "Conceptos_Core" : "Core_Concepts"} index="04" />
+                <SectionDivider label={language === "es" ? "Conceptos_Core" : "Core_Concepts"} index="02" />
             </div>
 
             {/* IMAGE AREA */}
@@ -199,24 +200,26 @@ export default function ClippedVideoTab() {
                 </div>
 
                 {/* VIDEO CONTAINER */}
-                <div className="relative overflow-hidden h-[560px] lg:h-[690px] custom-clip shadow-2xl">
+                <div className="relative overflow-hidden h-[560px] lg:h-[540px] lg:max-w-5xl lg:mx-auto custom-clip shadow-2xl">
 
                     {/* VIDEO */}
                     <AnimatePresence mode="wait">
 
                         {activeItem.video.match(/\.(mp4|webm)$/i) ? (
-                            <motion.video
+                            <motion.div
                                 key={activeItem.video}
-                                src={activeItem.video}
-                                autoPlay
-                                muted
-                                loop
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.45 }}
-                                className="absolute inset-0 w-full h-full object-cover"
-                            />
+                                className="absolute inset-0 w-full h-full"
+                            >
+                                <ViewportVideo
+                                    src={activeItem.video}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                    wrapperClassName="absolute inset-0 w-full h-full"
+                                />
+                            </motion.div>
                         ) : (
                             <motion.img
                                 key={activeItem.video}
@@ -246,14 +249,14 @@ export default function ClippedVideoTab() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 14 }}
                                 transition={{ duration: 0.35 }}
-                                className="w-[calc(100%-2.5rem)] sm:w-[320px] rounded-[26px] border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-5"
+                                className="w-[calc(100%-3rem)] max-w-[280px] sm:max-w-none sm:w-[320px] rounded-[22px] sm:rounded-[26px] border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-4 sm:p-5"
                             >
 
                                 {/* HEADER */}
                                 <div className="flex items-center justify-between">
 
-                                    <h3 className="text-[18px] font-semibold text-white flex items-center gap-2">
-                                        <activeItem.icon className="w-5 h-5 text-blue-400" />
+                                    <h3 className="text-[16px] sm:text-[18px] font-semibold text-white flex items-center gap-2">
+                                        <activeItem.icon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                                         {activeItem.card.heading}
                                     </h3>
 
@@ -264,20 +267,20 @@ export default function ClippedVideoTab() {
                                 </div>
 
                                 {/* GOAL */}
-                                <div className="mt-4 border border-zinc-800 rounded-xl p-3">
+                                <div className="mt-3 sm:mt-4 border border-zinc-800 rounded-xl p-2.5 sm:p-3">
 
-                                    <p className="text-[11px] text-zinc-400">
+                                    <p className="text-[10px] sm:text-[11px] text-zinc-400">
                                         {language === "es" ? "Descripción" : "Description"}
                                     </p>
 
-                                    <p className="text-[13px] leading-[20px] mt-1 text-white">
+                                    <p className="text-[12px] sm:text-[13px] leading-[18px] sm:leading-[20px] mt-1 text-white">
                                         {activeItem.description}
                                     </p>
 
                                 </div>
 
                                 {/* TASKS */}
-                                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-3">
+                                <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2 sm:gap-y-3">
 
                                     {activeItem.card.tasks.map((task, index) => (
                                         <div
@@ -289,15 +292,15 @@ export default function ClippedVideoTab() {
                                             <div className="mt-[2px]">
 
                                                 {task.status === "completed" && (
-                                                    <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                                                    <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                                                 )}
 
                                                 {task.status === "progress" && (
-                                                    <LoaderCircle className="w-4 h-4 text-blue-400" />
+                                                    <LoaderCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                                                 )}
 
                                                 {task.status === "pending" && (
-                                                    <Circle className="w-4 h-4 text-zinc-600" />
+                                                    <Circle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-600" />
                                                 )}
 
                                             </div>
@@ -307,7 +310,7 @@ export default function ClippedVideoTab() {
 
                                                 <p
                                                     className={`
-                            text-[13px]
+                            text-[12px] sm:text-[13px]
                             ${task.status === "completed"
                                                             ? "text-zinc-200 font-medium"
                                                             : task.status === "progress"
@@ -329,8 +332,8 @@ export default function ClippedVideoTab() {
                                 </div>
 
                                 {/* CATEGORY BADGE */}
-                                <div className="mt-5 flex items-center justify-start gap-2">
-                                    <span className="text-[11px] bg-blue-900/30 text-blue-400 px-2 py-1 rounded-md font-mono tracking-wide">
+                                <div className="mt-3 sm:mt-5 flex items-center justify-start gap-2">
+                                    <span className="text-[10px] sm:text-[11px] bg-blue-900/30 text-blue-400 px-2 py-1 rounded-md font-mono tracking-wide">
                                         {activeItem.card.badge}
                                     </span>
                                 </div>
