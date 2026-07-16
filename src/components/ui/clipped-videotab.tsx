@@ -27,62 +27,62 @@ export default function ClippedVideoTab() {
 
     const items = [
         {
-            icon: Cloud,
-            label: "Cloud-Native Infrastructure",
-            title: "Cloud-Native Infrastructure",
+            icon: Bot,
+            label: language === "es" ? "Mi Enfoque" : "My Approach",
+            title: language === "es" ? "Mi Enfoque (AI Co-pilot)" : "My Approach (AI Co-pilot)",
             description: language === "es"
-                ? "Diseño e implementación de sistemas escalables y resilientes en la nube. Orientado a eventos, sin preocuparse por la infraestructura subyacente y optimizando costos."
-                : "Design and implementation of scalable and resilient cloud systems. Event-driven approach, zero infrastructure management, and cost optimization.",
-            video: "/cloud2.jpg",
+                ? "Mi enfoque combina la ingeniería de software tradicional con la inteligencia artificial. En lugar de solo escribir código, diseño la arquitectura del sistema y utilizo la IA como copiloto para acelerar la implementación. Actúo como el orquestador principal, asegurando calidad y escalabilidad de extremo a extremo."
+                : "My approach bridges traditional software engineering with artificial intelligence. Instead of just writing code, I design the system architecture and leverage AI as a co-pilot to accelerate implementation. I act as the lead orchestrator, ensuring quality and scalability from end to end.",
+            video: "/approach-compressed.mp4",
             card: {
-                heading: "CLOUD-NATIVE",
-                badge: "AWS",
-                goal: "RESILIENCY & SCALE",
+                heading: "MY APPROACH",
+                badge: "AI",
+                goal: "SPEED & PRECISION",
                 tasks: [
-                    { title: "Event-Driven", meta: "Practice", status: "completed" },
-                    { title: "Microservices", meta: "Practice", status: "completed" },
-                    { title: "Infra as Code", meta: "Practice", status: "completed" },
-                    { title: "Serverless Framework", meta: "Practice", status: "completed" },
+                    { title: language === "es" ? "Arquitecto de sistemas" : "Systems Architect", meta: "Role", status: "completed" },
+                    { title: "AI Orchestration", meta: "Workflow", status: "completed" },
+                    { title: "Rapid Delivery", meta: "Result", status: "completed" },
+                    { title: "Problem-solver", meta: "Skill", status: "completed" },
                 ],
             },
         },
         {
-            icon: Code,
-            label: "Clean Code",
-            title: "Clean Code & Patrones",
+            icon: BrainCircuit,
+            label: language === "es" ? "Filosofía" : "Philosophy",
+            title: language === "es" ? "Mi Filosofía" : "My Philosophy",
             description: language === "es"
-                ? "Desarrollo de software mantenible, testeable y fácil de leer. Aplicación de principios SOLID, Patrones de Diseño y refactorización continua."
-                : "Development of maintainable, testable, and readable software. Application of SOLID principles, Design Patterns, and continuous refactoring.",
+                ? "Teniendo los fundamentos claros y orquestando Agents adecuadamente, se pueden entregar resultados y sistemas complejos hasta 10 veces más rápido."
+                : "By having a strong grasp of fundamentals and properly orchestrating Agents, it's possible to deliver complex systems and results up to 10x faster.",
             video: "/code2-compressed.mp4",
             card: {
-                heading: "SOFTWARE DESIGN",
-                badge: "SOLID",
-                goal: "MAINTAINABILITY",
+                heading: "PHILOSOPHY",
+                badge: "SYSTEMS",
+                goal: "BEST DESIGN",
                 tasks: [
-                    { title: "TDD", meta: "Practice", status: "completed" },
-                    { title: "Design Patterns", meta: "Practice", status: "completed" },
-                    { title: "Code Review", meta: "Practice", status: "completed" },
-                    { title: "Refactoring", meta: "Practice", status: "completed" },
+                    { title: "System Design", meta: "Core", status: "completed" },
+                    { title: "Architecture", meta: "Focus", status: "completed" },
+                    { title: "Less is More", meta: "Code", status: "completed" },
+                    { title: "Scalability", meta: "Goal", status: "completed" },
                 ],
             },
         },
         {
-            icon: Zap,
-            label: "Performance",
-            title: "Rendimiento y Escalabilidad",
+            icon: CheckCircle2,
+            label: "Soft Skills",
+            title: "Soft Skills",
             description: language === "es"
-                ? "Optimización de algoritmos y bases de datos para manejar alto tráfico. Profiling, estrategias de caché, estructuras de datos eficientes y concurrencia."
-                : "Algorithm and database optimization for high traffic. Profiling, caching strategies, efficient data structures, and concurrency.",
-            video: "/opti-compressed.mp4",
+                ? "Las habilidades que me permiten adaptarme a nuevos retos y trabajar en equipo: Pensamiento sistémico, Problem solving, Aprendizaje rápido, Comunicación técnica, Orientación a resultados y Adaptabilidad."
+                : "The skills that allow me to adapt to new challenges and work in a team: Systems thinking, Problem solving, Fast learning, Technical communication, Results orientation, and Adaptability.",
+            video: "/glass-compressed.jpg",
             card: {
-                heading: "OPTIMIZATION",
-                badge: "O(1)",
-                goal: "SPEED & EFFICIENCY",
+                heading: "SOFT SKILLS",
+                badge: "HUMAN",
+                goal: "TEAM & GROWTH",
                 tasks: [
-                    { title: "Caching", meta: "Practice", status: "completed" },
-                    { title: "Load Balancing", meta: "Practice", status: "completed" },
-                    { title: "DB Indexing", meta: "Practice", status: "completed" },
-                    { title: "Profiling", meta: "Practice", status: "completed" },
+                    { title: language === "es" ? "Pensamiento sistémico" : "Systems thinking", meta: "Skill", status: "completed" },
+                    { title: "Problem solving", meta: "Skill", status: "completed" },
+                    { title: language === "es" ? "Aprendizaje rápido" : "Fast learning", meta: "Skill", status: "completed" },
+                    { title: language === "es" ? "Comunicación técnica" : "Tech Comms", meta: "Skill", status: "completed" },
                 ],
             },
         },
