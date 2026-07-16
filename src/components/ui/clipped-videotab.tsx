@@ -200,7 +200,7 @@ export default function ClippedVideoTab() {
                 </div>
 
                 {/* VIDEO CONTAINER */}
-                <div className="relative overflow-hidden h-[560px] lg:h-[540px] lg:max-w-5xl lg:mx-auto custom-clip shadow-2xl">
+                <div className="relative overflow-hidden h-[420px] md:h-[500px] lg:h-[540px] lg:max-w-5xl lg:mx-auto custom-clip shadow-2xl">
 
                     {/* VIDEO */}
                     <AnimatePresence mode="wait">
@@ -249,13 +249,13 @@ export default function ClippedVideoTab() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 14 }}
                                 transition={{ duration: 0.35 }}
-                                className="w-[calc(100%-3rem)] max-w-[280px] sm:max-w-none sm:w-[320px] rounded-[22px] sm:rounded-[26px] border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-4 sm:p-5"
+                                className="w-[calc(100%-4rem)] max-w-[260px] sm:max-w-none sm:w-[320px] rounded-[20px] sm:rounded-[26px] border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-3 sm:p-5"
                             >
 
                                 {/* HEADER */}
                                 <div className="flex items-center justify-between">
 
-                                    <h3 className="text-[16px] sm:text-[18px] font-semibold text-white flex items-center gap-2">
+                                    <h3 className="text-[15px] sm:text-[18px] font-semibold text-white flex items-center gap-2">
                                         <activeItem.icon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                                         {activeItem.card.heading}
                                     </h3>
@@ -267,20 +267,20 @@ export default function ClippedVideoTab() {
                                 </div>
 
                                 {/* GOAL */}
-                                <div className="mt-3 sm:mt-4 border border-zinc-800 rounded-xl p-2.5 sm:p-3">
+                                <div className="mt-2.5 sm:mt-4 border border-zinc-800 rounded-[10px] sm:rounded-xl p-2 sm:p-3">
 
                                     <p className="text-[10px] sm:text-[11px] text-zinc-400">
                                         {language === "es" ? "Descripción" : "Description"}
                                     </p>
 
-                                    <p className="text-[12px] sm:text-[13px] leading-[18px] sm:leading-[20px] mt-1 text-white">
+                                    <p className="text-[11px] sm:text-[13px] leading-[16px] sm:leading-[20px] mt-1 text-white">
                                         {activeItem.description}
                                     </p>
 
                                 </div>
 
                                 {/* TASKS */}
-                                <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2 sm:gap-y-3">
+                                <div className="mt-2.5 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-1.5 sm:gap-y-3">
 
                                     {activeItem.card.tasks.map((task, index) => (
                                         <div
@@ -310,7 +310,7 @@ export default function ClippedVideoTab() {
 
                                                 <p
                                                     className={`
-                            text-[12px] sm:text-[13px]
+                            text-[11px] sm:text-[13px]
                             ${task.status === "completed"
                                                             ? "text-zinc-200 font-medium"
                                                             : task.status === "progress"
@@ -332,7 +332,7 @@ export default function ClippedVideoTab() {
                                 </div>
 
                                 {/* CATEGORY BADGE */}
-                                <div className="mt-3 sm:mt-5 flex items-center justify-start gap-2">
+                                <div className="mt-2.5 sm:mt-5 flex items-center justify-start gap-2">
                                     <span className="text-[10px] sm:text-[11px] bg-blue-900/30 text-blue-400 px-2 py-1 rounded-md font-mono tracking-wide">
                                         {activeItem.card.badge}
                                     </span>
