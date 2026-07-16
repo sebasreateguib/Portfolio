@@ -51,18 +51,18 @@ export default function ClippedVideoTab() {
             label: language === "es" ? "Filosofía" : "Philosophy",
             title: language === "es" ? "Mi Filosofía" : "My Philosophy",
             description: language === "es"
-                ? "Teniendo los fundamentos claros y orquestando Agents adecuadamente, se pueden entregar resultados y sistemas complejos hasta 10 veces más rápido."
-                : "By having a strong grasp of fundamentals and properly orchestrating Agents, it's possible to deliver complex systems and results up to 10x faster.",
+                ? "La tecnología es solo un medio; el verdadero objetivo es resolver problemas reales. Mi filosofía es entender profundamente la arquitectura y la necesidad antes de escribir código, asegurando que cada sistema que diseño aporte un valor tangible, escalable y medible."
+                : "Technology is just a medium; the true goal is solving real problems. My philosophy is to deeply understand the architecture and the need before writing code, ensuring every system I design delivers tangible, scalable, and measurable value.",
             video: "/code2-compressed.mp4",
             card: {
                 heading: "PHILOSOPHY",
                 badge: "SYSTEMS",
-                goal: "BEST DESIGN",
+                goal: "MEASURABLE VALUE",
                 tasks: [
-                    { title: "System Design", meta: "Core", status: "completed" },
-                    { title: "Architecture", meta: "Focus", status: "completed" },
-                    { title: "Less is More", meta: "Code", status: "completed" },
-                    { title: "Scalability", meta: "Goal", status: "completed" },
+                    { title: "Problem Solving", meta: "Core", status: "completed" },
+                    { title: "User-Centric", meta: "Focus", status: "completed" },
+                    { title: "Scalable Impact", meta: "Code", status: "completed" },
+                    { title: "Efficient Design", meta: "Goal", status: "completed" },
                 ],
             },
         },
