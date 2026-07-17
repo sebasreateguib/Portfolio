@@ -66,6 +66,19 @@ const projectsData = [
     live: null
   },
   {
+    id: 7,
+    artist: "RRadar",
+    album: "C++ | VUE | LEAFLET",
+    tech: ["C++", "Vue.js", "Leaflet", "Vite", "R-Tree"],
+    category: "ALGORITHMS",
+    label: "GEOSPATIAL",
+    year: "2026",
+    image: "/rradar-compressed.mp4",
+    description: "Interactive client-server app to explore geospatial POIs in Lima. Compares Linear Search vs a custom R-Tree (range + KNN), with a Vue.js + Leaflet map visualizing MBRs and live performance benchmarks.",
+    github: "#",
+    live: null
+  },
+  {
     id: 5,
     artist: "SparseExcel",
     album: "C++ | REACT | JS",
@@ -76,19 +89,6 @@ const projectsData = [
     image: "/sparse-compressed.mp4",
     description: "Memory-Optimized Spreadsheet Engine in C++ using custom Sparse Matrix representations, with dual 2D/3D data visualization frontend.",
     github: "https://github.com/sebasreateguib/SparseExcel",
-    live: null
-  },
-  {
-    id: 6,
-    artist: "QuadTree Sim",
-    album: "C++ | VUE.JS | SSE",
-    tech: ["C++", "Vue.js", "Tailwind CSS", "Data Structures", "Algorithms"],
-    category: "DATA STRUCTURES",
-    label: "PHYSICS ENG",
-    year: "2026",
-    image: "/quadtree-compressed.jpg",
-    description: "High-performance 2D particle collision engine using a custom QuadTree in C++ for O(log N) detection, streamed via SSE to a Vue.js dashboard.",
-    github: "https://github.com/sebasreateguib/QuadTreeParticleSimulator",
     live: null
   }
 ];

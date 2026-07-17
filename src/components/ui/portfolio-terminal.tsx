@@ -282,9 +282,9 @@ Answer user questions accurately and professionally using the portfolio informat
     }
 
     return (
-        <div className="w-full bg-black rounded-lg overflow-hidden shadow-[0_0_50px_rgba(16,185,129,0.15)] border border-green-500/30 font-mono text-green-400">
+        <div className="w-full bg-black/55 backdrop-blur-md rounded-lg overflow-hidden shadow-[0_0_50px_rgba(16,185,129,0.15)] border border-green-500/30 font-mono text-green-400">
             {/* Terminal Header */}
-            <div className="flex items-center gap-2 p-3 bg-gray-900 border-b border-white/5 select-none text-xs text-gray-400">
+            <div className="flex items-center gap-2 p-3 bg-gray-900/75 border-b border-white/5 select-none text-xs text-gray-400">
                 <div className="flex gap-1.5">
                     <button type="button" onClick={onClose} aria-label="Close terminal" className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer" />
                     <button type="button" onClick={onClose} aria-label="Close terminal" className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer" />
@@ -299,7 +299,7 @@ Answer user questions accurately and professionally using the portfolio informat
             {/* Terminal Output */}
             <div
                 ref={terminalRef}
-                className="h-[60vh] max-h-[700px] overflow-y-auto p-4 space-y-3 bg-[#050505] cursor-text"
+                className="h-[60vh] max-h-[700px] overflow-y-auto p-4 space-y-3 bg-[#050505]/55 cursor-text"
                 style={{
                     scrollbarWidth: 'thin',
                     scrollbarColor: '#10b981 #1f2937'
@@ -345,7 +345,7 @@ Answer user questions accurately and professionally using the portfolio informat
             </div>
 
             {/* Terminal Footer */}
-            <div className="bg-gray-900 px-4 py-2 text-[10px] text-gray-500 border-t border-white/5">
+            <div className="bg-gray-900/75 px-4 py-2 text-[10px] text-gray-500 border-t border-white/5">
                 <div className="flex justify-between items-center select-none">
                     <span>Type 'help' for commands • Type natural language to use AI</span>
                     <span>Press ESC or type 'exit' to close</span>
