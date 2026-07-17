@@ -1,13 +1,22 @@
 "use client";
 import { useState } from 'react';
 import Image from 'next/image';
-import { ArrowRight, ChevronDown, ExternalLink } from 'lucide-react';
+import { ChevronDown, ExternalLink } from 'lucide-react';
 import { TerminalIcon } from '../term-icon';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
+import { projectsArchiveItems } from '../../data/projects-archive';
 import { ViewportVideo } from './viewport-video';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from './dialog';
+import { FileSystem, type FileSystemFileItem } from './file-system';
 
 const projectDetails = {
     en: {
@@ -21,6 +30,11 @@ const projectDetails = {
         demo: 'Live Demo',
         unavailable: 'Demo soon',
         projects: {
+            7: {
+                category: 'Geospatial Algorithms',
+                role: 'C++ Systems / Frontend Engineer',
+                signals: ['Custom R-Tree', 'Range + KNN queries', 'Live search benchmarks'],
+            },
             1: {
                 category: 'Fintech Analytics',
                 role: 'Core Full-Stack, Cloud & Data Engineer',
@@ -46,11 +60,6 @@ const projectDetails = {
                 role: 'Backend Serverless Engineer',
                 signals: ['Event-driven architecture', 'AWS Step Functions', 'Wait for Callback pattern'],
             },
-            6: {
-                category: 'Algorithms / Physics Engine',
-                role: 'C++ Systems Programmer',
-                signals: ['QuadTree algorithm', 'Server-Sent Events (SSE)', 'Vue.js interactive canvas'],
-            },
         },
     },
     es: {
@@ -64,6 +73,11 @@ const projectDetails = {
         demo: 'Demo en vivo',
         unavailable: 'Demo pronto',
         projects: {
+            7: {
+                category: 'Algoritmos Geoespaciales',
+                role: 'C++ Systems / Frontend Engineer',
+                signals: ['R-Tree propio', 'Consultas Range + KNN', 'Benchmarks en vivo'],
+            },
             1: {
                 category: 'Analítica Fintech',
                 role: 'Core Full-Stack, Cloud & Data Engineer',
@@ -89,11 +103,6 @@ const projectDetails = {
                 role: 'Backend Serverless Engineer',
                 signals: ['Arquitectura orientada a eventos', 'AWS Step Functions', 'Patrón Wait for Callback'],
             },
-            6: {
-                category: 'Algoritmos / Motor Físico',
-                role: 'C++ Systems Programmer',
-                signals: ['Algoritmo QuadTree', 'Server-Sent Events (SSE)', 'Canvas interactivo Vue.js'],
-            },
         },
     },
 } as const;
@@ -103,6 +112,13 @@ export default function ProjectsSection() {
     const t = translations[language];
     const copy = projectDetails[language];
     const [expandedProject, setExpandedProject] = useState<number | null>(null);
+    const [archiveOpen, setArchiveOpen] = useState(false);
+
+    const handleArchiveFileOpen = (file: FileSystemFileItem, url: string | null) => {
+        const target = url ?? file.url;
+        if (!target) return;
+        window.open(target, '_blank', 'noopener,noreferrer');
+    };
 
     return (
         <section id="projects" className="bg-black py-16 lg:py-24 relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:900px]">
@@ -277,7 +293,57 @@ export default function ProjectsSection() {
                         );
                     })}
                 </div>
+
+                <div className="mt-2 flex justify-start md:mt-4">
+                    <button
+                        type="button"
+                        onClick={() => setArchiveOpen(true)}
+                        className="group inline-flex min-h-11 items-center gap-2 border border-white/15 bg-white/[0.03] px-4 py-2 font-mono text-[11px] tracking-[0.16em] uppercase text-white/70 transition-colors duration-200 hover:border-blue-400/45 hover:bg-blue-400/10 hover:text-blue-100"
+                    >
+                        <svg
+                            className="h-4 w-4 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1" />
+                            <path d="M3 9h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" />
+                        </svg>
+                        {t.projects.archiveCta}
+                    </button>
+                </div>
             </div>
+
+            <Dialog open={archiveOpen} onOpenChange={setArchiveOpen}>
+                <DialogContent
+                    showCloseButton
+                    bottomStickOnMobile={false}
+                    className="flex w-[min(94vw,720px)] max-w-none flex-col gap-0 overflow-hidden rounded-2xl border border-white/10 bg-[#050505] p-0 text-white shadow-[0_0_0_1px_rgba(96,165,250,0.12),0_32px_100px_rgba(0,0,0,0.65)] max-sm:max-h-[min(88dvh,100%)]"
+                >
+                    <DialogHeader className="shrink-0 border-b border-white/10 bg-white/[0.02] px-5 py-3.5 pr-12">
+                        <DialogTitle className="font-mono text-sm tracking-[0.18em] text-blue-200 uppercase">
+                            {t.projects.archiveTitle}
+                        </DialogTitle>
+                        <DialogDescription className="text-xs text-white/45">
+                            {t.projects.archiveHint}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex min-h-0 flex-1 flex-col p-2 sm:p-4">
+                        <FileSystem
+                            title={language === 'es' ? 'Archivo' : 'Archive'}
+                            items={projectsArchiveItems}
+                            defaultView="icons"
+                            defaultPath=""
+                            className="h-[min(70dvh,560px)] min-h-0 flex-1 rounded-xl border border-white/10 bg-[#0d0d0d] text-white sm:h-[min(52vh,420px)] sm:flex-none touch-pan-y overscroll-contain"
+                            onFileOpen={handleArchiveFileOpen}
+                        />
+                    </div>
+                </DialogContent>
+            </Dialog>
         </section>
     );
 }

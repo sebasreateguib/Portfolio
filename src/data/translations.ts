@@ -34,6 +34,9 @@ export const translations = {
     projects: {
       title: "Projects",
       featured: "Featured_Projects",
+      archiveCta: "View project archive",
+      archiveTitle: "Project_Archive",
+      archiveHint: "Browse the rest by category — open a file to jump to its repo.",
       list: [
         {
           id: 4,
@@ -76,6 +79,16 @@ export const translations = {
           year: "2025"
         },
         {
+          id: 7,
+          title: "RRadar",
+          description: "Interactive client-server app to explore geospatial Points of Interest across Lima. Compares Linear Search vs a custom R-Tree (range + KNN) for spatial queries, with a Vue.js + Leaflet map that visualizes MBRs and live performance benchmarks.",
+          tech: ["C++", "Vue.js", "Leaflet", "Vite", "R-Tree"],
+          github: "#",
+          live: "#",
+          image: "/rradar-compressed.mp4",
+          year: "2026"
+        },
+        {
           id: 3,
           title: "SparseExcel",
           description: "Memory-Optimized Spreadsheet Engine. Implemented a memory-efficient backend in C++ leveraging custom Sparse Matrix representations, paired with a frontend featuring dual 2D and 3D data visualization.",
@@ -83,16 +96,6 @@ export const translations = {
           github: "https://github.com/sebasreateguib/SparseExcel",
           live: "#",
           image: "/sparse-compressed.mp4",
-          year: "2026"
-        },
-        {
-          id: 6,
-          title: "QuadTree Simulation",
-          description: "High-performance 2D particle collision engine. Implemented a custom QuadTree in C++ for O(log N) neighbor detection. Used Server-Sent Events (SSE) to stream physics computations in real-time to a Vue.js web dashboard.",
-          tech: ["C++", "Vue.js", "Tailwind CSS", "Data Structures", "Algorithms"],
-          github: "https://github.com/sebasreateguib/QuadTreeParticleSimulator",
-          live: "#",
-          image: "/quadtree-compressed.jpg",
           year: "2026"
         }
       ]
@@ -198,6 +201,9 @@ export const translations = {
     projects: {
       title: "Proyectos",
       featured: "Proyectos_Destacados",
+      archiveCta: "Ver archivo de proyectos",
+      archiveTitle: "Archivo_de_Proyectos",
+      archiveHint: "Explora el resto por categoría — abre un archivo para ir a su repo.",
       list: [
         {
           id: 4,
@@ -240,6 +246,16 @@ export const translations = {
           year: "2025"
         },
         {
+          id: 7,
+          title: "RRadar",
+          description: "App cliente-servidor para explorar POIs geoespaciales en Lima. Compara Búsqueda Lineal vs un R-Tree propio (range + KNN), con un mapa en Vue.js + Leaflet que visualiza los MBRs y benchmarks de rendimiento en tiempo real.",
+          tech: ["C++", "Vue.js", "Leaflet", "Vite", "R-Tree"],
+          github: "#",
+          live: "#",
+          image: "/rradar-compressed.mp4",
+          year: "2026"
+        },
+        {
           id: 3,
           title: "SparseExcel",
           description: "Motor de Hoja de Cálculo Optimizado en Memoria. Implementé un backend eficiente en C++ aprovechando representaciones personalizadas de Matrices Dispersas, junto a un frontend con visualización dual 2D y 3D.",
@@ -247,16 +263,6 @@ export const translations = {
           github: "https://github.com/sebasreateguib/SparseExcel",
           live: "#",
           image: "/sparse-compressed.mp4",
-          year: "2026"
-        },
-        {
-          id: 6,
-          title: "QuadTree Simulation",
-          description: "Motor físico de colisiones 2D de alto rendimiento. Implementé un QuadTree en C++ para detección de vecinos en O(log N). Utiliza Server-Sent Events (SSE) para enviar la simulación física en tiempo real a un dashboard interactivo en Vue.js.",
-          tech: ["C++", "Vue.js", "Tailwind CSS", "Estructuras de Datos", "Algoritmos"],
-          github: "https://github.com/sebasreateguib/QuadTreeParticleSimulator",
-          live: "#",
-          image: "/quadtree-compressed.jpg",
           year: "2026"
         }
       ]

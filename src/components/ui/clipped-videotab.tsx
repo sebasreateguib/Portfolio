@@ -21,11 +21,25 @@ import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../data/translations";
 import { ViewportVideo } from "./viewport-video";
 
+type PhilosophyItem = {
+    icon: typeof Bot;
+    label: string;
+    title: string;
+    description: string;
+    video?: string;
+    card: {
+        heading: string;
+        badge: string;
+        goal: string;
+        tasks: Array<{ title: string; meta: string; status: string }>;
+    };
+};
+
 export default function ClippedVideoTab() {
     const { language } = useLanguage();
     const t = translations[language];
 
-    const items = [
+    const items: PhilosophyItem[] = [
         {
             icon: Bot,
             label: language === "es" ? "Mi Enfoque" : "My Approach",
@@ -202,10 +216,9 @@ export default function ClippedVideoTab() {
                 {/* VIDEO CONTAINER */}
                 <div className="relative overflow-hidden h-[420px] md:h-[500px] lg:h-[540px] lg:max-w-5xl lg:mx-auto custom-clip shadow-2xl">
 
-                    {/* VIDEO */}
+                    {/* BACKGROUND MEDIA */}
                     <AnimatePresence mode="wait">
-
-                        {activeItem.video.match(/\.(mp4|webm)$/i) ? (
+                        {activeItem.video?.match(/\.(mp4|webm)$/i) ? (
                             <motion.div
                                 key={activeItem.video}
                                 initial={{ opacity: 0 }}
@@ -220,7 +233,7 @@ export default function ClippedVideoTab() {
                                     wrapperClassName="absolute inset-0 w-full h-full"
                                 />
                             </motion.div>
-                        ) : (
+                        ) : activeItem.video ? (
                             <motion.img
                                 key={activeItem.video}
                                 src={activeItem.video}
@@ -231,8 +244,7 @@ export default function ClippedVideoTab() {
                                 transition={{ duration: 0.45 }}
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
-                        )}
-
+                        ) : null}
                     </AnimatePresence>
 
                     {/* OVERLAY */}
