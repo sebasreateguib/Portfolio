@@ -14,7 +14,6 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import PortfolioTerminal from './portfolio-terminal';
 import { BotMarkdown } from './bot-markdown';
-import { SiriWave } from './siri-wave';
 import {
     COPILOT_OPEN_EVENT,
     dismissCopilotCoachmark,
@@ -166,29 +165,9 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                                className="relative z-10 w-full max-w-5xl overflow-hidden rounded-lg"
+                                className="relative w-full max-w-5xl z-10"
                             >
-                                {!shouldReduceMotion && (
-                                    <div
-                                        className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-lg"
-                                        aria-hidden
-                                    >
-                                        <SiriWave
-                                            variant="fluid-dots"
-                                            size={900}
-                                            renderScale={0.55}
-                                            className="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2 rounded-none opacity-55"
-                                            style={{
-                                                width: "max(120%, 100vh)",
-                                                height: "max(120%, 100vh)",
-                                            }}
-                                        />
-                                        <div className="absolute inset-0 bg-black/35" />
-                                    </div>
-                                )}
-                                <div className="relative z-10">
-                                    <PortfolioTerminal onClose={triggerClose} />
-                                </div>
+                                <PortfolioTerminal onClose={triggerClose} />
                             </motion.div>
                         </div>
 
