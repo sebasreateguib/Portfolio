@@ -21,7 +21,7 @@ export const translations = {
     intro: {
       readme: "README.md",
       hi: "Hi there 👋, I'm Sebastian!",
-      bio: "I'm a 26 year old Computer Science student living in Lima, Peru. I always enjoy learning new things and giving my best to every project and challenge.",
+      bio: "I'm a 26 year old Computer Science student based in Lima, Perú. I always enjoy learning new things and giving my best to every project and challenge.",
       bullet1: "I'm currently a <span className=\"text-[#60a5fa] font-semibold\">3rd-year CS Student</span> at UTEC",
       bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust, NestJS & Nuxt.</span>",
       bullet3: "Fun fact: <span className=\"text-[#60a5fa] font-semibold\">I was inspired by Blue Lock's pentagon for the hero design!</span>",
