@@ -116,7 +116,7 @@ export default function ProjectsSection() {
     const [archiveOpen, setArchiveOpen] = useState(false);
 
     return (
-        <section id="projects" className="bg-black py-16 lg:py-24 relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:900px]">
+        <section id="projects" className="bg-black py-16 lg:py-24 relative overflow-hidden">
             {/* Background grid pattern */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none"></div>
             <div className="absolute inset-x-0 top-1/3 h-56 bg-blue-500/10 blur-[120px] pointer-events-none"></div>
