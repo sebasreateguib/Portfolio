@@ -110,6 +110,10 @@ export const translations = {
       hackathonDesc: "Developed SanaFlow, a scalable cloud solution using serverless technologies, during an intensive 24-hour hackathon.",
       inProgress: "IN_PROGRESS"
     },
+    workPhilosophy: {
+      title: "Work Philosophy",
+      badge: "Methodology",
+    },
     skills: {
       title: "Skills & Technologies",
       frontend: "Frontend",
@@ -276,6 +280,10 @@ export const translations = {
       hackathonTitle: "Participante de Hackathon de Cloud Computing",
       hackathonDesc: "Desarrollé SanaFlow, una solución cloud escalable usando tecnologías serverless, durante un hackathon intensivo de 24 horas.",
       inProgress: "EN_CURSO"
+    },
+    workPhilosophy: {
+      title: "Filosofía de Trabajo",
+      badge: "Metodología",
     },
     skills: {
       title: "Habilidades y Tecnologías",
