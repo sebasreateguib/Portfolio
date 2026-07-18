@@ -1,10 +1,10 @@
-import type { FileSystemItem } from "@/components/ui/file-system"
+import type { ArchiveItem } from "@/components/ui/archive-browser"
 
 /**
- * Archive projects shown in the FileSystem panel (no live demo required).
+ * Archive projects shown in the ArchiveBrowser panel (no live demo required).
  * Organize by category folders. Replace placeholders with real repos when ready.
  */
-export const projectsArchiveItems: FileSystemItem[] = [
+export const projectsArchiveItems: ArchiveItem[] = [
   { kind: "folder", path: "Software/", name: "Software" },
   { kind: "folder", path: "AI/", name: "AI" },
   { kind: "folder", path: "Algorithms/", name: "Algorithms" },

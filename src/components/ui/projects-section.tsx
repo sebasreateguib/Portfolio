@@ -1,5 +1,5 @@
 "use client";
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { ChevronDown, ExternalLink } from 'lucide-react';
 import { TerminalIcon } from '../term-icon';
@@ -16,11 +16,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from './dialog';
-import type { FileSystemFileItem } from './file-system';
+import { ArchiveBrowser } from './archive-browser';
 
-const FileSystem = lazy(() =>
-    import('./file-system').then((m) => ({ default: m.FileSystem }))
-);
 
 const projectDetails = {
     en: {
@@ -117,12 +114,6 @@ export default function ProjectsSection() {
     const copy = projectDetails[language];
     const [expandedProject, setExpandedProject] = useState<number | null>(null);
     const [archiveOpen, setArchiveOpen] = useState(false);
-
-    const handleArchiveFileOpen = (file: FileSystemFileItem, url: string | null) => {
-        const target = url ?? file.url;
-        if (!target) return;
-        window.open(target, '_blank', 'noopener,noreferrer');
-    };
 
     return (
         <section id="projects" className="bg-black py-16 lg:py-24 relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:900px]">
@@ -326,7 +317,7 @@ export default function ProjectsSection() {
                 <DialogContent
                     showCloseButton
                     bottomStickOnMobile={false}
-                    className="flex w-[min(94vw,720px)] max-w-none flex-col gap-0 overflow-hidden rounded-2xl border border-white/10 bg-[#050505] p-0 text-white shadow-[0_0_0_1px_rgba(96,165,250,0.12),0_32px_100px_rgba(0,0,0,0.65)] max-h-[min(88dvh,640px)]"
+                    className="flex w-[min(94vw,720px)] max-w-none flex-col gap-0 overflow-hidden rounded-2xl border border-white/10 bg-[#050505] p-0 text-white shadow-[0_0_0_1px_rgba(96,165,250,0.12),0_32px_100px_rgba(0,0,0,0.65)] max-h-[min(88dvh,600px)]"
                 >
                     <DialogHeader className="shrink-0 border-b border-white/10 bg-white/[0.02] px-5 py-3.5 pr-12">
                         <DialogTitle className="font-mono text-sm tracking-[0.18em] text-blue-200 uppercase">
@@ -336,21 +327,8 @@ export default function ProjectsSection() {
                             {t.projects.archiveHint}
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="flex min-h-0 flex-1 flex-col p-2 sm:p-3">
-                        <Suspense fallback={
-                            <div className="flex flex-1 items-center justify-center text-white/30 text-xs font-mono tracking-widest">
-                                LOADING...
-                            </div>
-                        }>
-                            <FileSystem
-                                title={language === 'es' ? 'Archivo' : 'Archive'}
-                                items={projectsArchiveItems}
-                                defaultView="icons"
-                                defaultPath=""
-                                className="min-h-0 flex-1 rounded-xl border border-white/10 bg-[#0d0d0d] text-white touch-pan-y overscroll-contain"
-                                onFileOpen={handleArchiveFileOpen}
-                            />
-                        </Suspense>
+                    <div className="flex min-h-0 flex-1 flex-col p-3">
+                        <ArchiveBrowser items={projectsArchiveItems} />
                     </div>
                 </DialogContent>
             </Dialog>
