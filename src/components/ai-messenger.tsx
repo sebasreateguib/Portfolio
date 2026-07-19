@@ -137,12 +137,12 @@ export function Messenger() {
 
 Is there any technology you are particularly interested in?`)
                 : (language === "es"
-                        ? `Puedes ponerte en contacto directo con Sebastián a través de:
+                    ? `Puedes ponerte en contacto directo con Sebastián a través de:
 - 📧 **Correo personal**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/sebasreateguib](https://github.com/sebasreateguib)
 
 ¡Estará encantado de conversar contigo sobre oportunidades de prácticas pre-profesionales o proyectos interesantes!`
-                        : `You can contact Sebastián directly via:
+                    : `You can contact Sebastián directly via:
 - 📧 **Personal Email**: reateguisebastian1@gmail.com
 - 🐙 **GitHub**: [github.com/sebasreateguib](https://github.com/sebasreateguib)
 

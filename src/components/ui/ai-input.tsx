@@ -14,6 +14,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import PortfolioTerminal from './portfolio-terminal';
 import { BotMarkdown } from './bot-markdown';
+import { PiedPiperOnboarding } from "@/components/brainless/blocks/pied-piper-onboarding";
 import {
     COPILOT_OPEN_EVENT,
     dismissCopilotCoachmark,
@@ -149,14 +150,14 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
             <AnimatePresence>
                 {showForm && (
                     <>
-                        {/* Desktop: Terminal Modal */}
-                        <div className="fixed inset-0 z-[100] hidden md:flex items-center justify-center p-4 sm:p-8 pointer-events-auto">
+                        {/* Terminal Modal */}
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center md:p-4 sm:p-8 pointer-events-auto">
                             <motion.div
                                 key="overlay"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="absolute inset-0 bg-black/60 backdrop-blur-md"
+                                className="absolute inset-0 bg-black/90 md:bg-black/60 backdrop-blur-md"
                                 onClick={triggerClose}
                             />
                             <motion.div
@@ -165,33 +166,34 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                                className="relative w-full max-w-5xl z-10"
+                                className="relative w-full max-h-[100dvh] md:max-h-[80vh] lg:max-h-[750px] max-w-5xl z-10 flex flex-col"
                             >
-                                <PortfolioTerminal onClose={triggerClose} />
+                                <div className="w-full flex flex-col min-h-0 bg-[#050505] rounded-none md:rounded-sm overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)] border-0 md:border border-[#ffffff]/20 font-mono relative">
+                                    {/* Terminal Header */}
+                                    <div className="flex shrink-0 items-center justify-between p-2 px-3 md:px-4 border-b border-[#ffffff]/10 select-none text-[10px] md:text-xs font-mono bg-[#050505] text-[#8c8273]">
+                                        <div className="font-semibold tracking-widest uppercase text-[#ffffff]/70">
+                                            sreategui@cli:~$ ./copilot.sh
+                                        </div>
+                                        <div className="flex items-center gap-3 md:gap-4">
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-[#ffffff] animate-pulse">●</span> <span className="hidden sm:inline">ONLINE</span>
+                                            </div>
+                                            <button 
+                                                type="button" 
+                                                onClick={triggerClose} 
+                                                aria-label="Close terminal" 
+                                                className="text-[#8c8273] hover:text-[#ffffff] transition-colors font-bold text-sm md:text-base cursor-pointer p-1"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="flex-1 flex flex-col min-h-0 p-3 sm:p-6 bg-[#050505]">
+                                        <PiedPiperOnboarding />
+                                    </div>
+                                </div>
                             </motion.div>
                         </div>
-
-                        {/* Mobile: Chat Messenger Full Screen Sidebar */}
-                        <motion.div
-                            key="chat-modal"
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed inset-0 z-[100] w-full h-dvh md:hidden pointer-events-auto bg-[#0c0c0e] shadow-2xl overflow-hidden"
-                        >
-                            <InputForm ref={textareaRef} />
-                        </motion.div>
-
-                        {/* Mobile Overlay (Optional for better focus) */}
-                        <motion.div
-                            key="mobile-overlay"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] md:hidden"
-                            onClick={triggerClose}
-                        />
                     </>
                 )}
             </AnimatePresence>

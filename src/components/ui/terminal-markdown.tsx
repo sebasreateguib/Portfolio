@@ -10,17 +10,17 @@ const terminalComponents: Components = {
         <strong className="font-bold text-white">{children}</strong>
     ),
     em: ({ children }) => (
-        <em className="italic text-green-300">{children}</em>
+        <em className="italic text-[#e9c46a]">{children}</em>
     ),
     ul: ({ children }) => (
         <ul className="mt-1 mb-2 flex flex-col gap-1 pl-0 list-none">{children}</ul>
     ),
     ol: ({ children }) => (
-        <ol className="mt-1 mb-2 flex flex-col gap-1 pl-4 list-decimal marker:text-green-500">{children}</ol>
+        <ol className="mt-1 mb-2 flex flex-col gap-1 pl-4 list-decimal marker:text-[#e9c46a]">{children}</ol>
     ),
     li: ({ children }) => (
         <li className="flex items-start gap-2">
-            <span className="mt-[0.45rem] text-green-500 shrink-0 text-xs leading-none">–</span>
+            <span className="mt-[0.45rem] text-[#e9c46a] shrink-0 text-xs leading-none">–</span>
             <span>{children}</span>
         </li>
     ),
@@ -35,18 +35,18 @@ const terminalComponents: Components = {
         </a>
     ),
     code: ({ children }) => (
-        <code className="rounded px-1 py-0.5 font-mono text-xs bg-white/10 text-green-300">
+        <code className="rounded px-1 py-0.5 font-mono text-xs bg-white/10 text-[#e9c46a]">
             {children}
         </code>
     ),
     h1: ({ children }) => <h1 className="text-base font-bold mb-1 mt-3 text-white">{children}</h1>,
     h2: ({ children }) => <h2 className="text-sm font-bold mb-1 mt-2 text-white">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 mt-1.5 text-green-300">{children}</h3>,
+    h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 mt-1.5 text-[#e9c46a]">{children}</h3>,
 };
 
-export function TerminalMarkdown({ text }: { text: string }) {
+export function TerminalMarkdown({ text, className }: { text: string; className?: string }) {
     return (
-        <div className="text-sm text-gray-300 leading-relaxed">
+        <div className={className || "text-sm text-gray-300 leading-relaxed"}>
             <ReactMarkdown components={terminalComponents}>
                 {text}
             </ReactMarkdown>

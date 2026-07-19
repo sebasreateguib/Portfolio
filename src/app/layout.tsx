@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Geist } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -30,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth bg-background text-foreground ${spaceGrotesk.variable}`}>
+    <html lang="en" className={cn("scroll-smooth", "bg-background", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
       <body className="antialiased bg-background min-h-screen">
         <LanguageProvider>
           {children}
