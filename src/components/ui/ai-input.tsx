@@ -12,7 +12,7 @@ import { cn } from "../../lib/utils"
 import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from '../../data/content';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
-import PortfolioTerminal from './portfolio-terminal';
+
 import { BotMarkdown } from './bot-markdown';
 import { PiedPiperOnboarding } from "@/components/brainless/blocks/pied-piper-onboarding";
 import {
