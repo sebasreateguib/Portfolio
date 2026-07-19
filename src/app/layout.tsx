@@ -33,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("scroll-smooth", "bg-background", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
-      <body className="antialiased bg-background min-h-screen">
+    <html lang="en" className={cn("scroll-smooth", "bg-black", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
+      <body className="antialiased bg-black min-h-screen">
         <LanguageProvider>
           {children}
         </LanguageProvider>
