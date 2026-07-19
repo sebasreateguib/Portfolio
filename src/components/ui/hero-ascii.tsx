@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useTransition } from 'react';
-import { LOGO } from './ascii';
+import { LOGO2 } from './ascii';
 import { Download, Mail, Menu, X, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
@@ -90,7 +90,7 @@ export default function HeroAscii() {
 
     // Scanner Effect State
     const [tick, setTick] = useState(0);
-    const asciiLines = LOGO.split('\n');
+    const asciiLines = LOGO2.split('\n');
     const L = asciiLines.length;
 
     useEffect(() => {
