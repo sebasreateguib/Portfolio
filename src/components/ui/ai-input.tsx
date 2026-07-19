@@ -91,6 +91,17 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
         }
     }, [showForm])
 
+    React.useEffect(() => {
+        if (showForm) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [showForm])
+
     // Atajo de teclado global (cmd+k o ctrl+k) para abrir/cerrar el panel
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -166,9 +177,9 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                                className="relative w-full max-h-[100dvh] md:max-h-[80vh] lg:max-h-[750px] max-w-5xl z-10 flex flex-col"
+                                className="relative w-full h-dvh md:h-auto max-h-[100dvh] md:max-h-[80vh] lg:max-h-[750px] max-w-5xl z-10 flex flex-col"
                             >
-                                <div className="w-full flex flex-col min-h-0 bg-[#050505] rounded-none md:rounded-sm overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)] border-0 md:border border-[#ffffff]/20 font-mono relative">
+                                <div className="w-full flex flex-col flex-1 min-h-0 bg-[#050505] rounded-none md:rounded-sm overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)] border-0 md:border border-[#ffffff]/20 font-mono relative">
                                     {/* Terminal Header */}
                                     <div className="flex shrink-0 items-center justify-between p-2 px-3 md:px-4 border-b border-[#ffffff]/10 select-none text-[10px] md:text-xs font-mono bg-[#050505] text-[#8c8273]">
                                         <div className="font-semibold tracking-widest uppercase text-[#ffffff]/70">
