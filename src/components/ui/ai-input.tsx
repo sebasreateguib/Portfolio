@@ -144,10 +144,10 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             className={cn(
-                                "pointer-events-auto overflow-hidden rounded-full border bg-[#0c0c0e]/80 shadow-2xl backdrop-blur-xl",
+                                "pointer-events-auto overflow-hidden rounded-sm border bg-[#050505] shadow-2xl font-mono",
                                 showCoachmark
-                                    ? "border-blue-400/30"
-                                    : "border-white/10",
+                                    ? "border-[#cd694a]"
+                                    : "border-[#333333]",
                                 showCoachmark && !shouldReduceMotion && "animate-[copilot-dock-pulse_2s_ease-in-out_3]"
                             )}
                         >
@@ -189,10 +189,10 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                                             <div className="flex items-center gap-1.5">
                                                 <span className="text-[#ffffff] animate-pulse">●</span> <span className="hidden sm:inline">ONLINE</span>
                                             </div>
-                                            <button 
-                                                type="button" 
-                                                onClick={triggerClose} 
-                                                aria-label="Close terminal" 
+                                            <button
+                                                type="button"
+                                                onClick={triggerClose}
+                                                aria-label="Close terminal"
                                                 className="text-[#8c8273] hover:text-[#ffffff] transition-colors font-bold text-sm md:text-base cursor-pointer p-1"
                                             >
                                                 ✕
@@ -230,39 +230,30 @@ function CopilotCoachmark({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
-                    className="pointer-events-auto w-[min(92vw,360px)] rounded-xl border border-blue-400/30 bg-[#0a0a0c]/95 backdrop-blur-xl px-4 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
+                    className="pointer-events-auto w-[min(92vw,360px)] rounded-sm border border-[#333333] bg-[#050505] px-5 py-4 shadow-2xl font-mono"
                     role="status"
                     aria-live="polite"
                 >
-                    <div className="flex items-start justify-between gap-3">
-                        <div>
-                            <p className="text-sm font-semibold text-white">
-                                {t.copilot.coachmarkTitle}
-                            </p>
-                            <p className="mt-1 text-xs text-white/60 leading-relaxed">
+                    <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="text-[#cd694a] font-bold text-[11px]">&gt;_</span>
+                                <p className="text-[11px] font-bold uppercase tracking-widest text-white">
+                                    {t.copilot.coachmarkTitle}
+                                </p>
+                            </div>
+                            <p className="text-[11.5px] text-white/60 leading-relaxed">
                                 {t.copilot.coachmarkBody}
                             </p>
                         </div>
                         <button
                             type="button"
                             onClick={onDismiss}
-                            className="shrink-0 rounded-md p-1 text-white/50 transition-colors hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 cursor-pointer"
+                            className="shrink-0 rounded-full p-1.5 text-white/40 transition-all hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 cursor-pointer"
                             aria-label={t.copilot.coachmarkDismiss}
                         >
-                            <X className="h-4 w-4" />
+                            <X className="h-3.5 w-3.5" />
                         </button>
-                    </div>
-                    <div className="mt-3 flex items-center justify-between gap-2">
-                        <button
-                            type="button"
-                            onClick={onDismiss}
-                            className="text-[11px] font-mono uppercase tracking-wider text-blue-300 hover:text-white transition-colors cursor-pointer"
-                        >
-                            {t.copilot.coachmarkDismiss}
-                        </button>
-                        <span className="text-lg text-blue-400/80 leading-none" aria-hidden="true">
-                            ↓
-                        </span>
                     </div>
                 </motion.div>
             )}
@@ -280,20 +271,18 @@ function DockBar() {
             type="button"
             id="sr-copilot-dock-trigger"
             onClick={triggerOpen}
-            className="flex h-[48px] w-[300px] max-w-[90vw] items-center gap-3 px-4 cursor-pointer select-none text-left whitespace-nowrap transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0c0e]"
+            className="flex h-[44px] w-[340px] max-w-[90vw] items-center gap-2 px-3 cursor-pointer select-none text-left whitespace-nowrap transition-all hover:bg-[#111111] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-400 group"
             aria-label={`${t.copilot.dockTitle}. ${t.copilot.dockSubtitle}`}
         >
-            <div className="flex shrink-0 items-center justify-center rounded-full bg-blue-500/20 p-1.5 text-blue-400">
-                <Bot className="h-4 w-4" aria-hidden="true" />
+            <div className="flex-1 flex items-center min-w-0">
+                <span className="text-blue-400 mr-2 text-[12px] font-bold">sr@cli:~$</span>
+                <span className="truncate text-[12px] font-mono tracking-wide text-white/70 group-hover:text-white transition-colors">
+                    {t.copilot.placeholder}
+                </span>
             </div>
 
-            <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-white/50">
-                {t.copilot.placeholder}
-            </span>
-
-            <div className="hidden shrink-0 items-center gap-1 rounded-md bg-white/10 px-2 py-1 font-mono text-xs text-white/40 sm:flex">
-                <Command className="h-3 w-3" aria-hidden="true" />
-                <span>K</span>
+            <div className="hidden shrink-0 items-center gap-1.5 rounded-sm border border-[#333333] bg-[#1a1a1a] px-2.5 py-1 font-mono text-[11px] text-white/50 sm:flex transition-colors group-hover:border-blue-400/50">
+                <span>⌘K</span>
             </div>
         </button>
     )
@@ -739,8 +728,8 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
             </div>
 
             {/* Input Area */}
-            <div className="shrink-0 p-4 border-t border-border/10 bg-background/50">
-                <div className="flex flex-wrap gap-2 mb-3">
+            <div className="shrink-0 p-4 border-t border-white/5 bg-transparent relative z-10 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-t before:from-black/80 before:to-transparent before:pointer-events-none">
+                <div className="flex flex-wrap gap-2 mb-3 px-1">
                     {quickReplies[language === "es" ? "es" : "en"].map((reply) => (
                         <button
                             key={reply}
@@ -752,31 +741,34 @@ Answer user questions accurately, warmly, and strictly using the portfolio infor
                                 }
                             }}
                             disabled={isLoading}
-                            className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs text-white/70 transition hover:border-white/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="rounded-full border border-white/10 bg-black/40 backdrop-blur-sm px-3.5 py-1.5 text-[11px] font-mono text-white/60 transition-all hover:border-white/30 hover:text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {reply}
                         </button>
                     ))}
                 </div>
-                <div className="flex items-end gap-3 rounded-3xl border border-white/20 bg-white/5 p-3 backdrop-blur">
+                <div className="flex items-end gap-2 rounded-full border border-white/15 bg-black/60 p-1.5 backdrop-blur-xl focus-within:border-white/40 focus-within:bg-black/80 focus-within:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all">
+                    <div className="flex shrink-0 items-center justify-center pl-3 pb-2.5">
+                        <span className="font-mono text-white/40 text-sm font-bold">~</span>
+                    </div>
                     <div className="flex-1 min-w-0">
                         <textarea
                             ref={ref}
                             onKeyDown={handleKeys}
-                            placeholder="Ask me something..."
+                            placeholder="Type a command..."
                             rows={1}
-                            className="w-full min-h-[40px] max-h-[120px] resize-none border-none bg-transparent text-[15px] text-white placeholder:text-white/40 focus-visible:ring-0 focus-visible:outline-none p-2"
+                            className="w-full min-h-[40px] max-h-[120px] resize-none border-none bg-transparent font-mono text-[14px] text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:outline-none px-2 py-2.5 leading-relaxed"
                             disabled={isLoading}
                         />
                     </div>
-                    <div className="flex shrink-0 items-end pb-1 pr-1">
+                    <div className="flex shrink-0 items-end">
                         <UiButton
                             type="submit"
                             size="icon"
-                            className="size-10 rounded-full bg-blue-600 text-white shadow-lg transition hover:bg-blue-500 focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="size-[38px] rounded-full bg-white text-black transition-transform hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-white/40 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center"
                             disabled={isLoading}
                         >
-                            <SendIcon className="h-4 w-4" size={16} />
+                            <SendIcon className="h-3.5 w-3.5 ml-0.5" size={14} />
                         </UiButton>
                     </div>
                 </div>
