@@ -16,7 +16,7 @@ import { TerminalMarkdown } from '@/components/ui/terminal-markdown';
  * components. Refactored into a functional AI Terminal Copilot.
  */
 
-const CLI_BRAND = "#ffffff"; // White
+const CLI_BRAND = "#cd694a"; // Claude's Terracotta
 const CLAUDE_COLOR = "#cd694a"; // Claude's Terracotta
 const GRAY = "#8c8273"; // Warm Taupe
 const FG = "#eaddcf"; // Warm Off-White
@@ -94,7 +94,7 @@ function PiedPiperHeader({ className }: { className?: string }) {
           <div className="font-semibold">{language === 'es' ? 'Bienvenido a SR Copilot' : 'Welcome to SR Copilot'}</div>
 
           <div className="flex items-center justify-center gap-3 my-2">
-            <pre className="text-[7px] leading-tight text-[#e9c46a] text-left">
+            <pre className="text-[7px] leading-tight text-left" style={{ color: "#ffffff" }}>
               {LOGO3.trim()}
             </pre>
             <span className="text-sm font-bold opacity-30" style={{ color: GRAY }}>✕</span>
@@ -289,9 +289,9 @@ I'm currently open to new opportunities, collaborations, or just to chat about t
     }
   }
 
-  // Auto-focus composer when not thinking
+  // Auto-focus composer when not thinking (desktop only)
   React.useEffect(() => {
-    if (!isThinking) {
+    if (!isThinking && window.matchMedia("(min-width: 768px)").matches) {
       const input = rootRef.current?.querySelector<HTMLInputElement>('input[aria-label="Prompt"]');
       input?.focus({ preventScroll: true });
     }
