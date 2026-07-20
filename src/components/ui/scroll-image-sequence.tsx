@@ -90,7 +90,7 @@ export default function ScrollImageSequence() {
     const ch = canvas.height;
     // Fix mobile detection: use window.innerWidth instead of cw, as cw is scaled by devicePixelRatio
     const isMobile = window.innerWidth < 768;
-    const zoomMultiplier = isMobile ? 0.45 : 0.85;
+    const zoomMultiplier = isMobile ? 0.50 : 0.85;
     const ratio = Math.max(cw / iw, ch / ih) * zoomMultiplier;
     const dx = (cw - iw * ratio) / 2;
     const dy = (ch - ih * ratio) / 2;
@@ -264,7 +264,7 @@ export default function ScrollImageSequence() {
                 display: "flex", alignItems: "center", justifyContent: "space-between",
               }}>
                 <div className="seq-hud" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.2em" }}>
-                  SEQUENCE_01 / PORTFOLIO INTRO
+                  SEQUENCE_01 // MOTIVATION
                 </div>
                 <div className="seq-hud" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.15em" }}>
                   FRAME {String(frameDisplay).padStart(3, "0")} / {FRAME_COUNT}
