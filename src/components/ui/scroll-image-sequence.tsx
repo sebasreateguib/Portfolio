@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { Terminal, Code, Cpu, Globe } from 'lucide-react';
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 const FRAME_COUNT = 240;
 const SCROLL_SCREENS = 3;
@@ -11,13 +13,11 @@ const SCROLL_SCREENS = 3;
 const getImagePath = (i: number) =>
   `/mac/frame-${String(i + 1).padStart(3, "0")}.jpg`;
 
-// Copy that evolves with scroll progress
-const COPY_STAGES = [
+// Copy layout config (text comes from translations)
+const COPY_STAGES_CONFIG = [
   {
     threshold: 0,
-    cmd: "$ cat /var/log/motivation.log",
-    headline: "> SYSTEM: MAGIC_INITIALIZED",
-    description: "Elegí Computer Science por su poder de impacto. Con un simple teclado y lógica estructurada, puedes resolver problemas a escala global.",
+    translationKey: "stage1" as const,
     textColor: "text-green-400",
     cursorColor: "bg-green-400",
     position: "bottom-24 left-4 right-4 md:bottom-20 md:left-8 md:top-auto md:right-auto",
@@ -25,9 +25,7 @@ const COPY_STAGES = [
   },
   {
     threshold: 0.25,
-    cmd: "$ import { Innovation } from 'cs'",
-    headline: "> SYSTEM: PUZZLE_SOLVED",
-    description: "Desde el frontend más pulido hasta bases de datos complejas. Conectar la creatividad humana con la lógica computacional es lo que me mueve cada día.",
+    translationKey: "stage2" as const,
     textColor: "text-amber-400",
     cursorColor: "bg-amber-400",
     position: "top-32 left-4 right-4 md:top-32 md:right-12 md:bottom-auto md:left-auto",
@@ -35,9 +33,7 @@ const COPY_STAGES = [
   },
   {
     threshold: 0.5,
-    cmd: "$ execute --goal=\"Impact\"",
-    headline: "> SYSTEM: BUILDING_THE_FUTURE",
-    description: "Transformo ideas abstractas en productos digitales que las personas disfrutan usar. Escribiendo el futuro, un commit a la vez.",
+    translationKey: "stage3" as const,
     textColor: "text-cyan-400",
     cursorColor: "bg-cyan-400",
     position: "bottom-32 left-4 right-4 md:bottom-32 md:left-24 md:top-auto md:right-auto",
@@ -45,9 +41,7 @@ const COPY_STAGES = [
   },
   {
     threshold: 0.75,
-    cmd: "$ status --current",
-    headline: "> SYSTEM: READY_TO_BUILD",
-    description: "El código es solo el comienzo. Siempre explorando nuevas tecnologías y listo para convertir el próximo gran desafío en realidad.",
+    translationKey: "stage4" as const,
     textColor: "text-purple-400",
     cursorColor: "bg-purple-400",
     position: "top-24 left-4 right-4 md:top-24 md:right-24 md:bottom-auto md:left-auto",
@@ -56,6 +50,16 @@ const COPY_STAGES = [
 ];
 
 export default function ScrollImageSequence() {
+  const { language } = useLanguage();
+  const t = translations[language].motivation;
+  
+  const copyStages = COPY_STAGES_CONFIG.map(config => ({
+    ...config,
+    cmd: t[config.translationKey].cmd,
+    headline: t[config.translationKey].headline,
+    description: t[config.translationKey].description,
+  }));
+
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -68,7 +72,7 @@ export default function ScrollImageSequence() {
   const [frameDisplay, setFrameDisplay] = useState(1);
 
   // Active copy stage
-  const activeCopy = [...COPY_STAGES].reverse().find(s => scrollPct >= s.threshold) ?? COPY_STAGES[0];
+  const activeCopy = [...copyStages].reverse().find(s => scrollPct >= s.threshold) ?? copyStages[0];
 
   // ─── Draw a frame (0-based index) ────────────────────────────────────────
   const drawFrame = useCallback((idx: number) => {

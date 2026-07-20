@@ -121,10 +121,10 @@ export default function Home() {
         <div className="bg-black min-h-screen">
           <TopBanner />
           <HeroAscii />
-          <ScrollImageSequence />
           <ScrollReveal>
             <GithubIntro />
           </ScrollReveal>
+          <ScrollImageSequence />
           <ScrollReveal>
             <ProjectsSection />
           </ScrollReveal>
