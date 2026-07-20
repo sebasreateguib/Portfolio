@@ -144,11 +144,7 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             className={cn(
-                                "pointer-events-auto overflow-hidden rounded-sm border bg-[#050505] shadow-2xl font-mono",
-                                showCoachmark
-                                    ? "border-[#cd694a]"
-                                    : "border-[#333333]",
-                                showCoachmark && !shouldReduceMotion && "animate-[copilot-dock-pulse_2s_ease-in-out_3]"
+                                "pointer-events-auto overflow-hidden rounded-sm border border-[#333333] bg-[#050505] shadow-2xl font-mono"
                             )}
                         >
                             <DockBar />
@@ -230,19 +226,19 @@ function CopilotCoachmark({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
-                    className="pointer-events-auto w-[min(92vw,360px)] rounded-sm border border-[#333333] bg-[#050505] px-5 py-4 shadow-2xl font-mono"
+                    className="pointer-events-auto w-[min(92vw,360px)] rounded-2xl border border-white/10 bg-[#111111]/90 backdrop-blur-md px-5 py-4 shadow-2xl font-sans"
                     role="status"
                     aria-live="polite"
                 >
                     <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                                <span className="text-[#cd694a] font-bold text-[11px]">&gt;_</span>
-                                <p className="text-[11px] font-bold uppercase tracking-widest text-white">
+                        <div className="flex-1 mt-0.5">
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <Bot className="h-4 w-4 text-blue-500" />
+                                <p className="text-[14px] font-medium text-white">
                                     {t.copilot.coachmarkTitle}
                                 </p>
                             </div>
-                            <p className="text-[11.5px] text-white/60 leading-relaxed">
+                            <p className="text-[13px] text-white/60 leading-relaxed ml-6">
                                 {t.copilot.coachmarkBody}
                             </p>
                         </div>
