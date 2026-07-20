@@ -18,6 +18,28 @@ export const translations = {
         metric3: { value: "AI & SW", label: "FOCUSED ENG." }
       }
     },
+    motivation: {
+      stage1: {
+        cmd: "$ cat /var/log/motivation.log",
+        headline: "> SYSTEM: MAGIC_INITIALIZED",
+        description: "I chose Computer Science for its scale of impact. With a simple keyboard and structured logic, you can solve problems on a global scale."
+      },
+      stage2: {
+        cmd: "$ import { Innovation } from 'cs'",
+        headline: "> SYSTEM: PUZZLE_SOLVED",
+        description: "From pixel-perfect frontends to complex databases. Connecting human creativity with computational logic is what drives me every day."
+      },
+      stage3: {
+        cmd: "$ execute --goal=\"Impact\"",
+        headline: "> SYSTEM: BUILDING_THE_FUTURE",
+        description: "I transform abstract ideas into digital products that people enjoy using. Writing the future, one commit at a time."
+      },
+      stage4: {
+        cmd: "$ status --current",
+        headline: "> SYSTEM: READY_TO_BUILD",
+        description: "Code is just the beginning. Always exploring new technologies and ready to turn the next big challenge into reality."
+      }
+    },
     intro: {
       readme: "README.md",
       hi: "Hi there 👋, I'm Sebastian!",
@@ -181,12 +203,34 @@ export const translations = {
     hero: {
       portfolio: "Portafolio",
       downloadResume: "Descargar CV",
-      role: "Estudiante de CC @ UTEC.",
-      description: "Apasionado por Ingeniería en IA y ML, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Nube-Nativa.",
+      role: "Estudiante de CS @ UTEC.",
+      description: "Apasionado por Ingeniería IA & ML, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native.",
       metrics: {
-        metric1: { value: "3er", label: "AÑO DE CS" },
+        metric1: { value: "3er", label: "AÑO CS" },
         metric2: { value: "5+", label: "PROYECTOS DESTACADOS" },
-        metric3: { value: "IA & SW", label: "ENFOQUE PRINCIPAL" }
+        metric3: { value: "IA & SW", label: "ENFOQUE TÉC." }
+      }
+    },
+    motivation: {
+      stage1: {
+        cmd: "$ cat /var/log/motivation.log",
+        headline: "> SYSTEM: MAGIC_INITIALIZED",
+        description: "Elegí Computer Science por su poder de impacto. Con un simple teclado y lógica estructurada, puedes resolver problemas a escala global."
+      },
+      stage2: {
+        cmd: "$ import { Innovation } from 'cs'",
+        headline: "> SYSTEM: PUZZLE_SOLVED",
+        description: "Desde el frontend más pulido hasta bases de datos complejas. Conectar la creatividad humana con la lógica computacional es lo que me mueve cada día."
+      },
+      stage3: {
+        cmd: "$ execute --goal=\"Impact\"",
+        headline: "> SYSTEM: BUILDING_THE_FUTURE",
+        description: "Transformo ideas abstractas en productos digitales que las personas disfrutan usar. Escribiendo el futuro, un commit a la vez."
+      },
+      stage4: {
+        cmd: "$ status --current",
+        headline: "> SYSTEM: READY_TO_BUILD",
+        description: "El código es solo el comienzo. Siempre explorando nuevas tecnologías y listo para convertir el próximo gran desafío en realidad."
       }
     },
     intro: {
