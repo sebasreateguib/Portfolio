@@ -3,19 +3,56 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { Terminal, Code, Cpu, Globe } from 'lucide-react';
 
 const FRAME_COUNT = 240;
 const SCROLL_SCREENS = 3;
 
 const getImagePath = (i: number) =>
-  `/kb/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+  `/mac/frame-${String(i + 1).padStart(3, "0")}.jpg`;
 
 // Copy that evolves with scroll progress
 const COPY_STAGES = [
-  { threshold: 0, headline: "SEBASTIAN REATEGUI", sub: "Software Engineer" },
-  { threshold: 0.3, headline: "FULL STACK DEVELOPER", sub: "Building modern web applications" },
-  { threshold: 0.6, headline: "CLOUD NATIVE", sub: "AWS & Serverless Architecture" },
-  { threshold: 0.9, headline: "PROBLEM SOLVER", sub: "Turning ideas into reality" },
+  {
+    threshold: 0,
+    cmd: "$ cat /var/log/motivation.log",
+    headline: "> SYSTEM: MAGIC_INITIALIZED",
+    description: "Elegí Computer Science por su poder de impacto. Con un simple teclado y lógica estructurada, puedes resolver problemas a escala global.",
+    textColor: "text-green-400",
+    cursorColor: "bg-green-400",
+    position: "bottom-24 left-4 right-4 md:bottom-20 md:left-8 md:top-auto md:right-auto",
+    animationClass: "slide-in-from-left-8"
+  },
+  {
+    threshold: 0.25,
+    cmd: "$ import { Innovation } from 'cs'",
+    headline: "> SYSTEM: PUZZLE_SOLVED",
+    description: "Desde el frontend más pulido hasta bases de datos complejas. Conectar la creatividad humana con la lógica computacional es lo que me mueve cada día.",
+    textColor: "text-amber-400",
+    cursorColor: "bg-amber-400",
+    position: "top-32 left-4 right-4 md:top-32 md:right-12 md:bottom-auto md:left-auto",
+    animationClass: "slide-in-from-right-8"
+  },
+  {
+    threshold: 0.5,
+    cmd: "$ execute --goal=\"Impact\"",
+    headline: "> SYSTEM: BUILDING_THE_FUTURE",
+    description: "Transformo ideas abstractas en productos digitales que las personas disfrutan usar. Escribiendo el futuro, un commit a la vez.",
+    textColor: "text-cyan-400",
+    cursorColor: "bg-cyan-400",
+    position: "bottom-32 left-4 right-4 md:bottom-32 md:left-24 md:top-auto md:right-auto",
+    animationClass: "slide-in-from-left-8"
+  },
+  {
+    threshold: 0.75,
+    cmd: "$ status --current",
+    headline: "> SYSTEM: READY_TO_BUILD",
+    description: "El código es solo el comienzo. Siempre explorando nuevas tecnologías y listo para convertir el próximo gran desafío en realidad.",
+    textColor: "text-purple-400",
+    cursorColor: "bg-purple-400",
+    position: "top-24 left-4 right-4 md:top-24 md:right-24 md:bottom-auto md:left-auto",
+    animationClass: "slide-in-from-right-8"
+  },
 ];
 
 export default function ScrollImageSequence() {
@@ -47,7 +84,10 @@ export default function ScrollImageSequence() {
     const ih = img.naturalHeight;
     const cw = canvas.width;
     const ch = canvas.height;
-    const ratio = Math.max(cw / iw, ch / ih);
+    // Fix mobile detection: use window.innerWidth instead of cw, as cw is scaled by devicePixelRatio
+    const isMobile = window.innerWidth < 768;
+    const zoomMultiplier = isMobile ? 0.45 : 0.85;
+    const ratio = Math.max(cw / iw, ch / ih) * zoomMultiplier;
     const dx = (cw - iw * ratio) / 2;
     const dy = (ch - ih * ratio) / 2;
 
@@ -227,41 +267,48 @@ export default function ScrollImageSequence() {
                 </div>
               </div>
 
-              {/* Scroll-driven copy — bottom left */}
+              {/* Scroll-driven copy — CLI cards */}
               <div
-                className="copy-fade"
-                style={{
-                  position: "absolute", bottom: 80, left: 32, zIndex: 15,
-                }}
+                key={activeCopy.headline}
+                className={`copy-fade absolute z-[15] w-auto md:w-[380px] transition-all duration-700 ease-out animate-in fade-in ${activeCopy.animationClass} ${activeCopy.position}`}
               >
-                <div className="seq-hud" style={{
-                  color: "rgba(255,255,255,0.22)", fontSize: "10px",
-                  letterSpacing: "0.25em", marginBottom: "4px",
-                }}>
-                  {activeCopy.sub.toUpperCase()}
-                </div>
-                <div className="seq-body" style={{
-                  color: "rgba(255,255,255,0.85)", fontSize: "28px",
-                  fontWeight: 300, letterSpacing: "0.05em",
-                }}>
-                  {activeCopy.headline}
+                <div className="p-3 md:p-4 border border-white/10 bg-black/80 backdrop-blur-sm shadow-[0_0_20px_rgba(0,0,0,0.8)] font-mono">
+                  {/* Terminal Header */}
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2 md:mb-3">
+                    <div className="flex gap-1.5">
+                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500/80"></div>
+                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500/80"></div>
+                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <div className="text-[8px] md:text-[9px] text-white/30 tracking-widest uppercase truncate max-w-[150px] md:max-w-none">
+                      BASH ~ sebastian
+                    </div>
+                  </div>
+
+                  {/* Terminal Body */}
+                  <div className="flex flex-col gap-2 md:gap-2.5">
+                    <div className="text-white/40 text-xs md:text-sm tracking-wider">
+                      <span className="text-white/20 pr-2">❯</span>
+                      {activeCopy.cmd}
+                    </div>
+                    <div className={`text-base md:text-lg font-bold ${activeCopy.textColor} tracking-tight`}>
+                      {activeCopy.headline}
+                    </div>
+                    <div className="text-white/70 text-[11px] md:text-xs leading-relaxed border-l border-white/10 pl-3 py-1 mt-0.5">
+                      {activeCopy.description}
+
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Scroll progress indicator — bottom right */}
-              <div style={{
-                position: "absolute", bottom: 80, right: 32, zIndex: 15,
-                display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px",
-              }}>
-                <div className="seq-hud" style={{
-                  color: "rgba(255,255,255,0.22)", fontSize: "10px", letterSpacing: "0.2em",
-                }}>
+              <div className="absolute top-24 right-4 md:top-auto md:bottom-20 md:right-8 z-[15] hidden md:flex flex-col items-end gap-1.5">
+                <div className="seq-hud text-white/20 text-[10px] tracking-[0.2em]">
                   PROGRESS
                 </div>
-                <div className="seq-hud" style={{
-                  color: "rgba(255,255,255,0.7)", fontSize: "32px",
-                }}>
-                  {String(pct).padStart(3, "0")}<span style={{ fontSize: "14px", opacity: 0.4 }}>%</span>
+                <div className="seq-hud text-white/70 text-3xl">
+                  {String(pct).padStart(3, "0")}<span className="text-sm opacity-40">%</span>
                 </div>
               </div>
             </>
@@ -269,21 +316,17 @@ export default function ScrollImageSequence() {
 
           {/* Bottom progress bar */}
           {loaded && (
-            <div style={{
-              position: "absolute", bottom: 32, left: 32, right: 32, zIndex: 15,
-              display: "flex", alignItems: "center", gap: "12px"
-            }}>
-              <div className="seq-hud" style={{
-                color: "rgba(255,255,255,0.2)", fontSize: "9px", letterSpacing: "0.2em", whiteSpace: "nowrap",
-              }}>
+            <div className="absolute bottom-6 left-4 right-4 md:bottom-8 md:left-8 md:right-8 z-[15] flex items-center gap-3">
+              <div className="seq-hud text-white/20 text-[9px] tracking-[0.2em] whitespace-nowrap hidden md:block">
                 SCROLL TO CONTINUE
               </div>
-              <div className="prog-track" style={{ flex: 1 }}>
+              <div className="seq-hud text-white/20 text-[9px] tracking-[0.2em] whitespace-nowrap md:hidden">
+                SCROLL
+              </div>
+              <div className="prog-track flex-1">
                 <div className="prog-fill" style={{ width: `${pct}%` }} />
               </div>
-              <div className="seq-hud" style={{
-                color: "rgba(255,255,255,0.2)", fontSize: "9px", letterSpacing: "0.2em", whiteSpace: "nowrap",
-              }}>
+              <div className="seq-hud text-white/20 text-[9px] tracking-[0.2em] whitespace-nowrap">
                 {pct}%
               </div>
             </div>
