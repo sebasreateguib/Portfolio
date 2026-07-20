@@ -8,7 +8,6 @@ import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../data/translations";
 
 const FRAME_COUNT = 240;
-const SCROLL_SCREENS = 3;
 
 const getImagePath = (i: number) =>
   `/mac/frame-${String(i + 1).padStart(3, "0")}.jpg`;
@@ -59,6 +58,17 @@ export default function ScrollImageSequence() {
     headline: t[config.translationKey].headline,
     description: t[config.translationKey].description,
   }));
+
+  const [scrollScreens, setScrollScreens] = useState(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScrollScreens(window.innerWidth < 768 ? 3 : 4);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -163,7 +173,7 @@ export default function ScrollImageSequence() {
       window.removeEventListener("resize", syncSize);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, [loaded, drawFrame, syncSize]);
+  }, [loaded, drawFrame, syncSize, scrollScreens]);
 
   const pct = Math.round(scrollPct * 100);
 
@@ -214,7 +224,7 @@ export default function ScrollImageSequence() {
       {/* ── Outer scroll container ─────────────────────────────────────── */}
       <div
         ref={containerRef}
-        style={{ height: `${SCROLL_SCREENS * 100}vh`, background: "#050505" }}
+        style={{ height: `${scrollScreens * 100}vh`, background: "#050505" }}
       >
         {/* ── Sticky viewport ─────────────────────────────────────────── */}
         <div
