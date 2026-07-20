@@ -1,5 +1,6 @@
 import TopBanner from '../components/ui/top-banner';
 import HeroAscii from '../components/ui/hero-ascii';
+import ScrollImageSequence from '../components/ui/scroll-image-sequence';
 import GithubIntro from '../components/ui/github-intro';
 import ProjectsSection from '../components/ui/projects-section';
 import WorkPhilosophy from '../components/ui/work-philosophy';
@@ -120,6 +121,7 @@ export default function Home() {
         <div className="bg-black min-h-screen">
           <TopBanner />
           <HeroAscii />
+          <ScrollImageSequence />
           <ScrollReveal>
             <GithubIntro />
           </ScrollReveal>

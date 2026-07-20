@@ -25,3 +25,6 @@ dist-ssr
 *.sw?
 
 .env
+
+# Large media files and frame sequences
+public/mb/
