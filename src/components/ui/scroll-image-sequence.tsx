@@ -100,7 +100,7 @@ export default function ScrollImageSequence() {
     const ch = canvas.height;
     // Fix mobile detection: use window.innerWidth instead of cw, as cw is scaled by devicePixelRatio
     const isMobile = window.innerWidth < 768;
-    const zoomMultiplier = isMobile ? 0.40 : 0.85;
+    const zoomMultiplier = isMobile ? 0.52 : 0.85;
     const ratio = Math.max(cw / iw, ch / ih) * zoomMultiplier;
     const dx = (cw - iw * ratio) / 2;
     const dy = (ch - ih * ratio) / 2;
@@ -284,7 +284,7 @@ export default function ScrollImageSequence() {
               {/* Scroll-driven copy — CLI cards */}
               <div
                 key={activeCopy.headline}
-                className={`copy-fade absolute z-[15] w-auto md:w-[380px] scale-[0.98] md:scale-100 transition-all duration-700 ease-out animate-in fade-in ${activeCopy.animationClass} ${activeCopy.position}`}
+                className={`copy-fade absolute z-[15] w-auto md:w-[380px] scale-90 md:scale-100 transition-all duration-700 ease-out animate-in fade-in ${activeCopy.animationClass} ${activeCopy.position}`}
               >
                 <div className="p-3 md:p-4 border border-white/10 bg-black/80 backdrop-blur-sm shadow-[0_0_20px_rgba(0,0,0,0.8)] font-mono">
                   {/* Terminal Header */}
