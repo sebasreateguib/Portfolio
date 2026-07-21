@@ -8,7 +8,10 @@ import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
+import { Download, FileText } from 'lucide-react';
 import AgenticWorkflow from './agentic-workflow';
+import { VercelCard } from './vercel-card';
+import PixelBackground from './pixel-background';
 
 interface Logo {
     name: string;
@@ -111,6 +114,26 @@ export default function LogoCloudMarquee({
             <div className="relative -mt-16 h-96 w-full overflow-hidden mask-[radial-gradient(50%_50%,white,transparent)] flex flex-col items-center">
                 <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,rgba(59,130,246,1),transparent_70%)] before:opacity-40" />
                 <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20 bg-zinc-950" />
+                
+                {/* CV Download Button - Centered in the visible planet area */}
+                <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="absolute top-[75%] z-30 flex flex-col items-center"
+                >
+                    <a
+                        href={language === 'es' ? '/CV-ES.pdf' : '/CV-EN.pdf'}
+                        download="Sebastian-Reategui-CV.pdf"
+                        className="group relative inline-flex items-center gap-3 px-6 py-3 bg-transparent text-white font-mono text-sm md:text-base border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all duration-200 cursor-pointer shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                    >
+                        <Download className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+                        <span className="text-white/80 group-hover:text-white transition-colors">
+                            {language === 'es' ? 'Descargar CV' : 'Download Resume'}
+                        </span>
+                    </a>
+                </motion.div>
             </div>
         </section>
     );
