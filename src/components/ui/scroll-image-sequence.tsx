@@ -7,10 +7,10 @@ import { Terminal, Code, Cpu, Globe } from 'lucide-react';
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../data/translations";
 
-const FRAME_COUNT = 240;
+const FRAME_COUNT = 300;
 
 const getImagePath = (i: number) =>
-  `/mac-3k-optimized/frame-${String(i + 1).padStart(3, "0")}.jpg`;
+  `/pc/upscayl_png_upscayl-standard-4x_5x/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
 
 // Copy layout config (text comes from translations)
 const COPY_STAGES_CONFIG = [
@@ -127,12 +127,16 @@ export default function ScrollImageSequence() {
   // ─── Phase 1: preload ────────────────────────────────────────────────────
   useEffect(() => {
     let done = 0;
+    setLoaded(false);
+    setProgress(0);
     images.current = Array.from({ length: FRAME_COUNT }, (_, i) => {
       const img = new Image();
       const tick = () => {
         done++;
         setProgress(Math.round((done / FRAME_COUNT) * 100));
-        if (done === FRAME_COUNT) setLoaded(true);
+        if (done === FRAME_COUNT) {
+          setLoaded(true);
+        }
       };
       img.onload = tick;
       img.onerror = tick;
@@ -146,18 +150,20 @@ export default function ScrollImageSequence() {
     if (!loaded) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const rafId = requestAnimationFrame(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let st: any = null;
+
+    const timer = setTimeout(() => {
       syncSize();
       drawFrame(0);
-      window.addEventListener("resize", syncSize);
 
-      const st = ScrollTrigger.create({
+      st = ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: true,
+        scrub: 0.1,
         onUpdate(self) {
-          const f = Math.round(self.progress * (FRAME_COUNT - 1));
+          const f = Math.min(FRAME_COUNT - 1, Math.max(0, Math.round(self.progress * (FRAME_COUNT - 1))));
           frameIdx.current = f;
           drawFrame(f);
           setScrollPct(self.progress);
@@ -165,13 +171,20 @@ export default function ScrollImageSequence() {
         },
       });
 
-      return () => st.kill();
-    });
+      ScrollTrigger.refresh();
+    }, 50);
+
+    const handleResize = () => {
+      syncSize();
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", syncSize);
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+      if (st) st.kill();
     };
   }, [loaded, drawFrame, syncSize, scrollScreens]);
 
