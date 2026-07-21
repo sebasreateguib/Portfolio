@@ -126,10 +126,10 @@ export default function LogoCloudMarquee({
                     <a
                         href={language === 'es' ? '/CV-ES.pdf' : '/CV-EN.pdf'}
                         download="Sebastian-Reategui-CV.pdf"
-                        className="group relative inline-flex items-center gap-3 px-6 py-3 bg-transparent text-white font-mono text-sm md:text-base border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all duration-200 cursor-pointer shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                        className="group relative inline-flex items-center gap-3 px-6 py-3 bg-transparent text-white font-mono text-sm md:text-base border border-transparent transition-all duration-200 cursor-pointer"
                     >
-                        <Download className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
-                        <span className="text-white/80 group-hover:text-white transition-colors">
+                        <Download className="w-5 h-5 text-white/70 transition-colors" />
+                        <span className="text-white/80 transition-colors">
                             {language === 'es' ? 'Descargar CV' : 'Download Resume'}
                         </span>
                     </a>
