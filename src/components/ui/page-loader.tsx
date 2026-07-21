@@ -58,15 +58,18 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
 
     useEffect(() => {
         if (phase === "revealed") {
+            document.documentElement.style.overflow = "";
+            document.body.style.overflow = "";
             window.dispatchEvent(new CustomEvent("portfolio:loader-done"));
             return;
         }
 
-        const previousOverflow = document.documentElement.style.overflow;
         document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
 
         return () => {
-            document.documentElement.style.overflow = previousOverflow;
+            document.documentElement.style.overflow = "";
+            document.body.style.overflow = "";
         };
     }, [phase]);
 
