@@ -7,10 +7,10 @@ import { Terminal, Code, Cpu, Globe } from 'lucide-react';
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../data/translations";
 
-const FRAME_COUNT = 300;
+const FRAME_COUNT = 240;
 
 const getImagePath = (i: number) =>
-  `/pc/upscayl_png_upscayl-standard-4x_5x/ezgif-frame-${String(i + 1).padStart(3, "0")}.png`;
+  `/mac/frame-${String(i + 1).padStart(3, "0")}.jpg`;
 
 // Copy layout config (text comes from translations)
 const COPY_STAGES_CONFIG = [
@@ -286,29 +286,29 @@ export default function ScrollImageSequence() {
                 key={activeCopy.headline}
                 className={`copy-fade absolute z-[15] w-auto md:w-[380px] transition-all duration-700 ease-out animate-in fade-in ${activeCopy.animationClass} ${activeCopy.position}`}
               >
-                <div className="p-2.5 md:p-4 border border-white/10 bg-black/80 backdrop-blur-sm shadow-[0_0_20px_rgba(0,0,0,0.8)] font-mono">
+                <div className="p-3 md:p-4 border border-white/10 bg-black/80 backdrop-blur-sm shadow-[0_0_20px_rgba(0,0,0,0.8)] font-mono">
                   {/* Terminal Header */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-1.5 md:pb-2 md:mb-3">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2 md:mb-3">
                     <div className="flex gap-1.5">
-                      <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full bg-red-500/80"></div>
-                      <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500/80"></div>
-                      <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full bg-green-500/80"></div>
+                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500/80"></div>
+                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500/80"></div>
+                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-500/80"></div>
                     </div>
-                    <div className="text-[7px] md:text-[9px] text-white/30 tracking-widest uppercase truncate max-w-[150px] md:max-w-none">
+                    <div className="text-[8px] md:text-[9px] text-white/30 tracking-widest uppercase truncate max-w-[150px] md:max-w-none">
                       BASH ~ sebastian
                     </div>
                   </div>
 
                   {/* Terminal Body */}
-                  <div className="flex flex-col gap-1.5 md:gap-2.5">
-                    <div className="text-white/40 text-[10px] md:text-sm tracking-wider">
+                  <div className="flex flex-col gap-2 md:gap-2.5">
+                    <div className="text-white/40 text-xs md:text-sm tracking-wider">
                       <span className="text-white/20 pr-2">❯</span>
                       {activeCopy.cmd}
                     </div>
-                    <div className={`text-sm md:text-lg font-bold ${activeCopy.textColor} tracking-tight`}>
+                    <div className={`text-base md:text-lg font-bold ${activeCopy.textColor} tracking-tight`}>
                       {activeCopy.headline}
                     </div>
-                    <div className="text-white/70 text-[9px] md:text-xs leading-relaxed border-l border-white/10 pl-2 py-0.5 md:pl-3 md:py-1 mt-0.5">
+                    <div className="text-white/70 text-[11px] md:text-xs leading-relaxed border-l border-white/10 pl-3 py-1 mt-0.5">
                       {activeCopy.description}
 
                     </div>
