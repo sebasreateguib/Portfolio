@@ -123,15 +123,7 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                         aria-live="polite"
                         aria-label={line}
                     >
-                        <div
-                            aria-hidden="true"
-                            className="pointer-events-none absolute inset-0 opacity-[0.35]"
-                            style={{
-                                backgroundImage:
-                                    "radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)",
-                                backgroundSize: "24px 24px",
-                            }}
-                        />
+
 
                         <motion.div
                             animate={
