@@ -7,10 +7,10 @@ import { Terminal, Code, Cpu, Globe } from 'lucide-react';
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../data/translations";
 
-const FRAME_COUNT = 240;
+const FRAME_COUNT = 300;
 
 const getImagePath = (i: number) =>
-  `/mac/frame-${String(i + 1).padStart(3, "0")}.jpg`;
+  `/pc/upscayl_png_upscayl-standard-4x_5x/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
 
 // Copy layout config (text comes from translations)
 const COPY_STAGES_CONFIG = [
