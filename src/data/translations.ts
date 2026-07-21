@@ -61,16 +61,6 @@ export const translations = {
       archiveHint: "Browse the rest by category — open a file to jump to its repo.",
       list: [
         {
-          id: 0,
-          title: "OpenMultimodal",
-          description: "Multimodal RAG Agent. Engineered an end-to-end AI system using LlamaIndex, LlamaParse, Google Gemini, and Qdrant. It indexes complex PDFs and images to answer queries backed by retrieved multimodal evidence.",
-          tech: ["Python", "FastAPI", "LlamaIndex", "Gemini", "Qdrant", "React"],
-          github: "https://github.com/sebasreateguib/OpenMultimodal",
-          live: "#",
-          image: "/demo.png",
-          year: "2026"
-        },
-        {
           id: 4,
           title: "SanaFlow",
           description: "Intelligent Medical Triage Platform. Designed a 100% Serverless, event-driven architecture using AWS (Lambda, SQS, DynamoDB). Engineered an automated data pipeline that processes massive clinical notes in real-time, leveraging Llama 3 via Groq API for extraction and urgency prioritization.",
@@ -91,16 +81,6 @@ export const translations = {
           year: "2026"
         },
         {
-          id: 10,
-          title: "FraudNet",
-          description: "Neural Network Fraud Detection System. Built a Multi-Layer Perceptron entirely from scratch in C++ using custom linear algebra tensors. Connected to an enterprise-grade React dashboard via a Node.js Bridge API for real-time transaction monitoring and testing.",
-          tech: ["C++", "Neural Networks", "React.js", "Node.js", "Express"],
-          github: "https://github.com/sebasreateguib/FraudNet",
-          live: "#",
-          image: "LUCIDE:Brain",
-          year: "2025"
-        },
-        {
           id: 5,
           title: "Mr Sushi Order Platform",
           description: "Modern Serverless and Event-Driven architecture backend for a restaurant platform. Built with Serverless Framework utilizing AWS Lambda, API Gateway, DynamoDB, Step Functions (Wait for Callback pattern) and EventBridge.",
@@ -109,6 +89,26 @@ export const translations = {
           live: "#",
           image: "/mrsushi-compressed.mp4",
           year: "2026"
+        },
+        {
+          id: 0,
+          title: "OpenMultimodal",
+          description: "Multimodal RAG Agent. Engineered an end-to-end AI system using LlamaIndex, LlamaParse, Google Gemini, and Qdrant. It indexes complex PDFs and images to answer queries backed by retrieved multimodal evidence.",
+          tech: ["Python", "FastAPI", "LlamaIndex", "Gemini", "Qdrant", "React"],
+          github: "https://github.com/sebasreateguib/OpenMultimodal",
+          live: "#",
+          image: "/demo.png",
+          year: "2026"
+        },
+        {
+          id: 10,
+          title: "FraudNet",
+          description: "Neural Network Fraud Detection System. Built a Multi-Layer Perceptron entirely from scratch in C++ using custom linear algebra tensors. Connected to an enterprise-grade React dashboard via a Node.js Bridge API for real-time transaction monitoring and testing.",
+          tech: ["C++", "Neural Networks", "React.js", "Node.js", "Express"],
+          github: "https://github.com/sebasreateguib/FraudNet",
+          live: "#",
+          image: "LUCIDE:Brain",
+          year: "2025"
         },
         {
           id: 2,
@@ -274,16 +274,6 @@ export const translations = {
       archiveHint: "Explora el resto por categoría — abre un archivo para ir a su repo.",
       list: [
         {
-          id: 0,
-          title: "OpenMultimodal",
-          description: "Agente Multimodal RAG. Diseñé un sistema de IA usando LlamaIndex, LlamaParse, Google Gemini y Qdrant. Indexa documentos complejos e imágenes para responder consultas respaldadas por evidencia multimodal.",
-          tech: ["Python", "FastAPI", "LlamaIndex", "Gemini", "Qdrant", "React"],
-          github: "https://github.com/sebasreateguib/OpenMultimodal",
-          live: "#",
-          image: "/demo.png",
-          year: "2026"
-        },
-        {
           id: 4,
           title: "SanaFlow",
           description: "Plataforma de Triaje Médico Inteligente. Arquitectura 100% Serverless orientada a eventos usando AWS (Lambda, SQS, DynamoDB). Diseñé un pipeline automático que procesa notas clínicas masivamente en tiempo real usando Llama 3 (vía Groq) para extraer síntomas y priorizar la urgencia médica.",
@@ -304,16 +294,6 @@ export const translations = {
           year: "2026"
         },
         {
-          id: 10,
-          title: "FraudNet",
-          description: "Sistema de Detección de Fraude con Redes Neuronales. Construí un Perceptrón Multicapa (MLP) desde cero en C++ usando tensores propios. Conectado a un dashboard empresarial en React mediante una API en Node.js para monitoreo y pruebas en tiempo real.",
-          tech: ["C++", "Neural Networks", "React.js", "Node.js", "Express"],
-          github: "https://github.com/sebasreateguib/FraudNet",
-          live: "#",
-          image: "LUCIDE:Brain",
-          year: "2025"
-        },
-        {
           id: 5,
           title: "Plataforma de Pedidos Mr Sushi",
           description: "Backend Serverless y Orientado a Eventos (EDA) moderno y robusto para una plataforma de restaurante. Construido con Serverless Framework utilizando AWS Lambda, API Gateway, DynamoDB, Step Functions y EventBridge.",
@@ -322,6 +302,26 @@ export const translations = {
           live: "#",
           image: "/mrsushi-compressed.mp4",
           year: "2026"
+        },
+        {
+          id: 0,
+          title: "OpenMultimodal",
+          description: "Agente Multimodal RAG. Diseñé un sistema de IA usando LlamaIndex, LlamaParse, Google Gemini y Qdrant. Indexa documentos complejos e imágenes para responder consultas respaldadas por evidencia multimodal.",
+          tech: ["Python", "FastAPI", "LlamaIndex", "Gemini", "Qdrant", "React"],
+          github: "https://github.com/sebasreateguib/OpenMultimodal",
+          live: "#",
+          image: "/demo.png",
+          year: "2026"
+        },
+        {
+          id: 10,
+          title: "FraudNet",
+          description: "Sistema de Detección de Fraude con Redes Neuronales. Construí un Perceptrón Multicapa (MLP) desde cero en C++ usando tensores propios. Conectado a un dashboard empresarial en React mediante una API en Node.js para monitoreo y pruebas en tiempo real.",
+          tech: ["C++", "Neural Networks", "React.js", "Node.js", "Express"],
+          github: "https://github.com/sebasreateguib/FraudNet",
+          live: "#",
+          image: "LUCIDE:Brain",
+          year: "2025"
         },
         {
           id: 2,

@@ -207,6 +207,44 @@ Cuenta con navegación completa por teclado, un encabezado animado con glitch y 
 El tipo de herramienta que construyes porque puedes, y luego terminas usando todos los días.
 Repo: https://github.com/sebasreateguib/AppleMusicTUI`
     }
+  },
+  {
+    id: 'project-openmultimodal.txt',
+    name: {
+      en: 'OpenMultimodal – Multimodal RAG Agent',
+      es: 'OpenMultimodal – Agente Multimodal RAG'
+    },
+    content: {
+      en: `OPENMULTIMODAL:
+Stack: Python · FastAPI · LlamaIndex · Gemini · Qdrant · React
+Challenge: Build an AI system to index and query complex multimodal data (PDFs, images).
+Solution: Engineered an end-to-end AI system using LlamaIndex, LlamaParse, Google Gemini, and Qdrant. It indexes complex PDFs and images to answer queries backed by retrieved multimodal evidence.
+Repo: https://github.com/sebasreateguib/OpenMultimodal`,
+      es: `OPENMULTIMODAL:
+Stack: Python · FastAPI · LlamaIndex · Gemini · Qdrant · React
+Desafío: Construir un sistema de IA para indexar y consultar datos multimodales complejos (PDFs, imágenes).
+Solución: Diseñé un sistema de IA usando LlamaIndex, LlamaParse, Google Gemini y Qdrant. Indexa documentos complejos e imágenes para responder consultas respaldadas por evidencia multimodal.
+Repo: https://github.com/sebasreateguib/OpenMultimodal`
+    }
+  },
+  {
+    id: 'project-fraudnet.txt',
+    name: {
+      en: 'FraudNet – Neural Network Fraud Detection System',
+      es: 'FraudNet – Sistema de Detección de Fraude con Redes Neuronales'
+    },
+    content: {
+      en: `FRAUDNET:
+Stack: C++ · Neural Networks · React.js · Node.js · Express
+Challenge: Build a Neural Network for fraud detection from scratch without external ML libraries.
+Solution: Built a Multi-Layer Perceptron entirely from scratch in C++ using custom linear algebra tensors. Connected to an enterprise-grade React dashboard via a Node.js Bridge API for real-time transaction monitoring and testing.
+Repo: https://github.com/sebasreateguib/FraudNet`,
+      es: `FRAUDNET:
+Stack: C++ · Redes Neuronales · React.js · Node.js · Express
+Desafío: Construir una Red Neuronal para detección de fraude desde cero sin usar librerías de ML externas.
+Solución: Construí un Perceptrón Multicapa (MLP) desde cero en C++ usando tensores propios. Conectado a un dashboard empresarial en React mediante una API en Node.js para monitoreo y pruebas en tiempo real.
+Repo: https://github.com/sebasreateguib/FraudNet`
+    }
   }
 ];
 
