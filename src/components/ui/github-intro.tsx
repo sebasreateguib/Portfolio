@@ -187,22 +187,13 @@ export default function GithubIntro() {
                 {/* ── Main Card ── */}
                 <motion.div
                     variants={itemVariants}
-                    className="relative w-full bg-[#080808] border border-white/8 overflow-hidden"
+                    className="relative w-full bg-[#030303] border border-white/5 overflow-hidden"
                 >
                     {/* Top edge accent line */}
                     <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-blue-400/50 to-transparent" />
 
-                    {/* Grid pattern background */}
-                    <div
-                        className="absolute inset-0 opacity-[0.025] pointer-events-none"
-                        style={{
-                            backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
-                            backgroundSize: '32px 32px',
-                        }}
-                    />
-
                     {/* ── Top bar: filename tag ── */}
-                    <div className="relative flex items-center justify-between border-b border-white/8 px-5 py-2.5">
+                    <div className="relative flex items-center justify-between border-b border-white/5 px-5 py-2.5">
                         <div className="flex items-center gap-2">
                             <div className="flex gap-1.5">
                                 <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
@@ -298,7 +289,7 @@ export default function GithubIntro() {
                         <div className="flex-1 flex flex-col">
 
                             {/* Bio */}
-                            <div className="px-7 py-7 border-b border-white/8">
+                            <div className="px-7 py-7 border-b border-white/5">
                                 <p className="text-[11px] font-mono text-blue-400/70 uppercase tracking-[0.2em] mb-3">// introduction</p>
                                 <h2 className="text-[22px] font-bold text-white tracking-tight leading-tight mb-3">
                                     {t.intro.hi}
@@ -312,7 +303,7 @@ export default function GithubIntro() {
                             </div>
 
                             {/* Bullets */}
-                            <div className="px-7 py-6 border-b border-white/8">
+                            <div className="px-7 py-6 border-b border-white/5">
                                 <ul className="flex flex-col gap-3.5">
                                     <BulletRow emoji="🚀" html={t.intro.bullet2} />
                                     <BulletRow emoji="🎯" html={t.intro.bullet4} />

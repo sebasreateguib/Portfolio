@@ -19,8 +19,6 @@ export default function EducationSection() {
 
     return (
         <section id="education" className="bg-black pt-16 pb-4 lg:pt-24 lg:pb-16 relative overflow-hidden flex flex-col justify-center">
-            {/* Background grid pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none"></div>
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
@@ -101,7 +99,7 @@ export default function EducationSection() {
                             title="Click to change camera angle"
                         >
                             {/* Base ASCII */}
-                            <pre className="font-mono text-[3px] sm:text-[3px] md:text-[4px] lg:text-[3px] xl:text-[3.5px] leading-[3px] sm:leading-[3px] md:leading-[4px] lg:leading-[3px] xl:leading-[3.5px] text-white/80 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+                            <pre className="font-mono text-[3px] sm:text-[3.5px] md:text-[4.5px] lg:text-[4.5px] xl:text-[5px] leading-[3px] sm:leading-[3.5px] md:leading-[4.5px] lg:leading-[4.5px] xl:leading-[5px] text-white/80 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
                                 {currentAscii}
                             </pre>
 
@@ -116,11 +114,11 @@ export default function EducationSection() {
                             />
 
                             {/* Glitch Layer 1 */}
-                            <pre className="absolute top-0 font-mono text-[3px] sm:text-[3px] md:text-[4px] lg:text-[3px] xl:text-[3.5px] leading-[3px] sm:leading-[3px] md:leading-[4px] lg:leading-[3px] xl:leading-[3.5px] text-cyan-400 mix-blend-screen opacity-0 animate-glitch-1 group-hover/glitch:opacity-0" style={{ textShadow: '-2px 0 0 #0ff' }}>
+                            <pre className="absolute top-0 font-mono text-[3px] sm:text-[3.5px] md:text-[4.5px] lg:text-[4.5px] xl:text-[5px] leading-[3px] sm:leading-[3.5px] md:leading-[4.5px] lg:leading-[4.5px] xl:leading-[5px] text-cyan-400 mix-blend-screen opacity-0 animate-glitch-1 group-hover/glitch:opacity-0" style={{ textShadow: '-2px 0 0 #0ff' }}>
                                 {currentAscii}
                             </pre>
                             {/* Glitch Layer 2 */}
-                            <pre className="absolute top-0 font-mono text-[3px] sm:text-[3px] md:text-[4px] lg:text-[3px] xl:text-[3.5px] leading-[3px] sm:leading-[3px] md:leading-[4px] lg:leading-[3px] xl:leading-[3.5px] text-fuchsia-500 mix-blend-screen opacity-0 animate-glitch-2 group-hover/glitch:opacity-0" style={{ textShadow: '2px 0 0 #f0f' }}>
+                            <pre className="absolute top-0 font-mono text-[3px] sm:text-[3.5px] md:text-[4.5px] lg:text-[4.5px] xl:text-[5px] leading-[3px] sm:leading-[3.5px] md:leading-[4.5px] lg:leading-[4.5px] xl:leading-[5px] text-fuchsia-500 mix-blend-screen opacity-0 animate-glitch-2 group-hover/glitch:opacity-0" style={{ textShadow: '2px 0 0 #f0f' }}>
                                 {currentAscii}
                             </pre>
                         </div>

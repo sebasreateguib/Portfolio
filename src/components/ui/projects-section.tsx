@@ -137,8 +137,6 @@ export default function ProjectsSection() {
 
     return (
         <section id="projects" className="bg-black py-16 lg:py-24 relative overflow-hidden">
-            {/* Background grid pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none"></div>
             <div className="absolute inset-x-0 top-1/3 h-56 bg-blue-500/10 blur-[120px] pointer-events-none"></div>
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
@@ -189,14 +187,14 @@ export default function ProjectsSection() {
                         return (
                             <div
                                 key={project.id}
-                                className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/10 bg-[#050505] shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_80px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-16px)]"
+                                className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/5 bg-[#030303] shadow-[0_0_0_1px_rgba(255,255,255,0.01),0_24px_80px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-16px)]"
                             >
-                                <div className="absolute top-0 left-0 z-30 h-3 w-3 border-l border-t border-white/40 transition-colors duration-300 group-hover:border-blue-300"></div>
-                                <div className="absolute top-0 right-0 z-30 h-3 w-3 border-r border-t border-white/40 transition-colors duration-300 group-hover:border-blue-300"></div>
-                                <div className="absolute bottom-0 left-0 z-30 h-3 w-3 border-b border-l border-white/40 transition-colors duration-300 group-hover:border-blue-300"></div>
-                                <div className="absolute bottom-0 right-0 z-30 h-3 w-3 border-b border-r border-white/40 transition-colors duration-300 group-hover:border-blue-300"></div>
+                                <div className="absolute top-0 left-0 z-30 h-3 w-3 border-l border-t border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>
+                                <div className="absolute top-0 right-0 z-30 h-3 w-3 border-r border-t border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>
+                                <div className="absolute bottom-0 left-0 z-30 h-3 w-3 border-b border-l border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>
+                                <div className="absolute bottom-0 right-0 z-30 h-3 w-3 border-b border-r border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>
 
-                                <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.025] px-4 py-3 font-mono text-[10px] tracking-widest">
+                                <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.01] px-4 py-3 font-mono text-[10px] tracking-widest">
                                     <div className="flex items-center gap-2 text-white/50">
                                         <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.9)]"></span>
                                         <span>{copy.eyebrow}_{String(index + 1).padStart(2, '0')}</span>
@@ -205,9 +203,9 @@ export default function ProjectsSection() {
                                 </div>
 
                                 {project.image && (
-                                    <div className="relative h-52 overflow-hidden border-b border-white/10 bg-blue-950/10 md:h-48 lg:h-52">
+                                    <div className="relative h-52 overflow-hidden border-b border-white/5 bg-black md:h-48 lg:h-52">
                                         {project.image.startsWith('LUCIDE:') ? (
-                                            <div className="flex h-full w-full items-center justify-center bg-[#0a0a0a] group-hover:scale-105 transition-all duration-700">
+                                            <div className="flex h-full w-full items-center justify-center bg-black group-hover:scale-105 transition-all duration-700">
                                                 {project.image === 'LUCIDE:Brain' && <Brain className="h-20 w-20 text-blue-400 opacity-60 group-hover:opacity-100 transition-opacity duration-500" strokeWidth={1} />}
                                             </div>
                                         ) : project.image.endsWith('.mp4') || project.image.endsWith('.webm') ? (
@@ -228,7 +226,7 @@ export default function ProjectsSection() {
                                             </>
                                         )}
                                         <div className="absolute inset-0 z-20 pointer-events-none bg-[linear-gradient(rgba(0,0,0,0.28)_1px,transparent_1px)] bg-size-[100%_4px]"></div>
-                                        <div className="absolute inset-x-0 bottom-0 z-20 h-20 bg-linear-to-t from-[#050505] to-transparent pointer-events-none"></div>
+                                        <div className="absolute inset-x-0 bottom-0 z-20 h-20 bg-linear-to-t from-[#030303] to-transparent pointer-events-none"></div>
                                         <div className="absolute left-4 top-4 z-30 rounded-full border border-blue-300/30 bg-black/50 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-blue-100 backdrop-blur">
                                             {meta.category}
                                         </div>

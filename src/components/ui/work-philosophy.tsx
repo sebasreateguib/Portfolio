@@ -146,9 +146,6 @@ export default function WorkPhilosophy() {
 
   return (
     <section id="philosophy" className="bg-black py-16 lg:py-24 relative overflow-hidden">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none" />
-
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="mb-10 md:mb-16">

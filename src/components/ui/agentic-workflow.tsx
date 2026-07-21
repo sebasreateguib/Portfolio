@@ -11,10 +11,7 @@ export default function AgenticWorkflow() {
     const t = translations[language];
 
     return (
-        <section className="bg-black py-16 lg:py-24 px-6 relative overflow-hidden flex items-center justify-center min-h-[400px]">
-             {/* Subtle Background Grid */}
-             <div className="absolute inset-0 z-0 pointer-events-none opacity-30 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:40px_40px]"></div>
-
+        <section className="relative py-12 md:py-20 overflow-hidden bg-black text-white">
              <div className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
                  <VercelCard 
                      showIcons={true} 
