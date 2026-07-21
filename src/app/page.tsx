@@ -15,6 +15,19 @@ import PageLoader from '../components/ui/page-loader';
 
 const projectsData = [
   {
+    id: 0,
+    artist: "OpenMultimodal",
+    album: "PYTHON | AI | PYTORCH",
+    tech: ["Python", "PyTorch", "AI", "Multimodal"],
+    category: "AI",
+    label: "MACHINE LEARNING",
+    year: "2026",
+    image: "/demo.png",
+    description: "An open-source multimodal AI project integrating different data modalities.",
+    github: "https://github.com/sebasreateguib/OpenMultimodal",
+    live: null
+  },
+  {
     id: 1,
     artist: "SanaFlow",
     album: "REACT | PYTHON | AWS",

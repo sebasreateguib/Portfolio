@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown, ExternalLink } from 'lucide-react';
+import { ChevronDown, ExternalLink, Brain } from 'lucide-react';
 import { TerminalIcon } from '../term-icon';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
@@ -31,6 +31,11 @@ const projectDetails = {
         demo: 'Live Demo',
         unavailable: 'Demo soon',
         projects: {
+            0: {
+                category: 'Multimodal RAG Agent',
+                role: 'Full-Stack AI Engineer',
+                signals: ['Multimodal Embeddings', 'LlamaParse parsing', 'Qdrant Vector DB'],
+            },
             7: {
                 category: 'Geospatial Algorithms',
                 role: 'C++ Systems / Frontend Engineer',
@@ -40,6 +45,11 @@ const projectDetails = {
                 category: 'Fintech Analytics',
                 role: 'Core Full-Stack, Cloud & Data Engineer',
                 signals: ['Serverless ETL', 'Multi-service backend', 'Analytical querying'],
+            },
+            10: {
+                category: 'Systems / AI Engineering',
+                role: 'Machine Learning & Systems Engineer',
+                signals: ['C++ Custom MLP', 'Gradient Descent', 'PCA Dataset'],
             },
             2: {
                 category: 'Healthcare Platform',
@@ -74,6 +84,11 @@ const projectDetails = {
         demo: 'Demo en vivo',
         unavailable: 'Demo pronto',
         projects: {
+            0: {
+                category: 'Agente Multimodal RAG',
+                role: 'Full-Stack AI Engineer',
+                signals: ['Embeddings Multimodales', 'Parsing con LlamaParse', 'Vector DB Qdrant'],
+            },
             7: {
                 category: 'Algoritmos Geoespaciales',
                 role: 'C++ Systems / Frontend Engineer',
@@ -83,6 +98,11 @@ const projectDetails = {
                 category: 'Analítica Fintech',
                 role: 'Core Full-Stack, Cloud & Data Engineer',
                 signals: ['ETL serverless', 'Backend multiservicio', 'Consultas analíticas'],
+            },
+            10: {
+                category: 'Ingeniería de Sistemas e IA',
+                role: 'Machine Learning & Systems Engineer',
+                signals: ['MLP C++ propio', 'Descenso de Gradiente', 'Dataset PCA'],
             },
             2: {
                 category: 'Plataforma de Salud',
@@ -186,22 +206,24 @@ export default function ProjectsSection() {
 
                                 {project.image && (
                                     <div className="relative h-52 overflow-hidden border-b border-white/10 bg-blue-950/10 md:h-48 lg:h-52">
-                                        {project.image.endsWith('.mp4') || project.image.endsWith('.webm') ? (
+                                        {project.image.startsWith('LUCIDE:') ? (
+                                            <div className="flex h-full w-full items-center justify-center bg-[#0a0a0a] group-hover:scale-105 transition-all duration-700">
+                                                {project.image === 'LUCIDE:Brain' && <Brain className="h-20 w-20 text-blue-400 opacity-60 group-hover:opacity-100 transition-opacity duration-500" strokeWidth={1} />}
+                                            </div>
+                                        ) : project.image.endsWith('.mp4') || project.image.endsWith('.webm') ? (
                                             <ViewportVideo
                                                 src={project.image}
                                                 className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
                                             />
                                         ) : (
                                             <>
-                                                {/* Glitch / Tint Overlay (Images only) */}
-                                                <div className="absolute inset-0 bg-blue-900/40 mix-blend-color z-10 group-hover:bg-transparent transition-colors duration-500"></div>
                                                 <Image
                                                     src={project.image}
                                                     alt={project.title}
                                                     fill
                                                     sizes="(max-width: 768px) 85vw, 33vw"
                                                     loading="lazy"
-                                                    className="object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                                    className="object-cover group-hover:scale-105 transition-all duration-700"
                                                 />
                                             </>
                                         )}
