@@ -113,11 +113,11 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                             duration: useInstantExit ? 0.2 : 0.5,
                             ease: "easeInOut",
                         }}
-                        className="fixed inset-0 z-50 flex min-h-dvh items-center justify-center overflow-hidden bg-[#0a0a0a]"
+                        className="fixed inset-0 z-50 flex min-h-dvh items-center justify-center overflow-hidden bg-black"
                         animate={{
                             backgroundColor: isTransitioning
-                                ? "rgba(10,10,10,0)"
-                                : "rgba(10,10,10,1)",
+                                ? "rgba(0,0,0,0)"
+                                : "rgba(0,0,0,1)",
                         }}
                         role="status"
                         aria-live="polite"
