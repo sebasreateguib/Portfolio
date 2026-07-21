@@ -165,7 +165,11 @@ export const translations = {
     logoCloud: {
       title: "Stack & Workflow",
       badge: "Tech_Stack_&_Tools",
-      description: "Languages, frameworks, tools and infrastructure I use to build scalable applications."
+      description: "Languages, frameworks, tools and infrastructure I use to build scalable applications.",
+      cvBadge: "CURRICULUM_VITAE",
+      cvTitle: "Want to review my full background?",
+      cvDesc: "Download my complete CV for an in-depth view of my technical skills, software architecture experience, and project history.",
+      cvButton: "Download Resume (.PDF)"
     },
     contact: {
       title: "Contact",
@@ -378,7 +382,11 @@ export const translations = {
     logoCloud: {
       title: "Stack & Workflow",
       badge: "Tecnologías_y_Herramientas",
-      description: "Lenguajes, frameworks, herramientas e infraestructura que uso para construir aplicaciones escalables."
+      description: "Lenguajes, frameworks, herramientas e infraestructura que uso para construir aplicaciones escalables.",
+      cvBadge: "CURRÍCULUM_VITAE",
+      cvTitle: "¿Quieres revisar mi experiencia completa?",
+      cvDesc: "Descarga mi CV completo para conocer a detalle mis habilidades técnicas, experiencia en arquitectura de software y trayectoria.",
+      cvButton: "Descargar CV (.PDF)"
     },
     contact: {
       title: "Contacto",
