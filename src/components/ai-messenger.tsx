@@ -13,7 +13,7 @@ import { BotMarkdown } from "./ui/bot-markdown";
 
 
 import { useLanguage } from "../context/LanguageContext";
-import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA } from "../data/content";
+import { FULL_STACK_BIO, SKILLS_CONTENT, PROJECTS_DATA, CONTACT_INFO, PERSONAL_EXTRA, FAQ_KNOWLEDGE } from "../data/content";
 
 type Message = {
     id: string;
@@ -182,6 +182,8 @@ Here is Sebastian's full portfolio information for your context:
 - SKILLS: ${language === "es" ? SKILLS_CONTENT.es : SKILLS_CONTENT.en}
 - PROJECTS: ${PROJECTS_DATA.map((p) => language === "es" ? p.content.es : p.content.en).join('\n\n')}
 - CONTACT: Email: ${CONTACT_INFO.email}, GitHub: ${CONTACT_INFO.github}, Status: ${language === "es" ? CONTACT_INFO.status.es : CONTACT_INFO.status.en}
+
+${language === "es" ? FAQ_KNOWLEDGE.es : FAQ_KNOWLEDGE.en}
 
 Answer user questions accurately, warmly, and strictly using the portfolio information above. If you don't know something or it is not in his professional profile, answer politely saying you only have details regarding Sebastian's studies, skills, projects, and contact info, but offer to tell them more about his awesome C++ or AWS work!
 `;
