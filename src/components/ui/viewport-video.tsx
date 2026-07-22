@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useInViewport } from '../../hooks/use-in-viewport'
 import { cn } from '../../lib/utils'
 
 interface ViewportVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
@@ -14,34 +13,41 @@ export function ViewportVideo({
     src,
     className,
     wrapperClassName,
-    eager = false,
+    eager,
     children,
     ...props
 }: ViewportVideoProps) {
-    const { ref, isInViewport } = useInViewport<HTMLDivElement>(0.25, '50px')
     const videoRef = useRef<HTMLVideoElement>(null)
-    const shouldPlay = eager || isInViewport
 
     useEffect(() => {
         const video = videoRef.current
         if (!video) return
 
-        if (shouldPlay) {
-            video.play().catch(() => {})
-        } else {
-            video.pause()
+        video.defaultMuted = true
+        video.muted = true
+
+        const playVideo = () => {
+            const promise = video.play()
+            if (promise !== undefined) {
+                promise.catch(() => {
+                    // Ignore autoplay restrictions if any
+                })
+            }
         }
-    }, [shouldPlay])
+
+        playVideo()
+    }, [src])
 
     return (
-        <div ref={ref} className={cn('relative w-full h-full', wrapperClassName)}>
+        <div className={cn('relative w-full h-full', wrapperClassName)}>
             <video
                 ref={videoRef}
                 src={src}
+                autoPlay
                 muted
                 loop
                 playsInline
-                preload={eager ? 'auto' : 'none'}
+                preload="auto"
                 className={className}
                 {...props}
             >
