@@ -18,7 +18,7 @@ export default function EducationSection() {
     const currentImage = cameraView === 1 ? "/utec3.png" : "/utec4.png";
 
     return (
-        <section id="education" className="bg-neutral-900 pt-16 pb-4 lg:pt-24 lg:pb-16 relative overflow-hidden flex flex-col justify-center">
+        <section id="education" className="bg-neutral-800 pt-16 pb-4 lg:pt-24 lg:pb-16 relative overflow-hidden flex flex-col justify-center">
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
@@ -45,7 +45,7 @@ export default function EducationSection() {
                                     loading="lazy"
                                     className="object-cover grayscale opacity-30 scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out mix-blend-luminosity"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-900/70 to-neutral-900" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-neutral-800 via-neutral-800/70 to-neutral-800" />
                                 <div className="absolute inset-0 bg-blue-900/20 mix-blend-color" />
                             </div>
 
