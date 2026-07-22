@@ -145,7 +145,7 @@ export default function WorkPhilosophy() {
   const cards = philosophyData[language];
 
   return (
-    <section id="philosophy" className="bg-neutral-900 py-16 lg:py-24 relative overflow-hidden">
+    <section id="philosophy" className="bg-neutral-800 py-16 lg:py-24 relative overflow-hidden">
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
