@@ -8,7 +8,7 @@ import { SectionDivider } from './section-divider';
 const DASH = 5;
 const GAP = 9;
 const STEP = `${DASH + GAP}px`;
-const COLOR = 'rgba(0,0,0,0.2)';
+const COLOR = 'rgba(255,255,255,0.2)';
 const SPEED = '0.5s';
 
 const dashBg = (dir: '90deg' | '180deg') =>
@@ -60,7 +60,7 @@ function AnimatedVDivider({ left }: { left: string }) {
 const BotIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-    className="text-black/50">
+    className="text-blue-400">
     <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" />
     <path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
   </svg>
@@ -68,14 +68,14 @@ const BotIcon = () => (
 const BrainIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-    className="text-black/50">
+    className="text-blue-400">
     <path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" /><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" /><path d="M17.599 6.5a3 3 0 0 0 .399-1.375" /><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /><path d="M3.477 10.896a4 4 0 0 1 .585-.396" /><path d="M19.938 10.5a4 4 0 0 1 .585.396" /><path d="M6 18a4 4 0 0 1-1.967-.516" /><path d="M19.967 17.484A4 4 0 0 1 18 18" />
   </svg>
 );
 const StarIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-    className="text-black/50">
+    className="text-blue-400">
     <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
   </svg>
 );
@@ -133,7 +133,7 @@ const philosophyData = {
 const CheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-    className="text-blue-600 shrink-0 mt-px">
+    className="text-blue-400 shrink-0 mt-px">
     <path d="M20 6 9 17l-5-5" />
   </svg>
 );
@@ -145,28 +145,28 @@ export default function WorkPhilosophy() {
   const cards = philosophyData[language];
 
   return (
-    <section id="philosophy" className="bg-white py-16 lg:py-24 relative overflow-hidden">
+    <section id="philosophy" className="bg-neutral-900 py-16 lg:py-24 relative overflow-hidden">
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="mb-10 md:mb-16">
           <div className="mb-4">
-            <SectionTitle index="04" className="text-black">{t.workPhilosophy.title}</SectionTitle>
+            <SectionTitle index="04">{t.workPhilosophy.title}</SectionTitle>
           </div>
           <div className="flex items-center gap-0 mb-6 md:mb-16">
               <div
-                  className="relative shrink-0 bg-black/[0.03] border border-black/10 px-3 pr-5 py-1 md:px-5 md:pr-8 md:py-1.5"
+                  className="relative shrink-0 bg-white/5 border border-white/10 px-3 pr-5 py-1 md:px-5 md:pr-8 md:py-1.5"
                   style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%)' }}
               >
                   <span className="font-mono text-[8px] md:text-[10px] tracking-widest uppercase select-none flex items-center gap-1.5 md:gap-2">
-                      <span className="text-blue-600 font-bold">04</span>
-                      <span className="text-black/20">·</span>
-                      <span className="text-black/50">{t.workPhilosophy.badge}</span>
+                      <span className="text-blue-400 font-bold">04</span>
+                      <span className="text-white/20">·</span>
+                      <span className="text-white/50">{t.workPhilosophy.badge}</span>
                   </span>
               </div>
               <div
                   className="flex-1 h-px"
-                  style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 70%)' }}
+                  style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.15) 0%, transparent 70%)' }}
               />
           </div>
         </div>
@@ -186,35 +186,35 @@ export default function WorkPhilosophy() {
             'bottom-0 left-0 -translate-x-1/2  translate-y-1/2',
             'bottom-0 right-0  translate-x-1/2   translate-y-1/2',
           ].map((pos, i) => (
-            <span key={i} className={`absolute ${pos} text-black/20 font-mono text-sm select-none pointer-events-none`}>+</span>
+            <span key={i} className={`absolute ${pos} text-white/30 font-mono text-sm select-none pointer-events-none`}>+</span>
           ))}
 
           {/* Internal + marks (top & bottom of each divider) */}
           {['top-0 -translate-y-1/2', 'bottom-0 translate-y-1/2'].map((pos, i) =>
             ['33.333%', '66.666%'].map((l, j) => (
               <span key={`${i}-${j}`}
-                className={`hidden md:block absolute ${pos} -translate-x-1/2 text-black/20 font-mono text-sm select-none pointer-events-none`}
+                className={`hidden md:block absolute ${pos} -translate-x-1/2 text-white/30 font-mono text-sm select-none pointer-events-none`}
                 style={{ left: l }}>+</span>
             ))
           )}
 
           {/* Cards */}
           {cards.map((card, i) => (
-            <div key={i} className={`p-8 lg:p-10 flex flex-col gap-6 ${i < cards.length - 1 ? 'border-b border-dashed border-black/10 md:border-b-0' : ''}`}>
+            <div key={i} className={`p-8 lg:p-10 flex flex-col gap-6 ${i < cards.length - 1 ? 'border-b border-dashed border-white/10 md:border-b-0' : ''}`}>
               {/* Icon box */}
               <div className="flex items-center justify-between">
-                <div className="w-9 h-9 flex items-center justify-center border border-black/10 bg-black/5">
+                <div className="w-9 h-9 flex items-center justify-center border border-white/10 bg-white/5">
                   {card.icon}
                 </div>
-                <span className="font-mono text-[9px] tracking-widest text-black/40 uppercase">{card.badge}</span>
+                <span className="font-mono text-[9px] tracking-widest text-white/40 uppercase">{card.badge}</span>
               </div>
 
               {/* Text */}
               <div>
-                <h3 className="text-[16px] font-semibold text-black/90 mb-3 tracking-tight font-section">
+                <h3 className="text-[16px] font-semibold text-white/90 mb-3 tracking-tight font-section">
                   {card.title}
                 </h3>
-                <p className="text-[13px] text-black/60 leading-[1.65] font-mono mb-5">
+                <p className="text-[13px] text-white/60 leading-[1.65] font-mono mb-5">
                   {card.desc}
                 </p>
               </div>
@@ -224,7 +224,7 @@ export default function WorkPhilosophy() {
                 {card.tags.map((tag, j) => (
                   <li key={j} className="flex items-center gap-2">
                     <CheckIcon />
-                    <span className="text-[12px] font-mono text-black/60">{tag}</span>
+                    <span className="text-[12px] font-mono text-white/60">{tag}</span>
                   </li>
                 ))}
               </ul>
@@ -235,4 +235,5 @@ export default function WorkPhilosophy() {
     </section>
   );
 }
+
 

@@ -45,21 +45,21 @@ export default function EducationSection() {
                                     loading="lazy"
                                     className="object-cover grayscale opacity-30 scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out mix-blend-luminosity"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/95" />
-                                <div className="absolute inset-0 bg-teal-900/20 mix-blend-color" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-900/70 to-neutral-900" />
+                                <div className="absolute inset-0 bg-blue-900/20 mix-blend-color" />
                             </div>
 
                             {/* Subtle left accent that lights up */}
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-0 bg-teal-500 rounded-r-full group-hover:h-3/4 transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 z-10" />
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-0 bg-blue-500 rounded-r-full group-hover:h-3/4 transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 z-10" />
 
                             <div className="flex flex-col gap-2 relative z-10">
                                 <a
                                     href="https://utec.edu.pe"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 text-xl md:text-2xl font-section font-bold text-white hover:text-teal-400 transition-colors duration-300"
+                                    className="flex items-center gap-3 text-xl md:text-2xl font-section font-bold text-white hover:text-blue-400 transition-colors duration-300"
                                 >
-                                    <CpuIcon className="text-teal-500 group-hover:scale-110 transition-transform duration-300" size={24} />
+                                    <CpuIcon className="text-blue-500 group-hover:scale-110 transition-transform duration-300" size={24} />
                                     {t.education.utec}
                                 </a>
 
@@ -69,7 +69,7 @@ export default function EducationSection() {
                                     <span className="font-mono text-white/40">2024 - 2029</span>
                                 </div>
 
-                                <div className="text-teal-400/80 font-medium text-xs md:text-sm flex flex-col gap-2 pl-9 mt-3">
+                                <div className="text-blue-400/80 font-medium text-xs md:text-sm flex flex-col gap-2 pl-9 mt-3">
                                     <div className="flex items-start gap-2">
                                         <Award className="w-4 h-4 shrink-0 mt-0.5" />
                                         <span>{t.education.award}</span>
@@ -85,8 +85,8 @@ export default function EducationSection() {
                             </div>
 
                             <div className="pl-9 md:pl-0 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 relative z-10">
-                                <div className="h-px w-8 bg-teal-500/40" />
-                                <span className="text-[10px] font-mono tracking-widest text-teal-400/80 uppercase">{t.education.inProgress}</span>
+                                <div className="h-px w-8 bg-blue-500/40" />
+                                <span className="text-[10px] font-mono tracking-widest text-blue-400/80 uppercase">{t.education.inProgress}</span>
                             </div>
                         </div>
                     </div>
