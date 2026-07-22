@@ -50,7 +50,7 @@ export default function FreelanceSection() {
 
                     {/* Text outside the component */}
                     <div className="text-center max-w-xl mt-2 px-2">
-                        <p className="text-[10px] sm:text-xs md:text-base text-gray-300 font-mono leading-relaxed mb-6">
+                        <p className="text-xs sm:text-sm md:text-base text-gray-300 font-mono leading-relaxed mb-6">
                             {language === 'es'
                                 ? 'Actualmente disponible para trabajo freelance y pasantías en desarrollo Full Stack: Frontend (Landing Pages, Dashboards, etc.) y Backend con arquitecturas de Microservicios o Serverless.'
                                 : "I'm currently available for freelance work and internships in Full Stack Development: Frontend (Landing Pages, Dashboards, etc.) and Backend development with Microservices or Serverless architectures."}
