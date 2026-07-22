@@ -138,17 +138,23 @@ export default function Home() {
             <GithubIntro />
           </ScrollReveal>
           <ScrollImageSequence />
-          <ScrollReveal>
-            <ProjectsSection />
-          </ScrollReveal>
+          <div className="relative w-full bg-black">
+            {/* Grid background that spans across the sections */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[40px_40px] mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] pointer-events-none z-0"></div>
+            <div className="relative z-10">
+              <ScrollReveal>
+                <ProjectsSection />
+              </ScrollReveal>
 
-          <ScrollReveal>
-            <EducationSection />
-          </ScrollReveal>
+              <ScrollReveal>
+                <EducationSection />
+              </ScrollReveal>
 
-          <ScrollReveal id="WorkPhilosophy">
-            <WorkPhilosophy />
-          </ScrollReveal>
+              <ScrollReveal id="WorkPhilosophy">
+                <WorkPhilosophy />
+              </ScrollReveal>
+            </div>
+          </div>
 
           <ScrollReveal id="Skills">
             <LogoCloudMarquee />

@@ -17,13 +17,13 @@ export default function AgenticWorkflow() {
                      showIcons={true} 
                      bordered={true} 
                      glowEffect={false}
-                     className="bg-[#050505] border-white/10"
+                     className="bg-black border-white/10"
                      contentClassName="p-0"
                      iconClassName="text-white/20"
                  >
                      <PixelBackground 
                          className="w-full h-full p-5 sm:p-6 md:p-10 rounded-xl"
-                         colors="#7a3015,#d97757,#e2967d,#050505"
+                         colors="#7a3015,#d97757,#e2967d,#000000"
                          opacity={0.3}
                          gap={8}
                          speed={60}

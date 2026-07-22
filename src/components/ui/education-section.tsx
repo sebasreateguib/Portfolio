@@ -18,7 +18,7 @@ export default function EducationSection() {
     const currentImage = cameraView === 1 ? "/utec3.png" : "/utec4.png";
 
     return (
-        <section id="education" className="bg-black pt-16 pb-4 lg:pt-24 lg:pb-16 relative overflow-hidden flex flex-col justify-center">
+        <section id="education" className="bg-transparent pt-16 pb-4 lg:pt-24 lg:pb-16 relative overflow-hidden flex flex-col justify-center">
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
