@@ -136,7 +136,7 @@ export default function ProjectsSection() {
     const [archiveOpen, setArchiveOpen] = useState(false);
 
     return (
-        <section id="projects" className="bg-black py-16 lg:py-24 relative overflow-hidden">
+        <section id="projects" className="bg-transparent py-16 lg:py-24 relative overflow-hidden">
             <div className="absolute inset-x-0 top-1/3 h-56 bg-blue-500/10 blur-[120px] pointer-events-none"></div>
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">

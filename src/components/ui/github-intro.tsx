@@ -43,7 +43,7 @@ function LiveClock() {
     const seconds = limaTime.getSeconds().toString().padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
     const hour12 = (hours % 12 || 12).toString().padStart(2, '0');
-    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const day = dayNames[limaTime.getDay()];
     const isWorking = hours >= 9 && hours < 22;
 
@@ -122,9 +122,9 @@ function AvailabilityStatus() {
             </div>
             <div className="flex flex-col gap-2">
                 {[
-                    { label: 'Type',       value: 'Internship · Freelance' },
-                    { label: 'Mode',       value: 'Remote · Hybrid' },
-                    { label: 'From',       value: 'Immediately' },
+                    { label: 'Type', value: 'Internship · Freelance' },
+                    { label: 'Mode', value: 'Remote · Hybrid' },
+                    { label: 'From', value: 'Immediately' },
                 ].map(({ label, value }) => (
                     <div key={label} className="flex items-baseline justify-between gap-2">
                         <span className="text-[9px] font-mono text-white/25 uppercase tracking-wider shrink-0">{label}</span>
