@@ -1,7 +1,7 @@
 "use client"
 
-import React, { HTMLAttributes, useCallback, useMemo, useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import React, { HTMLAttributes, useCallback, useMemo, useState, useEffect, useRef } from "react"
+import { motion, useInView } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -66,6 +66,8 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
     ...props
 }) => {
     const [isMounted, setIsMounted] = useState(false)
+    const ref = useRef<HTMLDivElement>(null)
+    const isInView = useInView(ref)
 
     useEffect(() => {
         setIsMounted(true)
@@ -90,7 +92,7 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
     const leftBeams = useMemo(() => generateBeams(), [generateBeams])
 
     return (
-        <div className={cn("relative rounded border p-20", className)} {...props}>
+        <div ref={ref} className={cn("relative rounded border p-20", className)} {...props}>
             <div
                 style={
                     {
@@ -103,7 +105,7 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
                     "@container-[size] pointer-events-none absolute top-0 left-0 size-full overflow-hidden [clipPath:inset(0)] perspective-(--perspective) transform-3d"
                 }
             >
-                {isMounted && (
+                {isMounted && isInView && (
                     <>
                         {/* top side */}
                         <div className="@container absolute z-20 h-[100cqmax] w-[100cqi] origin-[50%_0%] transform-[rotateX(-90deg)] bg-size-[var(--beam-size)_var(--beam-size)] [background:linear-gradient(var(--grid-color)_0_1px,transparent_1px_var(--beam-size))_50%_-0.5px_/var(--beam-size)_var(--beam-size),linear-gradient(90deg,var(--grid-color)_0_1px,transparent_1px_var(--beam-size))_50%_50%_/var(--beam-size)_var(--beam-size)] transform-3d">
