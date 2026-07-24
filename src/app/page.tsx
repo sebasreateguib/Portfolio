@@ -150,12 +150,12 @@ export default function Home() {
                 <EducationSection />
               </ScrollReveal>
 
-              <ScrollReveal>
-                <FreelanceSection />
-              </ScrollReveal>
-
               <ScrollReveal id="WorkPhilosophy">
                 <WorkPhilosophy />
+              </ScrollReveal>
+
+              <ScrollReveal>
+                <FreelanceSection />
               </ScrollReveal>
             </div>
           </div>
