@@ -74,7 +74,7 @@ export default function FreelanceSection() {
 
                             <FrameButton
                                 as="link"
-                                href={language === 'es' 
+                                href={language === 'es'
                                     ? "https://wa.me/51947546421?text=Hola%20Sebasti%C3%A1n,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20sobre%20un%20proyecto."
                                     : "https://wa.me/51947546421?text=Hi%20Sebasti%C3%A1n,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."}
                                 target="_blank"
