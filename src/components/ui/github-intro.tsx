@@ -217,7 +217,7 @@ export default function GithubIntro() {
                             {/* Avatar area */}
                             <div className="flex flex-col items-center justify-center px-6 py-8 gap-5">
                                 {/* Portrait with luminous frame */}
-                                <div className="relative group cursor-pointer w-full max-w-[175px]">
+                                <div className="relative group cursor-pointer w-full max-w-[171.5px]">
                                     {/* Glow layers */}
                                     <div className="absolute inset-0 bg-blue-500/15 blur-xl scale-105 group-hover:bg-blue-500/30 transition-all duration-500" />
                                     <div className="absolute inset-0 bg-blue-400/10 blur-2xl scale-125 group-hover:scale-[1.35] transition-all duration-700" />
@@ -225,42 +225,13 @@ export default function GithubIntro() {
                                     {/* Frame */}
                                     <div className="relative border border-blue-400/25 p-[3px] group-hover:border-blue-400/60 transition-colors duration-300">
                                         <div className="relative w-full aspect-1791/2082 overflow-hidden bg-black">
-                                            {/* Pixelate SVG Filter */}
-                                            <svg width="0" height="0" className="absolute">
-                                                <filter id="pixelate-v2" x="0" y="0">
-                                                    <feFlood x="2" y="2" height="1" width="1" />
-                                                    <feComposite width="4" height="4" />
-                                                    <feTile result="a" />
-                                                    <feComposite in="SourceGraphic" in2="a" operator="in" />
-                                                    <feMorphology operator="dilate" radius="2" />
-                                                </filter>
-                                            </svg>
-                                            {/* Normal image */}
-                                            <div className="absolute inset-0">
-                                                <Image
-                                                    src="/anime-pp-monitores.jpg"
-                                                    alt="Sebastian Reategui"
-                                                    fill
-                                                    sizes="175px"
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                            {/* Pixelated overlay — fades on hover */}
-                                            <div className="absolute inset-0 group-hover:opacity-0 transition-opacity duration-300 hidden md:block">
-                                                <Image
-                                                    src="/anime-pp-monitores.jpg"
-                                                    alt="Sebastian Reategui pixel"
-                                                    fill
-                                                    sizes="175px"
-                                                    className="object-cover"
-                                                    style={{ filter: 'url(#pixelate-v2)' }}
-                                                />
-                                                {/* Scanlines */}
-                                                <div
-                                                    className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-25"
-                                                    style={{ backgroundImage: 'repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.8) 2px, rgba(0,0,0,0.8) 4px)' }}
-                                                />
-                                            </div>
+                                            <Image
+                                                src="/anime-pp-monitores.jpg"
+                                                alt="Sebastian Reategui"
+                                                fill
+                                                sizes="172px"
+                                                className="object-cover"
+                                            />
                                         </div>
                                     </div>
                                 </div>
