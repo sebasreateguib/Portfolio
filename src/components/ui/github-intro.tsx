@@ -215,16 +215,16 @@ export default function GithubIntro() {
                         <div className="lg:w-[260px] shrink-0 flex flex-col border-b lg:border-b-0 lg:border-r border-white/8">
 
                             {/* Avatar area */}
-                            <div className="flex flex-col items-center justify-center px-8 py-10 gap-5">
-                                {/* Avatar with luminous ring */}
-                                <div className="relative group cursor-pointer">
+                            <div className="flex flex-col items-center justify-center px-6 py-8 gap-5">
+                                {/* Portrait with luminous frame */}
+                                <div className="relative group cursor-pointer w-full max-w-[175px]">
                                     {/* Glow layers */}
-                                    <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl scale-125 group-hover:bg-blue-500/35 transition-all duration-500" />
-                                    <div className="absolute inset-0 rounded-full bg-blue-400/10 blur-2xl scale-150 group-hover:scale-[1.7] transition-all duration-700" />
+                                    <div className="absolute inset-0 bg-blue-500/15 blur-xl scale-105 group-hover:bg-blue-500/30 transition-all duration-500" />
+                                    <div className="absolute inset-0 bg-blue-400/10 blur-2xl scale-125 group-hover:scale-[1.35] transition-all duration-700" />
 
-                                    {/* Ring */}
-                                    <div className="relative w-[108px] h-[108px] rounded-full border border-blue-400/30 p-[3px] group-hover:border-blue-400/60 transition-colors duration-300">
-                                        <div className="w-full h-full rounded-full overflow-hidden bg-black">
+                                    {/* Frame */}
+                                    <div className="relative border border-blue-400/25 p-[3px] group-hover:border-blue-400/60 transition-colors duration-300">
+                                        <div className="relative w-full aspect-1791/2082 overflow-hidden bg-black">
                                             {/* Pixelate SVG Filter */}
                                             <svg width="0" height="0" className="absolute">
                                                 <filter id="pixelate-v2" x="0" y="0">
@@ -238,20 +238,20 @@ export default function GithubIntro() {
                                             {/* Normal image */}
                                             <div className="absolute inset-0">
                                                 <Image
-                                                    src="/Anime Avatar.png"
+                                                    src="/anime-pp-monitores.jpg"
                                                     alt="Sebastian Reategui"
                                                     fill
-                                                    sizes="108px"
+                                                    sizes="175px"
                                                     className="object-cover"
                                                 />
                                             </div>
                                             {/* Pixelated overlay — fades on hover */}
                                             <div className="absolute inset-0 group-hover:opacity-0 transition-opacity duration-300 hidden md:block">
                                                 <Image
-                                                    src="/Anime Avatar.png"
+                                                    src="/anime-pp-monitores.jpg"
                                                     alt="Sebastian Reategui pixel"
                                                     fill
-                                                    sizes="108px"
+                                                    sizes="175px"
                                                     className="object-cover"
                                                     style={{ filter: 'url(#pixelate-v2)' }}
                                                 />
