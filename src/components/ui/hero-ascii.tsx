@@ -122,7 +122,7 @@ export default function HeroAscii() {
                 <div className="h-full w-full opacity-[0.40] md:opacity-[0.60]">
                     <ViewportVideo
                         eager
-                        src="/Herov2.mp4"
+                        src="/main-hero-compressed.mp4"
                         wrapperClassName="w-full h-full"
                         className="h-full w-full object-cover object-center scale-115 lg:object-contain"
                     />
