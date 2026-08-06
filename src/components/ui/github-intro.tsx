@@ -224,9 +224,9 @@ export default function GithubIntro() {
 
                                     {/* Frame */}
                                     <div className="relative border border-blue-400/25 p-[3px] group-hover:border-blue-400/60 transition-colors duration-300">
-                                        <div className="relative w-full aspect-1791/2082 overflow-hidden bg-black">
+                                        <div className="relative w-full aspect-square overflow-hidden bg-black">
                                             <Image
-                                                src="/anime-pp-monitores.jpg"
+                                                src="/linkedin.JPG"
                                                 alt="Sebastian Reategui"
                                                 fill
                                                 sizes="172px"
