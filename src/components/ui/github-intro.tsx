@@ -251,7 +251,7 @@ export default function GithubIntro() {
                                 {/* Name + role */}
                                 <div className="text-center">
                                     <p className="text-[15px] font-semibold text-white tracking-tight">Sebastian Reategui</p>
-                                    <p className="text-[11px] font-mono text-white/35 mt-0.5 tracking-wider">CS Student @ UTEC</p>
+                                    <p className="text-[11px] font-mono text-white/35 mt-0.5 tracking-wider">Computer Science @ UTEC</p>
                                 </div>
 
                                 {/* Tags */}
