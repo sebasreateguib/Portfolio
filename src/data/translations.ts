@@ -10,6 +10,7 @@ export const translations = {
     hero: {
       portfolio: "Portfolio",
       downloadResume: "Download Resume",
+      letsTalk: "Let's talk",
       role: "CS Student @ UTEC.",
       description: "Passionate about AI & ML Engineering, Full Stack Development, Systems Optimization and Cloud-Native Infrastructure.",
       metrics: {
@@ -174,11 +175,12 @@ export const translations = {
     contact: {
       title: "Contact",
       getInTouch: "Get_In_Touch",
-      headingBefore: "Let's build",
-      headingHighlight: "something great.",
+      heading: "Let's build something great.",
       desc: "Currently open for new opportunities, collaborations, and interesting projects. Feel free to reach out!",
-      email: "Email me",
+      email: "Copy email",
+      emailCopied: "Copied!",
       github: "GitHub",
+      linkedin: "LinkedIn",
       formNamePlaceholder: "Your Name",
       formEmailPlaceholder: "your@email.com",
       formMessagePlaceholder: "How can I help you?",
@@ -228,6 +230,7 @@ export const translations = {
     hero: {
       portfolio: "Portafolio",
       downloadResume: "Descargar CV",
+      letsTalk: "Hablemos",
       role: "Estudiante de CS @ UTEC.",
       description: "Apasionado por Ingeniería IA & ML, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native.",
       metrics: {
@@ -392,11 +395,12 @@ export const translations = {
     contact: {
       title: "Contacto",
       getInTouch: "Contáctame",
-      headingBefore: "Construyamos",
-      headingHighlight: "algo increíble.",
+      heading: "Construyamos algo increíble.",
       desc: "Actualmente abierto a nuevas oportunidades, colaboraciones y proyectos interesantes. ¡No dudes en contactarme!",
-      email: "Escríbeme",
+      email: "Copiar correo",
+      emailCopied: "¡Copiado!",
       github: "GitHub",
+      linkedin: "LinkedIn",
       formNamePlaceholder: "Tu Nombre",
       formEmailPlaceholder: "tu@correo.com",
       formMessagePlaceholder: "¿En qué te puedo ayudar?",
