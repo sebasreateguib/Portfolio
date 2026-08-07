@@ -7,7 +7,12 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
+import { MarkerHighlight } from './marker-highlight';
 import Signature from '../signature';
+
+// Marker sweep behind the line above the signature (amber-400 knockout)
+const SIGNATURE_MARKER_COLOR = '#fbbf24';
+const SIGNATURE_MARKER_TEXT_COLOR = '#050505';
 
 /* ─── Animation Variants ─────────────────────────────────────── */
 const containerVariants = {
@@ -250,8 +255,17 @@ export default function GithubIntro() {
                                 </div>
                             </div>
 
-                            {/* Handwritten signature — centered in the space left above the widgets */}
-                            <div className="flex justify-center px-6 pt-3 pb-12 my-auto">
+                            {/* Highlighted line + handwritten signature — centered in the space left above the widgets */}
+                            <div className="flex flex-col items-center gap-3 px-6 pt-3 pb-12 my-auto">
+                                <p className="w-full max-w-[171.5px] text-center text-[13px] font-semibold leading-snug text-white">
+                                    <MarkerHighlight
+                                        before={t.intro.signatureBefore}
+                                        highlight={t.intro.signatureHighlight}
+                                        markerColor={SIGNATURE_MARKER_COLOR}
+                                        baseColor="#ffffff"
+                                        highlightedTextColor={SIGNATURE_MARKER_TEXT_COLOR}
+                                    />
+                                </p>
                                 <div className="w-full max-w-[171.5px]">
                                     <Signature ariaLabel="Sebastian Reategui" className="text-white/70" />
                                 </div>

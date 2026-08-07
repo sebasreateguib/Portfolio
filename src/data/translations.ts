@@ -51,7 +51,9 @@ export const translations = {
       bullet5: "<span className=\"text-[#60a5fa] font-semibold\">Open to internships</span> and freelance projects!",
       activity: "ACTIVITY",
       less: "Less",
-      more: "More"
+      more: "More",
+      signatureBefore: "Let's build",
+      signatureHighlight: "something great"
     },
     projects: {
       title: "Projects",
@@ -268,7 +270,9 @@ export const translations = {
       bullet5: "¡<span className=\"text-[#60a5fa] font-semibold\">Abierto a prácticas</span> y proyectos freelance!",
       activity: "ACTIVIDAD",
       less: "Menos",
-      more: "Más"
+      more: "Más",
+      signatureBefore: "Construyamos",
+      signatureHighlight: "algo increíble"
     },
     projects: {
       title: "Proyectos",
