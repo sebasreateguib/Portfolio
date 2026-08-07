@@ -180,7 +180,7 @@ function usePrefersReducedMotion() {
 /**
  * PiedPiperOnboarding — interactive demo block refactored as a functional chatbot.
  */
-export function PiedPiperOnboarding() {
+export function PiedPiperOnboarding({ initialPrompt = null }: { initialPrompt?: string | null } = {}) {
   const { language } = useLanguage();
   const rootRef = React.useRef<HTMLDivElement>(null);
 
@@ -205,6 +205,15 @@ export function PiedPiperOnboarding() {
       setPhase("chat");
     }
   }, [typed, phase, welcomeMessage]);
+
+  // A message typed in the floating dock is sent once the greeting is done.
+  const sentInitialPrompt = React.useRef(false);
+  React.useEffect(() => {
+    if (phase !== "chat" || !initialPrompt || sentInitialPrompt.current) return;
+    sentInitialPrompt.current = true;
+    void submit(initialPrompt);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, initialPrompt]);
 
   const commands = {
     'help': () => language === 'es' ? `
@@ -307,8 +316,8 @@ I'm currently open to new opportunities, collaborations, or just to chat about t
     }
   }, [lines, isThinking]);
 
-  async function submit() {
-    const value = draft.trim();
+  async function submit(overrideValue?: string) {
+    const value = (overrideValue ?? draft).trim();
     if (!value || isThinking) return;
 
     setLines((prev) => [...prev, { kind: "user", text: value }]);

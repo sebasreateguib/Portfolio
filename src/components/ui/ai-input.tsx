@@ -15,6 +15,7 @@ import { translations } from '../../data/translations';
 
 import { BotMarkdown } from './bot-markdown';
 import { PiedPiperOnboarding } from "@/components/brainless/blocks/pied-piper-onboarding";
+import { AgentDock } from "../agent-dock";
 import {
     COPILOT_OPEN_EVENT,
     dismissCopilotCoachmark,
@@ -33,7 +34,7 @@ type Message = {
 
 interface ContextShape {
     showForm: boolean
-    triggerOpen: () => void
+    triggerOpen: (prompt?: string) => void
     triggerClose: () => void
 }
 
@@ -45,14 +46,18 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
 
     const [showForm, setShowForm] = React.useState(false)
     const [showCoachmark, setShowCoachmark] = React.useState(false)
+    // Message typed in the floating dock, handed to the terminal on open.
+    const [initialPrompt, setInitialPrompt] = React.useState<string | null>(null)
     const shouldReduceMotion = useReducedMotion()
 
     const triggerClose = React.useCallback(() => {
         setShowForm(false)
+        setInitialPrompt(null)
         textareaRef.current?.blur()
     }, [])
 
-    const triggerOpen = React.useCallback(() => {
+    const triggerOpen = React.useCallback((prompt?: string) => {
+        setInitialPrompt(prompt?.trim() ? prompt.trim() : null)
         setShowForm(true)
         setShowCoachmark(false)
         dismissCopilotCoachmark()
@@ -143,11 +148,9 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
-                            className={cn(
-                                "pointer-events-auto overflow-hidden rounded-sm border border-[#333333] bg-[#050505] shadow-2xl font-mono"
-                            )}
+                            className="pointer-events-auto w-[400px] max-w-[92vw]"
                         >
-                            <DockBar />
+                            <CopilotDock onOpenChat={() => triggerOpen()} />
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -196,7 +199,7 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
                                         </div>
                                     </div>
                                     <div className="flex-1 flex flex-col min-h-0 p-3 sm:p-6 bg-[#050505]">
-                                        <PiedPiperOnboarding />
+                                        <PiedPiperOnboarding initialPrompt={initialPrompt} />
                                     </div>
                                 </div>
                             </motion.div>
@@ -257,30 +260,16 @@ function CopilotCoachmark({
     )
 }
 
-function DockBar() {
-    const { triggerOpen } = useFormContext()
+function CopilotDock({ onOpenChat }: { onOpenChat: () => void }) {
     const { language } = useLanguage();
-    const t = translations[language];
 
     return (
-        <button
-            type="button"
-            id="sr-copilot-dock-trigger"
-            onClick={triggerOpen}
-            className="flex h-[44px] w-[340px] max-w-[90vw] items-center gap-2 px-3 cursor-pointer select-none text-left whitespace-nowrap transition-all hover:bg-[#111111] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-400 group"
-            aria-label={`${t.copilot.dockTitle}. ${t.copilot.dockSubtitle}`}
-        >
-            <div className="flex-1 flex items-center min-w-0">
-                <span className="text-blue-400 mr-2 text-[12px] font-bold">sr@cli:~$</span>
-                <span className="truncate text-[12px] font-mono tracking-wide text-white/70 group-hover:text-white transition-colors">
-                    {t.copilot.placeholder}
-                </span>
-            </div>
-
-            <div className="hidden shrink-0 items-center gap-1.5 rounded-sm border border-[#333333] bg-[#1a1a1a] px-2.5 py-1 font-mono text-[11px] text-white/50 sm:flex transition-colors group-hover:border-blue-400/50">
-                <span>⌘K</span>
-            </div>
-        </button>
+        <AgentDock
+            agentName="SR Copilot"
+            avatarSrc="/Claudecode Color Icon.svg"
+            status={language === 'es' ? 'Listo' : 'Ready'}
+            onOpenChat={onOpenChat}
+        />
     )
 }
 

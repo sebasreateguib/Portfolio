@@ -7,6 +7,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
+import Signature from '../signature';
 
 /* ─── Animation Variants ─────────────────────────────────────── */
 const containerVariants = {
@@ -249,8 +250,15 @@ export default function GithubIntro() {
                                 </div>
                             </div>
 
+                            {/* Handwritten signature — centered in the space left above the widgets */}
+                            <div className="flex justify-center px-6 pt-3 pb-12 my-auto">
+                                <div className="w-full max-w-[171.5px]">
+                                    <Signature ariaLabel="Sebastian Reategui" className="text-white/70" />
+                                </div>
+                            </div>
+
                             {/* ── Widgets ── */}
-                            <div className="mt-auto">
+                            <div>
                                 <LiveClock />
                                 <AvailabilityStatus />
                             </div>
