@@ -8,6 +8,11 @@ import { FrameButton } from './frame-button';
 
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
+import { MarkerHighlight } from './marker-highlight';
+
+// Marker sweep behind the contact heading (amber-400 knockout)
+const HEADING_MARKER_COLOR = '#fbbf24';
+const HEADING_MARKER_TEXT_COLOR = '#050505';
 
 export default function ContactSection() {
     const { language } = useLanguage();
@@ -61,7 +66,16 @@ export default function ContactSection() {
                     <div className="flex flex-col gap-10 w-full lg:w-1/2">
                         <div className="flex flex-col gap-4">
                             <div className="relative inline-block self-start">
-                                <h3 className="text-2xl md:text-4xl font-section font-bold text-white mb-2 leading-tight">{t.contact.heading}</h3>
+                                <h3 className="text-2xl md:text-4xl font-section font-bold text-white mb-2 leading-tight">
+                                    <MarkerHighlight
+                                        before={t.contact.headingBefore}
+                                        highlight={t.contact.headingHighlight}
+                                        markerColor={HEADING_MARKER_COLOR}
+                                        baseColor="#ffffff"
+                                        highlightedTextColor={HEADING_MARKER_TEXT_COLOR}
+                                        className="tracking-normal"
+                                    />
+                                </h3>
                             </div>
                             <p className="text-white/60 font-mono text-sm md:text-base max-w-md leading-relaxed">
                                 {t.contact.desc}
