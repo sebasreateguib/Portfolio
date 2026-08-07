@@ -51,9 +51,7 @@ export const translations = {
       bullet5: "<span className=\"text-[#60a5fa] font-semibold\">Open to internships</span> and freelance projects!",
       activity: "ACTIVITY",
       less: "Less",
-      more: "More",
-      signatureBefore: "Let's build",
-      signatureHighlight: "something great"
+      more: "More"
     },
     projects: {
       title: "Projects",
@@ -176,7 +174,8 @@ export const translations = {
     contact: {
       title: "Contact",
       getInTouch: "Get_In_Touch",
-      heading: "Let's build something great.",
+      headingBefore: "Let's build",
+      headingHighlight: "something great.",
       desc: "Currently open for new opportunities, collaborations, and interesting projects. Feel free to reach out!",
       email: "Email me",
       github: "GitHub",
@@ -270,9 +269,7 @@ export const translations = {
       bullet5: "¡<span className=\"text-[#60a5fa] font-semibold\">Abierto a prácticas</span> y proyectos freelance!",
       activity: "ACTIVIDAD",
       less: "Menos",
-      more: "Más",
-      signatureBefore: "Construyamos",
-      signatureHighlight: "algo increíble"
+      more: "Más"
     },
     projects: {
       title: "Proyectos",
@@ -395,7 +392,8 @@ export const translations = {
     contact: {
       title: "Contacto",
       getInTouch: "Contáctame",
-      heading: "Construyamos algo increíble.",
+      headingBefore: "Construyamos",
+      headingHighlight: "algo increíble.",
       desc: "Actualmente abierto a nuevas oportunidades, colaboraciones y proyectos interesantes. ¡No dudes en contactarme!",
       email: "Escríbeme",
       github: "GitHub",
