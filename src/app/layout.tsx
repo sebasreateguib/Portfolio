@@ -3,6 +3,7 @@ import { Space_Grotesk, Geist } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css";
 import { cn } from "@/lib/utils";
+import CustomCursor from "@/components/ui/custom-cursor";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("scroll-smooth", "bg-black", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
       <body className="antialiased bg-black min-h-screen">
+        <CustomCursor />
         <LanguageProvider>
           {children}
         </LanguageProvider>
