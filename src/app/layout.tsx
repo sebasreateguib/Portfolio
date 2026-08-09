@@ -1,3 +1,4 @@
+// deploy trigger
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Geist } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
