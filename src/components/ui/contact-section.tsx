@@ -105,10 +105,6 @@ export default function ContactSection() {
 
                         {/* Direct channels */}
                         <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3 max-w-md">
-                            <a href="https://github.com/sebasreateguib" target="_blank" rel="noopener noreferrer" className="col-span-2 sm:col-span-1 flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 bg-transparent border border-white text-white font-mono text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200">
-                                <GithubIcon size={16} />
-                                {t.contact.github}
-                            </a>
                             <a href="https://www.linkedin.com/in/sebasreateguib" target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 bg-transparent border border-white text-white font-mono text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200">
                                 <LinkedInIcon size={16} />
                                 {t.contact.linkedin}
