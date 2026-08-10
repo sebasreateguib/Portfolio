@@ -312,7 +312,6 @@ export default function GithubIntro() {
                                 <ul className="flex flex-col gap-3.5">
                                     <BulletRow emoji="🚀" html={t.intro.bullet2} />
                                     <BulletRow emoji="🎯" html={t.intro.bullet4} />
-                                    <BulletRow emoji="💼" html={t.intro.bullet5} />
                                     <BulletRow emoji="🧩" html={t.intro.bullet3} />
                                 </ul>
                             </div>
