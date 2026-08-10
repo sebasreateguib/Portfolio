@@ -11,6 +11,7 @@ import { translations } from "../../data/translations";
 const SECTIONS = [
     { id: "about", key: "about" as const, short: "ABT" },
     { id: "projects", key: "projects" as const, short: "PRJ" },
+    { id: "experience", key: "experience" as const, short: "EXP" },
     { id: "education", key: "education" as const, short: "EDU" },
     { id: "Skills", key: "skills" as const, short: "STK" },
     { id: "contact", key: "contact" as const, short: "CNT" },

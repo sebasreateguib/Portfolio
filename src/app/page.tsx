@@ -3,6 +3,7 @@ import HeroAscii from '../components/ui/hero-ascii';
 import ScrollImageSequence from '../components/ui/scroll-image-sequence';
 import GithubIntro from '../components/ui/github-intro';
 import ProjectsSection from '../components/ui/projects-section';
+import ExperienceSection from '../components/ui/experience-section';
 import WorkPhilosophy from '../components/ui/work-philosophy';
 import EducationSection from '../components/ui/education-section';
 import FreelanceSection from '../components/ui/freelance-section';
@@ -144,6 +145,10 @@ export default function Home() {
             <div className="relative z-10">
               <ScrollReveal>
                 <ProjectsSection />
+              </ScrollReveal>
+
+              <ScrollReveal>
+                <ExperienceSection />
               </ScrollReveal>
 
               <ScrollReveal>

@@ -41,6 +41,11 @@ const projectDetails = {
                 role: 'C++ Systems / Frontend Engineer',
                 signals: ['Custom R-Tree', 'Range + KNN queries', 'Live search benchmarks'],
             },
+            8: {
+                category: 'Restaurant Landing Page',
+                role: 'Freelance Frontend Developer',
+                signals: ['Canvas image sequence', 'GSAP ScrollTrigger', 'WhatsApp ordering'],
+            },
             1: {
                 category: 'Fintech Analytics',
                 role: 'Core Full-Stack, Cloud & Data Engineer',
@@ -93,6 +98,11 @@ const projectDetails = {
                 category: 'Algoritmos Geoespaciales',
                 role: 'C++ Systems / Frontend Engineer',
                 signals: ['R-Tree propio', 'Consultas Range + KNN', 'Benchmarks en vivo'],
+            },
+            8: {
+                category: 'Landing de Restaurante',
+                role: 'Freelance Frontend Developer',
+                signals: ['Secuencia de imágenes en Canvas', 'GSAP ScrollTrigger', 'Pedidos por WhatsApp'],
             },
             1: {
                 category: 'Analítica Fintech',
