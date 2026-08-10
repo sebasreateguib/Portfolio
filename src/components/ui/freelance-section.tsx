@@ -39,7 +39,7 @@ export default function FreelanceSection() {
                         >
                             <div className="bg-[#111111] border border-white/10 rounded-xl p-3 md:p-5 max-w-[260px] md:max-w-[320px] mx-4 shadow-2xl relative z-10 text-center">
                                 <h2 className="text-xs md:text-base font-bold tracking-tight text-white mb-1 md:mb-2 font-sans">
-                                    {language === 'es' ? '¡Abierto a proyectos freelance y pasantías!' : 'Open to freelance projects and internships!'}
+                                    {language === 'es' ? 'Remoto desde Lima, Perú · GMT-5' : 'Remote from Lima, Peru · GMT-5'}
                                 </h2>
                                 <p className="hidden md:block text-[#a1a1aa] text-xs leading-relaxed font-sans">
                                     {language === 'es'

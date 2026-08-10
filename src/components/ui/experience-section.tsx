@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
+import { AvailabilityMarquee } from './availability-marquee';
 
 export default function ExperienceSection() {
     const { language } = useLanguage();
@@ -23,6 +24,11 @@ export default function ExperienceSection() {
                         <SectionTitle index="04">{copy.title}</SectionTitle>
                     </div>
                     <SectionDivider label={copy.badge} className="mb-0" index="04" />
+                </div>
+
+                {/* Availability marquee */}
+                <div className="mb-10 md:mb-14">
+                    <AvailabilityMarquee />
                 </div>
 
                 {/* Timeline */}

@@ -50,7 +50,6 @@ export const translations = {
       bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust, NestJS & Nuxt.</span>",
       bullet3: "Fun fact: <span className=\"text-[#60a5fa] font-semibold\">I was inspired by Blue Lock's pentagon for the hero design!</span>",
       bullet4: "Focused on <span className=\"text-[#60a5fa] font-semibold\">clean code, modern infrastructure, and AI.</span>",
-      bullet5: "<span className=\"text-[#60a5fa] font-semibold\">Open to internships</span> and freelance projects!",
       activity: "ACTIVITY",
       less: "Less",
       more: "More"
@@ -161,6 +160,11 @@ export const translations = {
       stackLabel: "STACK",
       highlightsLabel: "KEY FEATURES",
       clientsLabel: "CLIENTS",
+      availability: [
+        "Open to AI Engineering internships",
+        "Open to Software Engineering internships",
+        "Open to freelance projects",
+      ],
       list: [
         {
           id: "frontend-freelance",
@@ -348,7 +352,6 @@ export const translations = {
       bullet2: "Actualmente estoy aprendiendo tecnologías como <span className=\"text-[#60a5fa] font-semibold\">Rust, NestJS & Nuxt</span>",
       bullet3: "Dato curioso: <span className=\"text-[#60a5fa] font-semibold\">¡Me inspiré en el pentágono de Blue Lock para el diseño!</span>",
       bullet4: "Enfocado en <span className=\"text-[#60a5fa] font-semibold\">código limpio, infraestructura moderna e IA.</span>",
-      bullet5: "¡<span className=\"text-[#60a5fa] font-semibold\">Abierto a prácticas</span> y proyectos freelance!",
       activity: "ACTIVIDAD",
       less: "Menos",
       more: "Más"
@@ -459,6 +462,11 @@ export const translations = {
       stackLabel: "STACK",
       highlightsLabel: "FUNCIONALIDADES CLAVE",
       clientsLabel: "CLIENTES",
+      availability: [
+        "Abierto a prácticas en AI Engineering",
+        "Abierto a prácticas en Software Engineering",
+        "Abierto a proyectos freelance",
+      ],
       list: [
         {
           id: "frontend-freelance",
