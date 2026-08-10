@@ -3,6 +3,7 @@ export const translations = {
     nav: {
       about: "About Me",
       projects: "Projects",
+      experience: "Experience",
       education: "Education",
       skills: "Stack & Workflow",
       contact: "Contact"
@@ -62,6 +63,16 @@ export const translations = {
       archiveHint: "Browse the rest by category — open a file to jump to its repo.",
       list: [
         {
+          id: 8,
+          title: "YeyoMaki",
+          description: "Premium landing page for a sushi restaurant in Lima. Scroll-driven 240-frame image sequence rendered on an HTML5 Canvas with GSAP ScrollTrigger and ScrollSmoother, interactive menu with prices and tags, offers section, delivery schedule and direct WhatsApp ordering.",
+          tech: ["React", "TypeScript", "Vite", "GSAP", "ScrollTrigger", "HTML5 Canvas"],
+          github: "#",
+          live: "https://yeyo-maki.vercel.app",
+          image: "/yeyomaki.jpg",
+          year: "2026"
+        },
+        {
           id: 4,
           title: "SanaFlow",
           description: "Intelligent Medical Triage Platform. Designed a 100% Serverless, event-driven architecture using AWS (Lambda, SQS, DynamoDB). Engineered an automated data pipeline that processes massive clinical notes in real-time, leveraging Llama 3 via Groq API for extraction and urgency prioritization.",
@@ -92,6 +103,16 @@ export const translations = {
           year: "2026"
         },
         {
+          id: 2,
+          title: "MediGO",
+          description: "Full-Stack Telemedicine Platform. Architected a secure REST API with JWT authentication. Developed a responsive SPA using React 19, integrated real-time video via Whereby SDK, Stripe sandbox payments, an AI chatbot powered by Gemini, and real-time WebSocket chat between patients and doctors.",
+          tech: ["Spring Boot", "Postgres", "React.js", "TypeScript", "Whereby", "Stripe", "Gemini", "WebSockets"],
+          github: "https://github.com/sebasreateguib/MediGO-Repository",
+          live: "#",
+          image: "/medigo-compressed.mp4",
+          year: "2025"
+        },
+        {
           id: 0,
           title: "OpenMultimodal",
           description: "Multimodal RAG Agent. Engineered an end-to-end AI system using LlamaIndex, LlamaParse, Google Gemini, and Qdrant. It indexes complex PDFs and images to answer queries backed by retrieved multimodal evidence.",
@@ -109,16 +130,6 @@ export const translations = {
           github: "https://github.com/sebasreateguib/FraudNet",
           live: "#",
           image: "LUCIDE:Brain",
-          year: "2025"
-        },
-        {
-          id: 2,
-          title: "MediGO",
-          description: "Full-Stack Telemedicine Platform. Architected a secure REST API with JWT authentication. Developed a responsive SPA using React 19, integrated real-time video via Whereby SDK, Stripe sandbox payments, an AI chatbot powered by Gemini, and real-time WebSocket chat between patients and doctors.",
-          tech: ["Spring Boot", "Postgres", "React.js", "TypeScript", "Whereby", "Stripe", "Gemini", "WebSockets"],
-          github: "https://github.com/sebasreateguib/MediGO-Repository",
-          live: "#",
-          image: "/medigo-compressed.mp4",
           year: "2025"
         },
         {
@@ -140,6 +151,73 @@ export const translations = {
           live: "#",
           image: "/sparse-compressed.mp4",
           year: "2026"
+        }
+      ]
+    },
+    experience: {
+      title: "Experience",
+      badge: "Freelance_&_Client_Work",
+      current: "CURRENT",
+      stackLabel: "STACK",
+      highlightsLabel: "KEY FEATURES",
+      clientsLabel: "CLIENTS",
+      list: [
+        {
+          id: "frontend-freelance",
+          role: "Frontend Developer",
+          company: "Sunrise Energy Peru · Yeyo Maki",
+          type: "Freelance",
+          period: "Aug 2026",
+          duration: "1 mo",
+          location: "Lima, Peru · Remote",
+          ongoing: true,
+          focus: "Front-End Development and Motion Design",
+          summary:
+            "Two scroll-driven landing pages built on the same stack — React + TypeScript on Vite, with GSAP ScrollTrigger choreography and an image sequence rendered frame by frame on an HTML5 Canvas — for a photovoltaic solar engineering firm and a premium sushi restaurant in Lima.",
+          tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "HTML5 Canvas", "CSS3", "Lucide React"],
+          highlights: [
+            "Scroll-linked image sequences rendered frame by frame on an HTML5 Canvas",
+            "Immersive scroll choreography with GSAP ScrollTrigger and ScrollSmoother: pinned sections, scrubbed timelines, and reveal animations",
+            "Premium CSS3 styling: glassmorphism, CSS variables, and mobile-first responsive layouts",
+            "Full technical SEO with JSON-LD structured data, Open Graph, and optimized meta tags",
+            "Conversion paths wired straight to the client: WhatsApp ordering and social integration"
+          ],
+          clients: [
+            {
+              name: "Sunrise Energy Peru",
+              detail: "Corporate landing page for a photovoltaic solar engineering firm, with full technical SEO and iconography by Lucide React.",
+              link: "https://sunrisenergyperu.com"
+            },
+            {
+              name: "Yeyo Maki",
+              detail: "Landing page for a premium sushi restaurant: 240-frame Canvas sequence, interactive menu with prices and tags, offers, delivery schedule, and WhatsApp ordering.",
+              link: "https://yeyo-maki.vercel.app"
+            }
+          ]
+        },
+        {
+          id: "vk-studio",
+          role: "Software Engineer",
+          company: "VK STUDIO.HN S.A.C.",
+          type: "Freelance",
+          period: "Aug 2026",
+          duration: "1 mo",
+          location: "Lima, Peru · Remote",
+          ongoing: true,
+          focus: "Software Infrastructure and Full-Stack Development",
+          summary:
+            "Full-Stack Quoting & Management System for a Nail Art Studio. Built a web application for a professional nail art studio to replace spreadsheets and manual workflows with a unified platform for quoting, appointment tracking, client management, and team administration.",
+          tech: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Auth + RLS", "Tailwind CSS"],
+          highlights: [
+            "Smart quoting engine with 80+ configurable services and automatic per-nail pricing, tax, and totals",
+            "Kanban appointment board with status flow, date navigation, and inactive client alerts",
+            "Client directory with visit history, average ticket, and favorite service tracking",
+            "Admin dashboard with technician leaderboard, commission management, revenue metrics, and editable service catalog",
+            "PDF quote generation for client sharing",
+            "Role-based auth (admin/technician) with PostgreSQL Row-Level Security and granular access policies",
+            "Optimized server-side PostgreSQL RPCs for pagination, aggregations, and reporting"
+          ],
+          clients: []
         }
       ]
     },
@@ -223,6 +301,7 @@ export const translations = {
     nav: {
       about: "Sobre Mí",
       projects: "Proyectos",
+      experience: "Experiencia",
       education: "Educación",
       skills: "Stack & Workflow",
       contact: "Contacto"
@@ -282,6 +361,16 @@ export const translations = {
       archiveHint: "Explora el resto por categoría — abre un archivo para ir a su repo.",
       list: [
         {
+          id: 8,
+          title: "YeyoMaki",
+          description: "Landing page premium para un restaurante de sushi en Lima. Secuencia de 240 imágenes ligada al scroll y renderizada sobre un Canvas HTML5 con GSAP ScrollTrigger y ScrollSmoother, carta interactiva con precios y etiquetas, sección de ofertas, horarios de delivery y pedidos directos por WhatsApp.",
+          tech: ["React", "TypeScript", "Vite", "GSAP", "ScrollTrigger", "HTML5 Canvas"],
+          github: "#",
+          live: "https://yeyo-maki.vercel.app",
+          image: "/yeyomaki.jpg",
+          year: "2026"
+        },
+        {
           id: 4,
           title: "SanaFlow",
           description: "Plataforma de Triaje Médico Inteligente. Arquitectura 100% Serverless orientada a eventos usando AWS (Lambda, SQS, DynamoDB). Diseñé un pipeline automático que procesa notas clínicas masivamente en tiempo real usando Llama 3 (vía Groq) para extraer síntomas y priorizar la urgencia médica.",
@@ -312,6 +401,16 @@ export const translations = {
           year: "2026"
         },
         {
+          id: 2,
+          title: "MediGO",
+          description: "Plataforma Full-Stack de Telemedicina. Diseñé una API REST segura con autenticación JWT. Desarrollé la SPA usando React 19, integrando consultas por video vía Whereby SDK, pagos en modo sandbox con Stripe, un chatbot con Gemini y chat en tiempo real con WebSockets entre pacientes y médicos.",
+          tech: ["Spring Boot", "Postgres", "React.js", "TypeScript", "Whereby", "Stripe", "Gemini", "WebSockets"],
+          github: "https://github.com/sebasreateguib/MediGO-Repository",
+          live: "#",
+          image: "/medigo-compressed.mp4",
+          year: "2025"
+        },
+        {
           id: 0,
           title: "OpenMultimodal",
           description: "Agente Multimodal RAG. Diseñé un sistema de IA usando LlamaIndex, LlamaParse, Google Gemini y Qdrant. Indexa documentos complejos e imágenes para responder consultas respaldadas por evidencia multimodal.",
@@ -329,16 +428,6 @@ export const translations = {
           github: "https://github.com/sebasreateguib/FraudNet",
           live: "#",
           image: "LUCIDE:Brain",
-          year: "2025"
-        },
-        {
-          id: 2,
-          title: "MediGO",
-          description: "Plataforma Full-Stack de Telemedicina. Diseñé una API REST segura con autenticación JWT. Desarrollé la SPA usando React 19, integrando consultas por video vía Whereby SDK, pagos en modo sandbox con Stripe, un chatbot con Gemini y chat en tiempo real con WebSockets entre pacientes y médicos.",
-          tech: ["Spring Boot", "Postgres", "React.js", "TypeScript", "Whereby", "Stripe", "Gemini", "WebSockets"],
-          github: "https://github.com/sebasreateguib/MediGO-Repository",
-          live: "#",
-          image: "/medigo-compressed.mp4",
           year: "2025"
         },
         {
@@ -360,6 +449,73 @@ export const translations = {
           live: "#",
           image: "/sparse-compressed.mp4",
           year: "2026"
+        }
+      ]
+    },
+    experience: {
+      title: "Experiencia",
+      badge: "Freelance_&_Clientes",
+      current: "ACTUAL",
+      stackLabel: "STACK",
+      highlightsLabel: "FUNCIONALIDADES CLAVE",
+      clientsLabel: "CLIENTES",
+      list: [
+        {
+          id: "frontend-freelance",
+          role: "Frontend Developer",
+          company: "Sunrise Energy Peru · Yeyo Maki",
+          type: "Freelance",
+          period: "Ago 2026",
+          duration: "1 mes",
+          location: "Lima, Perú · Remoto",
+          ongoing: true,
+          focus: "Desarrollo Front-End y Motion Design",
+          summary:
+            "Dos landing pages ligadas al scroll construidas sobre el mismo stack — React + TypeScript sobre Vite, con coreografía de GSAP ScrollTrigger y una secuencia de imágenes renderizada cuadro por cuadro sobre un Canvas HTML5 — para una empresa de ingeniería en energía solar fotovoltaica y un restaurante de sushi premium en Lima.",
+          tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "HTML5 Canvas", "CSS3", "Lucide React"],
+          highlights: [
+            "Secuencias de imágenes ligadas al scroll, renderizadas cuadro por cuadro sobre un Canvas HTML5",
+            "Coreografía de scroll inmersiva con GSAP ScrollTrigger y ScrollSmoother: secciones fijadas, timelines scrubbeados y animaciones de aparición",
+            "Estilos CSS3 premium: glassmorphism, variables CSS y layouts responsive mobile-first",
+            "SEO técnico completo con datos estructurados JSON-LD, Open Graph y meta tags optimizados",
+            "Rutas de conversión conectadas directo al cliente: pedidos por WhatsApp e integración con redes"
+          ],
+          clients: [
+            {
+              name: "Sunrise Energy Peru",
+              detail: "Landing corporativa para una empresa de ingeniería en energía solar fotovoltaica, con SEO técnico completo e iconografía con Lucide React.",
+              link: "https://sunrisenergyperu.com"
+            },
+            {
+              name: "Yeyo Maki",
+              detail: "Landing para un restaurante de sushi premium: secuencia de 240 frames en Canvas, carta interactiva con precios y etiquetas, ofertas, horarios de delivery y pedidos por WhatsApp.",
+              link: "https://yeyo-maki.vercel.app"
+            }
+          ]
+        },
+        {
+          id: "vk-studio",
+          role: "Software Engineer",
+          company: "VK STUDIO.HN S.A.C.",
+          type: "Freelance",
+          period: "Ago 2026",
+          duration: "1 mes",
+          location: "Lima, Perú · Remoto",
+          ongoing: true,
+          focus: "Infraestructura de Software y Desarrollo Full-Stack",
+          summary:
+            "Sistema Full-Stack de Cotización y Gestión para un estudio de Nail Art. Desarrollé una aplicación web para un estudio profesional de nail art que reemplaza hojas de cálculo y procesos manuales con una plataforma unificada de cotización, seguimiento de citas, gestión de clientes y administración del equipo.",
+          tech: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Auth + RLS", "Tailwind CSS"],
+          highlights: [
+            "Motor de cotización inteligente con más de 80 servicios configurables y cálculo automático de precio por uña, impuestos y totales",
+            "Tablero Kanban de citas con flujo de estados, navegación por fecha y alertas de clientes inactivos",
+            "Directorio de clientes con historial de visitas, ticket promedio y seguimiento de servicio favorito",
+            "Dashboard de administración con ranking de técnicas, gestión de comisiones, métricas de ingresos y catálogo de servicios editable",
+            "Generación de cotizaciones en PDF para compartir con el cliente",
+            "Autenticación por roles (admin/técnica) con Row-Level Security de PostgreSQL y políticas de acceso granulares",
+            "RPCs de PostgreSQL optimizados en el servidor para paginación, agregaciones y reportes"
+          ],
+          clients: []
         }
       ]
     },
