@@ -5,7 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
-import { AvailabilityMarquee } from './availability-marquee';
+import { AvailabilityLED } from './availability-led';
 
 export default function ExperienceSection() {
     const { language } = useLanguage();
@@ -26,9 +26,9 @@ export default function ExperienceSection() {
                     <SectionDivider label={copy.badge} className="mb-0" index="04" />
                 </div>
 
-                {/* Availability marquee */}
+                {/* Availability LED board */}
                 <div className="mb-10 md:mb-14">
-                    <AvailabilityMarquee />
+                    <AvailabilityLED />
                 </div>
 
                 {/* Timeline */}
