@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { WarpBackground } from './warp-background';
+import { FlipDiskMatrix } from './flip-matrix';
 import { SectionTitle } from './section-title';
 import { SectionDivider } from './section-divider';
 import { useLanguage } from '../../context/LanguageContext';
@@ -32,22 +32,20 @@ export default function FreelanceSection() {
                 </div>
 
                 <div className="w-full max-w-5xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-10 lg:gap-16">
-                    <div className="w-full lg:w-1/2 flex justify-center">
-                        <WarpBackground
-                            className="w-full h-[200px] md:h-[340px] text-left flex flex-col items-center justify-center border-white/10 bg-black overflow-hidden rounded-2xl"
-                            gridColor="rgba(255, 255, 255, 0.08)"
-                        >
-                            <div className="bg-[#111111] border border-white/10 rounded-xl p-3 md:p-5 max-w-[260px] md:max-w-[320px] mx-4 shadow-2xl relative z-10 text-center">
-                                <h2 className="text-xs md:text-base font-bold tracking-tight text-white mb-1 md:mb-2 font-sans">
-                                    {language === 'es' ? 'Remoto desde Lima, Perú · GMT-5' : 'Remote from Lima, Peru · GMT-5'}
-                                </h2>
-                                <p className="hidden md:block text-[#a1a1aa] text-xs leading-relaxed font-sans">
-                                    {language === 'es'
-                                        ? '¡Construyamos algo increíble juntos! ¡Contáctame!'
-                                        : "Let's build something amazing together. Feel free to reach out!"}
-                                </p>
-                            </div>
-                        </WarpBackground>
+                    {/* Split-flap board — cascades into the word when scrolled into view */}
+                    <div className="w-full lg:w-1/2 flex flex-col items-center gap-3">
+                        <div aria-hidden="true" className="w-full">
+                            <FlipDiskMatrix
+                                mode="text"
+                                text={language === 'es' ? 'LIBRE' : 'OPEN'}
+                                color="#60a5fa"
+                            />
+                        </div>
+                        <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-neutral-500">
+                            {language === 'es'
+                                ? 'Lima, Perú · GMT-5 · Disponible'
+                                : 'Lima, Peru · GMT-5 · Available'}
+                        </p>
                     </div>
 
                     {/* Text outside the component */}
