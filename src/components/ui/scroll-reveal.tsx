@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { cn } from '../../lib/utils';
 import { useLoaderTransition } from '../../context/LoaderTransitionContext';
 
 interface ScrollRevealProps {
@@ -17,7 +16,6 @@ export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevea
     const { phase } = useLoaderTransition();
     const triggerRef = useRef<HTMLDivElement>(null);
     const [isInView, setIsInView] = useState(false);
-    const [hasRevealed, setHasRevealed] = useState(false);
 
     /*
      * Only start observing AFTER the loader finishes.
@@ -52,32 +50,25 @@ export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevea
         );
     }
 
-    const hidden = {
-        filter: 'blur(12px)',
-        clipPath: 'inset(8% 12% 8% 12% round 12px)',
-        opacity: 0.35,
-    };
-
-    const visible = {
-        filter: 'blur(0px)',
-        clipPath: 'inset(0% 0% 0% 0% round 0px)',
-        opacity: 1,
-    };
+    /*
+     * Transform + opacity only. The previous version animated `clip-path` from
+     * inset(8% 12%) to inset(0%) together with a 12px blur, which made every
+     * section visibly expand as it revealed — with nine of them chained down the
+     * page, something was almost always mid-animation while scrolling. Both
+     * properties also force repaints; `y` and `opacity` stay on the compositor.
+     */
+    const hidden = { opacity: 0, y: 16 };
+    const visible = { opacity: 1, y: 0 };
 
     return (
         <div ref={triggerRef} id={id} className={className}>
             <motion.div
-                className={cn(!hasRevealed && 'will-change-[filter,clip-path,opacity]')}
                 initial={hidden}
                 animate={isInView ? visible : hidden}
                 transition={{
                     duration: 0.7,
                     delay,
                     ease: [0.25, 1, 0.5, 1],
-                    filter: { duration: 0.55, delay: delay + 0.1 },
-                }}
-                onAnimationComplete={() => {
-                    if (isInView) setHasRevealed(true);
                 }}
             >
                 {children}

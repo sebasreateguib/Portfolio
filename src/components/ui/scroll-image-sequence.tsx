@@ -150,6 +150,11 @@ export default function ScrollImageSequence() {
     if (!loaded) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    // On mobile the URL bar collapsing/expanding fires `resize` mid-scroll.
+    // Without this, ScrollTrigger recalculates and corrects scroll position
+    // every time, which reads as the page yanking under your finger.
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let st: any = null;
 
@@ -174,9 +179,16 @@ export default function ScrollImageSequence() {
       ScrollTrigger.refresh();
     }, 50);
 
+    // Only a width change is a real layout change. Height alone changes every
+    // time the mobile URL bar shows or hides, and refreshing on that was
+    // yanking the scroll position. The canvas still resyncs either way.
+    let lastWidth = window.innerWidth;
     const handleResize = () => {
       syncSize();
-      ScrollTrigger.refresh();
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        ScrollTrigger.refresh();
+      }
     };
 
     window.addEventListener("resize", handleResize);

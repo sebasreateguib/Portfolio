@@ -81,23 +81,26 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
         <LoaderTransitionContext.Provider
             value={{ phase, skipHeroTypewriter: false }}
         >
+            {/* Only opacity and scale are animated here: both are compositor-only.
+                A `filter: blur()` on this wrapper forced the browser to rasterize
+                the entire document to a texture and re-blur it every frame, which
+                on mobile blew the frame budget and made the reveal snap. */}
             <motion.div
                 initial={false}
                 animate={{
                     opacity: phase === "loading" ? 0 : 1,
                     scale: phase === "loading" ? 1.015 : 1,
-                    filter: phase === "loading" ? "blur(6px)" : "blur(0px)",
                 }}
                 transition={{
                     duration: useInstantExit ? 0.2 : 0.55,
                     ease: [0.22, 1, 0.36, 1],
                     delay: isTransitioning && !useInstantExit ? 0.12 : 0,
                 }}
-                className={
-                    phase === "loading"
-                        ? "pointer-events-none invisible fixed inset-0 overflow-hidden"
-                        : undefined
-                }
+                // The content stays in normal flow while loading (hidden behind the
+                // opaque overlay, and unscrollable via the overflow lock below).
+                // It used to be `invisible fixed inset-0`, so revealing it relaid
+                // out the whole document in the same frame the animation started.
+                className={phase === "loading" ? "pointer-events-none" : undefined}
                 aria-hidden={phase === "loading"}
             >
                 {children}
