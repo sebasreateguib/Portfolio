@@ -147,9 +147,13 @@ export default function PixelBackground({
     const timePreviousRef = useRef<number>(0);
 
     useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
         const reducedMotionValue = window.matchMedia(
             '(prefers-reduced-motion: reduce)',
         ).matches;
+        let isRunning = false;
         const getOriginPoint = (width: number, height: number) => {
             switch (direction) {
                 case 'top':
@@ -245,6 +249,8 @@ export default function PixelBackground({
 
             if (allIdle && animationRef.current !== null) {
                 cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
+                isRunning = false;
             }
         };
 
@@ -256,12 +262,35 @@ export default function PixelBackground({
         };
 
         initPixels();
-        handleAnimation('appear');
 
-        return () => {
+        // Pixels reaching full size flip into `shimmer`, which never marks them
+        // idle — so the loop would otherwise repaint the canvas at 60fps for the
+        // life of the page, including while this section is far off-screen.
+        const start = () => {
+            if (isRunning) return;
+            isRunning = true;
+            timePreviousRef.current = 0;
+            handleAnimation('appear');
+        };
+
+        const stop = () => {
+            if (!isRunning) return;
+            isRunning = false;
             if (animationRef.current !== null) {
                 cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
             }
+        };
+
+        const observer = new IntersectionObserver(
+            ([entry]) => (entry.isIntersecting ? start() : stop()),
+            { rootMargin: '150px 0px' },
+        );
+        observer.observe(container);
+
+        return () => {
+            observer.disconnect();
+            stop();
         };
     }, [gap, speed, colors, direction]);
 
