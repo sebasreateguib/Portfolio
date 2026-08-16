@@ -1,159 +1,119 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef } from "react";
+
+const ARROW_PATH = "M 0 0 L 0 20 L 4.5 15.5 L 8 22 L 10 21 L 6.5 14.5 L 12 14.5 Z";
 
 export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const mouse = useRef({ x: -100, y: -100 });
-  const ringPos = useRef({ x: -100, y: -100 });
+  // Outer wrapper: ONLY JS sets transform here for mouse tracking
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const mouse = useRef({ x: -200, y: -200 });
   const rafId = useRef<number>(0);
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Lerp factor — lower = more lag/smoothness
-  const LERP = 0.15;
-
-  const animate = useCallback(() => {
-    // Interpolate ring position toward mouse
-    ringPos.current.x += (mouse.current.x - ringPos.current.x) * LERP;
-    ringPos.current.y += (mouse.current.y - ringPos.current.y) * LERP;
-
-    if (dotRef.current) {
-      dotRef.current.style.transform = `translate(${mouse.current.x}px, ${mouse.current.y}px) translate(-50%, -50%)`;
-    }
-
-    if (ringRef.current) {
-      ringRef.current.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px) translate(-50%, -50%) scale(${
-        isClicking ? 0.7 : isHovering ? 1.6 : 1
-      })`;
-    }
-
-    rafId.current = requestAnimationFrame(animate);
-  }, [isHovering, isClicking]);
 
   useEffect(() => {
-    // Only show custom cursor on devices with a fine pointer (no touch)
-    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
-    if (!hasFinePointer) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const onMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      if (!isVisible) setIsVisible(true);
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-
-    const handleMouseEnterInteractive = () => setIsHovering(true);
-    const handleMouseLeaveInteractive = () => setIsHovering(false);
-
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
-    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
-    document.documentElement.addEventListener("mouseenter", handleMouseEnter);
-
-    // Target only interactive elements
-    const interactiveSelectors =
-      "a, button, [role='button'], input, textarea, select, [data-cursor-hover]";
-
-    const addListeners = () => {
-      document.querySelectorAll(interactiveSelectors).forEach((el) => {
-        el.addEventListener("mouseenter", handleMouseEnterInteractive);
-        el.addEventListener("mouseleave", handleMouseLeaveInteractive);
-      });
+    const loop = () => {
+      if (wrapperRef.current) {
+        wrapperRef.current.style.transform = `translate(${mouse.current.x}px, ${mouse.current.y}px)`;
+      }
+      rafId.current = requestAnimationFrame(loop);
     };
 
-    // Initial listener attachment
-    addListeners();
-
-    // Use MutationObserver to handle dynamically added elements
-    const observer = new MutationObserver(() => {
-      addListeners();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // Start animation loop
-    rafId.current = requestAnimationFrame(animate);
+    document.addEventListener("mousemove", onMove);
+    rafId.current = requestAnimationFrame(loop);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mouseup", handleMouseUp);
-      document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
-      document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
+      document.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(rafId.current);
-      observer.disconnect();
     };
-  }, [animate, isVisible]);
-
-  // Don't render on touch devices
-  if (typeof window !== "undefined" && !window.matchMedia("(pointer: fine)").matches) {
-    return null;
-  }
+  }, []);
 
   return (
     <>
-      {/* Global style to hide the default cursor */}
-      <style jsx global>{`
+      <style>{`
         @media (pointer: fine) {
-          *, *::before, *::after {
-            cursor: none !important;
-          }
+          *, *::before, *::after { cursor: none !important; }
         }
+
+        /* Outer wrapper: only JS touches transform (mouse position) */
+        .gc-wrapper {
+          position: fixed;
+          top: 0; left: 0;
+          width: 0; height: 0;
+          pointer-events: none;
+          z-index: 99999;
+          will-change: transform;
+        }
+
+        /* Inner div: only CSS animation touches transform (glitch shake) */
+        .gc-inner {
+          position: absolute;
+          top: 0; left: 0;
+          width: 24px; height: 24px;
+        }
+
+        .gc-inner svg {
+          position: absolute;
+          top: 0; left: 0;
+        }
+
+        .gc-inner svg.cur-red  { mix-blend-mode: screen; opacity: 0; }
+        .gc-inner svg.cur-blue { mix-blend-mode: screen; opacity: 0; }
+
+        /* ── Keyframes — affect .gc-inner only ──────────────────── */
+        @keyframes gc-shake {
+          0%,79%,100% { transform: translate(0,0) skewX(0deg); }
+          80%  { transform: translate(-2px, 0px) skewX(-5deg); }
+          82%  { transform: translate(3px, -1px) skewX(5deg); }
+          84%  { transform: translate(-1px, 1px) skewX(-3deg); }
+          86%  { transform: translate(2px, 0px) skewX(3deg); }
+          88%  { transform: translate(0, 0) skewX(0deg); }
+        }
+
+        @keyframes gc-red {
+          0%,79%,100% { transform: translate(0,0); opacity: 0; }
+          80%  { transform: translate(-4px, 1px); opacity: 0.8; }
+          82%  { transform: translate(-6px, 0px); opacity: 0.9; }
+          84%  { transform: translate(-3px,-1px); opacity: 0.7; }
+          86%  { transform: translate(-5px, 2px); opacity: 0.85; }
+          88%  { transform: translate(0,0); opacity: 0; }
+        }
+
+        @keyframes gc-blue {
+          0%,79%,100% { transform: translate(0,0); opacity: 0; }
+          80%  { transform: translate(4px,-1px); opacity: 0.8; }
+          82%  { transform: translate(6px, 0px); opacity: 0.9; }
+          84%  { transform: translate(3px, 1px); opacity: 0.7; }
+          86%  { transform: translate(5px,-2px); opacity: 0.85; }
+          88%  { transform: translate(0,0); opacity: 0; }
+        }
+
+        .gc-inner             { animation: gc-shake 3.5s infinite; }
+        .gc-inner svg.cur-red  { animation: gc-red  3.5s infinite; }
+        .gc-inner svg.cur-blue { animation: gc-blue 3.5s infinite; }
       `}</style>
 
-      {/* Dot — precise center point */}
-      <div
-        ref={dotRef}
-        aria-hidden="true"
-        className="custom-cursor-dot"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: isHovering ? "10px" : "14px",
-          height: isHovering ? "10px" : "14px",
-          borderRadius: "50%",
-          backgroundColor: "#3b82f6",
-          pointerEvents: "none",
-          zIndex: 99999,
-          opacity: isVisible ? 1 : 0,
-          transition: "width 0.3s ease, height 0.3s ease, opacity 0.15s ease",
-        }}
-      />
-
-      {/* Ring — follows with smooth delay */}
-      <div
-        ref={ringRef}
-        aria-hidden="true"
-        className="custom-cursor-ring"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "40px",
-          height: "40px",
-          borderRadius: "50%",
-          border: isHovering
-            ? "1.5px solid rgba(0, 220, 255, 0.6)"
-            : "1.5px solid rgba(255, 255, 255, 0.7)",
-          pointerEvents: "none",
-          zIndex: 99998,
-          opacity: isVisible ? 1 : 0,
-          transition:
-            "border-color 0.3s ease, opacity 0.15s ease, box-shadow 0.3s ease",
-          boxShadow: isHovering
-            ? "0 0 20px rgba(0, 220, 255, 0.25), 0 0 60px rgba(0, 220, 255, 0.08), inset 0 0 12px rgba(0, 220, 255, 0.06)"
-            : "0 0 8px rgba(255, 255, 255, 0.04)",
-        }}
-      />
+      {/* Outer: JS moves this with mouse position */}
+      <div ref={wrapperRef} className="gc-wrapper" aria-hidden="true">
+        {/* Inner: CSS glitch animates only this */}
+        <div className="gc-inner">
+          <svg className="cur-blue" width="24" height="24" viewBox="0 0 13 23" fill="none">
+            <path d={ARROW_PATH} fill="#00aaff" />
+          </svg>
+          <svg className="cur-red" width="24" height="24" viewBox="0 0 13 23" fill="none">
+            <path d={ARROW_PATH} fill="#ff2244" />
+          </svg>
+          <svg className="cur-base" width="24" height="24" viewBox="0 0 13 23" fill="none">
+            <path d={ARROW_PATH} fill="white" stroke="black" strokeWidth="1" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
     </>
   );
 }
