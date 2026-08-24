@@ -238,12 +238,13 @@ export default function GithubIntro() {
                                     <div className="relative border border-blue-400/25 p-[3px] group-hover:border-blue-400/60 transition-colors duration-300">
                                         <div className="relative w-full aspect-square overflow-hidden bg-black">
                                             <Image
-                                                src="/hackathonpp1.png"
+                                                src="/pp-portfolio.png"
                                                 alt="Sebastian Reategui"
                                                 fill
                                                 sizes="512px"
                                                 quality={100}
                                                 className="object-cover"
+                                                style={{ transform: 'scale(2.0)', transformOrigin: 'center 18%' }}
                                             />
                                         </div>
                                     </div>
