@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ARROW_PATH = "M 0 0 L 0 20 L 4.5 15.5 L 8 22 L 10 21 L 6.5 14.5 L 12 14.5 Z";
 
@@ -9,9 +9,19 @@ export default function CustomCursor() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: -200, y: -200 });
   const rafId = useRef<number>(0);
+  // Only mount the cursor on fine-pointer devices (no touch/mobile)
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
+    const mq = window.matchMedia("(pointer: fine)");
+    const sync = () => setEnabled(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
 
     const onMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
@@ -32,7 +42,9 @@ export default function CustomCursor() {
       document.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(rafId.current);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>
@@ -49,6 +61,7 @@ export default function CustomCursor() {
           pointer-events: none;
           z-index: 99999;
           will-change: transform;
+          transform: translate(-200px, -200px);
         }
 
         /* Inner div: only CSS animation touches transform (glitch shake) */
