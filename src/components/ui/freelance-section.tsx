@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from 'react';
-import { FlipDiskMatrix } from './flip-matrix';
+import React, { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { SectionTitle } from './section-title';
 import { SectionDivider } from './section-divider';
 import { useLanguage } from '../../context/LanguageContext';
@@ -8,9 +8,45 @@ import { useLanguage } from '../../context/LanguageContext';
 import { FrameButton } from './frame-button';
 import { Mail, Copy, Check } from 'lucide-react';
 
+// Three.js / WebGL — client only
+const ASCIIText = dynamic(() => import('./ascii-text'), { ssr: false });
+
+const ASCII_MESSAGES = {
+    en: ['Open', "Let's talk"],
+    es: ['Libre', 'Hablemos'],
+} as const;
+const ASCII_INTERVAL_MS = 3500;
+
 export default function FreelanceSection() {
     const { language } = useLanguage();
     const [copied, setCopied] = useState(false);
+    const [messageIndex, setMessageIndex] = useState(0);
+    const [inView, setInView] = useState(false);
+    const signRef = useRef<HTMLDivElement>(null);
+
+    const messages = ASCII_MESSAGES[language === 'es' ? 'es' : 'en'];
+
+    // Only mount the WebGL sign while it's on screen
+    useEffect(() => {
+        const el = signRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setInView(entry.isIntersecting),
+            { threshold: 0.2 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    // Cycle the ASCII sign through its messages while visible
+    useEffect(() => {
+        setMessageIndex(0);
+        if (!inView) return;
+        const id = setInterval(() => {
+            setMessageIndex(i => (i + 1) % messages.length);
+        }, ASCII_INTERVAL_MS);
+        return () => clearInterval(id);
+    }, [messages, inView]);
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText('reateguisebastian1@gmail.com');
@@ -31,25 +67,24 @@ export default function FreelanceSection() {
                     <SectionDivider label="AVAILABLE_FOR_HIRE" index="06" />
                 </div>
 
-                <div className="w-full max-w-5xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-10 lg:gap-16">
-                    {/* Split-flap board — cascades into the word when scrolled into view */}
-                    <div className="w-full lg:w-1/2 flex flex-col items-center gap-3">
-                        <div aria-hidden="true" className="w-full">
-                            <FlipDiskMatrix
-                                mode="text"
-                                text={language === 'es' ? 'LIBRE' : 'OPEN'}
-                                color="#60a5fa"
-                            />
+                <div className="w-full max-w-5xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-6 lg:gap-10">
+                    {/* ASCII "Open" sign */}
+                    <div className="w-full lg:w-3/5 flex flex-col items-center">
+                        <div ref={signRef} aria-hidden="true" className="relative w-full h-[280px] md:h-[380px] lg:h-[440px] overflow-hidden">
+                            {inView && (
+                                <ASCIIText
+                                    text={messages[messageIndex]}
+                                    asciiFontSize={5}
+                                    textFontSize={200}
+                                    planeBaseHeight={9}
+                                    enableWaves
+                                />
+                            )}
                         </div>
-                        <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-neutral-500">
-                            {language === 'es'
-                                ? 'Lima, Perú · GMT-5 · Disponible'
-                                : 'Lima, Peru · GMT-5 · Available'}
-                        </p>
                     </div>
 
                     {/* Text outside the component */}
-                    <div className="w-full lg:w-1/2 text-center lg:text-left mt-2 px-4 lg:px-0">
+                    <div className="w-full lg:w-2/5 text-center lg:text-left mt-2 px-4 lg:px-0">
                         <p className="text-xs md:text-base text-gray-300 font-mono leading-relaxed mb-6 md:mb-8">
                             {language === 'es'
                                 ? 'Actualmente disponible para trabajo freelance y pasantías en desarrollo Full Stack: Frontend (Landing Pages, Dashboards, etc.) y Backend con arquitecturas de Microservicios o Serverless.'

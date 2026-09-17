@@ -229,29 +229,28 @@ function CopilotCoachmark({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
-                    className="pointer-events-auto w-[min(92vw,360px)] rounded-2xl border border-white/10 bg-[#111111]/90 backdrop-blur-md px-5 py-4 shadow-2xl font-sans"
+                    className="pointer-events-auto w-[400px] max-w-[92vw] rounded-2xl border border-white/5 bg-neutral-950 p-2 text-white shadow-2xl font-sans"
                     role="status"
                     aria-live="polite"
                 >
-                    <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 mt-0.5">
-                            <div className="flex items-center gap-2 mb-1.5">
-                                <Bot className="h-4 w-4 text-blue-500" />
-                                <p className="text-[14px] font-medium text-white">
-                                    {t.copilot.coachmarkTitle}
-                                </p>
-                            </div>
-                            <p className="text-[13px] text-white/60 leading-relaxed ml-6">
+                    {/* Misma anatomía que el dock: texto en dos líneas, control a la derecha. */}
+                    <div className="flex items-center gap-3 pl-2">
+                        <span className="min-w-0 flex-1">
+                            <span className="block truncate text-sm font-medium leading-none">
+                                {t.copilot.coachmarkTitle}
+                            </span>
+                            <span className="mt-1.5 block truncate text-xs text-neutral-400">
                                 {t.copilot.coachmarkBody}
-                            </p>
-                        </div>
+                            </span>
+                        </span>
+
                         <button
                             type="button"
                             onClick={onDismiss}
-                            className="shrink-0 rounded-full p-1.5 text-white/40 transition-all hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 cursor-pointer"
+                            className="flex size-9 shrink-0 items-center justify-center rounded-lg text-white/50 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/30 cursor-pointer"
                             aria-label={t.copilot.coachmarkDismiss}
                         >
-                            <X className="h-3.5 w-3.5" />
+                            <X className="size-4" />
                         </button>
                     </div>
                 </motion.div>
