@@ -1,5 +1,6 @@
 "use client";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { ChevronDown, ExternalLink, MapPin } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
@@ -12,6 +13,19 @@ export default function ExperienceSection() {
     const t = translations[language];
     const copy = t.experience;
     const [expanded, setExpanded] = useState<string | null>(null);
+    const shouldReduceMotion = useReducedMotion();
+
+    /*
+     * Rail fill tracks scroll: 0 when the top of the timeline reaches the
+     * viewport centre, 1 when its bottom does. The spring smooths the raw
+     * scroll value so the fill glides instead of jumping on fast wheels.
+     */
+    const timelineRef = useRef<HTMLOListElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: timelineRef,
+        offset: ['start center', 'end center'],
+    });
+    const railProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.4 });
 
     return (
         <section id="experience" className="bg-transparent py-16 lg:py-24 relative overflow-hidden">
@@ -32,13 +46,20 @@ export default function ExperienceSection() {
                 </div>
 
                 {/* Timeline */}
-                <ol className="relative mx-auto max-w-4xl pt-2">
-                    {/* Vertical rail */}
+                <ol ref={timelineRef} className="relative mx-auto max-w-4xl pt-2">
+                    {/* Vertical rail — dim track */}
                     <div
-                        className="absolute left-[9px] top-3 bottom-3 w-px md:left-[11px]"
+                        className="absolute left-[9px] top-3 bottom-3 w-px bg-white/10 md:left-[11px]"
+                        aria-hidden="true"
+                    />
+                    {/* Vertical rail — fill that grows with scroll */}
+                    <motion.div
+                        className="absolute left-[9px] top-3 bottom-3 w-px origin-top md:left-[11px]"
                         style={{
+                            scaleY: shouldReduceMotion ? 1 : railProgress,
                             background:
-                                'linear-gradient(to bottom, rgba(96,165,250,0.55) 0%, rgba(96,165,250,0.18) 55%, transparent 100%)',
+                                'linear-gradient(to bottom, rgba(96,165,250,0.95) 0%, rgba(96,165,250,0.6) 100%)',
+                            boxShadow: '0 0 12px rgba(96,165,250,0.6)',
                         }}
                         aria-hidden="true"
                     />
