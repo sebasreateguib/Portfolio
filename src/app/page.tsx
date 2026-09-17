@@ -6,7 +6,6 @@ import ProjectsSection from '../components/ui/projects-section';
 import ExperienceSection from '../components/ui/experience-section';
 import WorkPhilosophy from '../components/ui/work-philosophy';
 import EducationSection from '../components/ui/education-section';
-import FreelanceSection from '../components/ui/freelance-section';
 import LogoCloudMarquee from '../components/ui/logo-cloud';
 import ContactSection from '../components/ui/contact-section';
 import LazyMorphPanel from '../components/ui/lazy-morph-panel';
@@ -157,10 +156,6 @@ export default function Home() {
 
               <ScrollReveal id="WorkPhilosophy">
                 <WorkPhilosophy />
-              </ScrollReveal>
-
-              <ScrollReveal>
-                <FreelanceSection />
               </ScrollReveal>
             </div>
           </div>
