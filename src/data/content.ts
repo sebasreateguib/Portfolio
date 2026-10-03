@@ -26,37 +26,51 @@ export const SKILLS_CONTENT = {
 CS STUDENT @ UTEC
 ──────────────────────────────────────────
 
-💻 LANGUAGES & FRAMEWORKS
+💻 LANGUAGES
 • C++, Python, Go, Java, JavaScript, TypeScript
-• React.js, Vue.js, Next.js, Spring Boot, Flask, FastApi, Express.js
 
-☁️ CLOUD & INFRASTRUCTURE
-• AWS (S3, Glue, Athena, Amplify, API Gateway, EC2)
-• Docker, Microservices Architecture
-• SQL (PostgreSQL, MySQL, SQLite) & NoSQL (MongoDB, DynamoDB)
+🧩 FRAMEWORKS
+• React.js, Vue.js, Next.js, Node.js, Spring Boot, Flask, FastAPI, Pydantic, Express.js
 
-🛠️ TOOLS & WORKFLOW
+🗄️ DATA
+• SQL: PostgreSQL (+ pgvector), MySQL, SQLite, Supabase
+• NoSQL: MongoDB, DynamoDB
+• Vector DBs: Qdrant, pgvector
+
+☁️ CLOUD & OPS
+• AWS (S3, Glue, Athena, Amplify, API Gateway, EC2), GCP, Cloudflare, Vercel
+• Docker, Jenkins, Nginx, Microservices Architecture
 • Git & GitHub, Postman
-• Cursor, Gemini, Codex, Claude Code
-• Opencode, Openrouter, Hugging Face, Groq, MCP Servers, SKILLS.MD
+
+🤖 AGENTIC WORKFLOW & AI
+• Claude Code, Codex, Cursor, Gemini, Antigravity, Opencode
+• LangChain, LangGraph, LlamaIndex, Docling, n8n
+• Ollama, Hugging Face, Openrouter, Groq, MCP Servers, SKILLS.MD
 `.trim(),
   es: `
 ESTUDIANTE DE CC @ UTEC
 ──────────────────────────────────────────
 
-💻 LENGUAJES Y FRAMEWORKS
-• C++, Python, Java, Go, JavaScript, TypeScript
-• React.js, Vue.js, Next.js, Spring Boot, Flask, FastApi, Express.js
+💻 LENGUAJES
+• C++, Python, Go, Java, JavaScript, TypeScript
 
-☁️ NUBE E INFRAESTRUCTURA
-• AWS (S3, Glue, Athena, Amplify, API Gateway, EC2)
-• Docker, Arquitectura de Microservicios
-• SQL (PostgreSQL, MySQL, SQLite) y MongoDB
+🧩 FRAMEWORKS
+• React.js, Vue.js, Next.js, Node.js, Spring Boot, Flask, FastAPI, Pydantic, Express.js
 
-🛠️ HERRAMIENTAS Y FLUJO DE TRABAJO
-• Git y GitHub
-• Vite, Tailwind CSS
-• Pipelines de Datos y ETL
+🗄️ DATOS
+• SQL: PostgreSQL (+ pgvector), MySQL, SQLite, Supabase
+• NoSQL: MongoDB, DynamoDB
+• Bases vectoriales: Qdrant, pgvector
+
+☁️ CLOUD Y OPS
+• AWS (S3, Glue, Athena, Amplify, API Gateway, EC2), GCP, Cloudflare, Vercel
+• Docker, Jenkins, Nginx, Arquitectura de Microservicios
+• Git y GitHub, Postman
+
+🤖 FLUJO AGÉNTICO E IA
+• Claude Code, Codex, Cursor, Gemini, Antigravity, Opencode
+• LangChain, LangGraph, LlamaIndex, Docling, n8n
+• Ollama, Hugging Face, Openrouter, Groq, MCP Servers, SKILLS.MD
 `.trim()
 };
 

@@ -160,6 +160,9 @@ export const translations = {
       stackLabel: "STACK",
       highlightsLabel: "KEY FEATURES",
       clientsLabel: "CLIENTS",
+      capabilitiesLabel: "What I built",
+      periodLabel: "Period",
+      locationLabel: "Location",
       availability: [
         "Open to AI Engineering internships",
         "Open to Software Engineering internships",
@@ -176,6 +179,7 @@ export const translations = {
           location: "Lima, Peru · Remote",
           ongoing: true,
           focus: "Front-End Development and Motion Design",
+          capabilities: ["Canvas image sequence", "GSAP ScrollTrigger", "Responsive layouts", "Technical SEO", "WhatsApp ordering", "Live in production"],
           summary:
             "Two scroll-driven landing pages built on the same stack — React + TypeScript on Vite, with GSAP ScrollTrigger choreography and an image sequence rendered frame by frame on an HTML5 Canvas — for a photovoltaic solar engineering firm and a premium sushi restaurant in Lima.",
           tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "HTML5 Canvas", "CSS3", "Lucide React"],
@@ -209,6 +213,7 @@ export const translations = {
           location: "Lima, Peru · Remote",
           ongoing: true,
           focus: "Software Infrastructure and Full-Stack Development",
+          capabilities: ["Quoting engine", "PDF quotes", "Kanban appointments", "Client directory", "Admin dashboard", "Roles & RLS"],
           summary:
             "Full-Stack Quoting & Management System for a Nail Art Studio. Built a web application for a professional nail art studio to replace spreadsheets and manual workflows with a unified platform for quoting, appointment tracking, client management, and team administration.",
           tech: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Auth + RLS", "Tailwind CSS"],
@@ -252,7 +257,8 @@ export const translations = {
       cvBadge: "CURRICULUM_VITAE",
       cvTitle: "Want to review my full background?",
       cvDesc: "Download my complete CV for an in-depth view of my technical skills, software architecture experience, and project history.",
-      cvButton: "Download Resume (.PDF)"
+      cvButton: "Download Resume (.PDF)",
+      aiTools: "Tools_I_Orchestrate"
     },
     contact: {
       title: "Contact",
@@ -462,6 +468,9 @@ export const translations = {
       stackLabel: "STACK",
       highlightsLabel: "FUNCIONALIDADES CLAVE",
       clientsLabel: "CLIENTES",
+      capabilitiesLabel: "Lo que construí",
+      periodLabel: "Periodo",
+      locationLabel: "Ubicación",
       availability: [
         "Abierto a prácticas en AI Engineering",
         "Abierto a prácticas en Software Engineering",
@@ -478,6 +487,7 @@ export const translations = {
           location: "Lima, Perú · Remoto",
           ongoing: true,
           focus: "Desarrollo Front-End y Motion Design",
+          capabilities: ["Secuencia en Canvas", "GSAP ScrollTrigger", "Layouts responsive", "SEO técnico", "Pedidos por WhatsApp", "En producción"],
           summary:
             "Dos landing pages ligadas al scroll construidas sobre el mismo stack — React + TypeScript sobre Vite, con coreografía de GSAP ScrollTrigger y una secuencia de imágenes renderizada cuadro por cuadro sobre un Canvas HTML5 — para una empresa de ingeniería en energía solar fotovoltaica y un restaurante de sushi premium en Lima.",
           tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "HTML5 Canvas", "CSS3", "Lucide React"],
@@ -511,6 +521,7 @@ export const translations = {
           location: "Lima, Perú · Remoto",
           ongoing: true,
           focus: "Infraestructura de Software y Desarrollo Full-Stack",
+          capabilities: ["Motor de cotización", "Cotizaciones en PDF", "Citas en Kanban", "Directorio de clientes", "Dashboard admin", "Roles y RLS"],
           summary:
             "Sistema Full-Stack de Cotización y Gestión para un estudio de Nail Art. Desarrollé una aplicación web para un estudio profesional de nail art que reemplaza hojas de cálculo y procesos manuales con una plataforma unificada de cotización, seguimiento de citas, gestión de clientes y administración del equipo.",
           tech: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Auth + RLS", "Tailwind CSS"],
@@ -554,7 +565,8 @@ export const translations = {
       cvBadge: "CURRÍCULUM_VITAE",
       cvTitle: "¿Quieres revisar mi experiencia completa?",
       cvDesc: "Descarga mi CV completo para conocer a detalle mis habilidades técnicas, experiencia en arquitectura de software y trayectoria.",
-      cvButton: "Descargar CV (.PDF)"
+      cvButton: "Descargar CV (.PDF)",
+      aiTools: "Herramientas_que_Orquesto"
     },
     contact: {
       title: "Contacto",

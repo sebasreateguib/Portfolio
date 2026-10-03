@@ -3,7 +3,6 @@
 import React from 'react';
 import { Mail } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import Signature from '../signature';
 
 const GithubIcon = ({ size = 20, className = "" }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -41,11 +40,6 @@ export default function Footer() {
           <p className="mt-1 text-xs text-gray-500 flex items-center gap-1 md:justify-start justify-center">
             {language === 'en' ? 'Made with ❤️ & ☕' : 'Hecho con ❤️ & ☕'}
           </p>
-        </div>
-
-        {/* Center: Handwritten sign-off */}
-        <div className="w-full max-w-[200px] shrink-0">
-          <Signature ariaLabel="Sebastian Reategui" className="text-white/70" />
         </div>
 
         {/* Right side: Social Links */}
