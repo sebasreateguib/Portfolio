@@ -1,74 +1,25 @@
-'use client';
-
 "use client";
 import { motion } from 'framer-motion';
-import { FlowingLogos } from './flowing-logos';
 import { cn } from '@/lib/utils';
 import { SectionDivider } from './section-divider';
 import { SectionTitle } from './section-title';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
-import { Download, FileText } from 'lucide-react';
+import { STACK_GROUPS } from '../../data/stack';
+import { FlowingLogos } from './flowing-logos';
 import AgenticWorkflow from './agentic-workflow';
-import { VercelCard } from './vercel-card';
-import PixelBackground from './pixel-background';
 
-interface Logo {
-    name: string;
-    image: string;
-    className?: string;
-}
+/** Per-logo height tweaks for the marquee, where logos sit bare instead of on tiles. */
+const MARQUEE_SIZES: Record<string, string> = {
+    AWS: '!h-8',
+    Docker: '!h-12',
+};
 
 interface LogoCloudMarqueeProps {
-    title?: string;
-    description?: string;
-    data?: Logo[];
     className?: string;
 }
 
-const defaultLogos: Logo[] = [
-    { name: 'C++', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg' },
-    { name: 'Python', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
-    { name: 'Go', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg' },
-    { name: 'Java', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
-    { name: 'JavaScript', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
-    { name: 'TypeScript', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
-    { name: 'React', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
-    { name: 'Vue.js', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg' },
-    { name: 'Next.js', image: 'https://cdn.simpleicons.org/nextdotjs/white' },
-    { name: 'Node.js', image: '/Node.svg' },
-    { name: 'Spring Boot', image: '/spring-boot.svg' },
-    { name: 'Flask', image: 'https://cdn.simpleicons.org/flask/white' },
-    { name: 'FastAPI', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
-    { name: 'Express', image: 'https://cdn.simpleicons.org/express/white' },
-    { name: 'AWS', image: '/AWS Logo.svg', className: '!h-8' },
-    { name: 'GCP', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg' },
-    { name: 'PostgreSQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
-    { name: 'MySQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
-    { name: 'SQLite', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg' },
-    { name: 'MongoDB', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg' },
-    { name: 'Supabase', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg' },
-    { name: 'DynamoDB', image: '/AWS DynamoDB.svg' },
-];
-
-const workflowLogos: Logo[] = [
-    { name: 'Git', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
-    { name: 'GitHub', image: 'https://cdn.simpleicons.org/github/white' },
-    { name: 'Docker', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', className: '!h-12' },
-    { name: 'Postman', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg' },
-    { name: 'Cursor', image: 'https://cdn.simpleicons.org/cursor/white' },
-    { name: 'Gemini', image: '/Gemini Color Icon.svg' },
-    { name: 'Claude', image: '/Claudecode Color Icon.svg' },
-    { name: 'Codex', image: '/Codex Color Icon.svg' },
-    { name: 'Ollama', image: 'https://cdn.simpleicons.org/ollama/white' },
-    { name: 'Hugging Face', image: '/Hugging Face Color Icon.svg' },
-    { name: 'Antigravity', image: '/Antigravity.svg' },
-];
-
-export default function LogoCloudMarquee({
-    data = defaultLogos,
-    className,
-}: LogoCloudMarqueeProps) {
+export default function LogoCloudMarquee({ className }: LogoCloudMarqueeProps) {
     const { language } = useLanguage();
     const t = translations[language];
 
@@ -97,15 +48,17 @@ export default function LogoCloudMarquee({
                     <div className='pointer-events-none absolute inset-y-0 left-0 z-20 w-32 bg-linear-to-r from-black via-black/60 to-transparent' />
                     <div className='pointer-events-none absolute inset-y-0 right-0 z-20 w-32 bg-linear-to-l from-black via-black/60 to-transparent' />
                     <div className="flex flex-col gap-12">
-                        <FlowingLogos
-                            data={data}
-                            className='[--duration:40s]'
-                        />
-                        <FlowingLogos
-                            data={workflowLogos}
-                            reverse={true}
-                            className='[--duration:35s]'
-                        />
+                        {STACK_GROUPS.map((group, i) => (
+                            <FlowingLogos
+                                key={group.label}
+                                data={group.logos.map((logo) => ({
+                                    ...logo,
+                                    className: MARQUEE_SIZES[logo.name],
+                                }))}
+                                reverse={i % 2 === 1}
+                                className={i % 2 === 1 ? '[--duration:45s]' : '[--duration:40s]'}
+                            />
+                        ))}
                     </div>
                 </motion.div>
             </div>

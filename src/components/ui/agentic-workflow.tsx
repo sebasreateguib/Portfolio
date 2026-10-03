@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { VercelCard } from './vercel-card';
 import PixelBackground from './pixel-background';
+import { AGENTIC_TOOLS } from '../../data/stack';
 
 export default function AgenticWorkflow() {
     const { language } = useLanguage();
@@ -43,6 +44,27 @@ export default function AgenticWorkflow() {
                              <p className="text-gray-400 font-mono text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-0 drop-shadow-md">
                                  {t.agentic.desc}
                              </p>
+
+                             <div className="mt-6 md:mt-8 w-full">
+                                 <p className="font-mono text-[9px] md:text-[10px] tracking-widest uppercase text-white/40">
+                                     {t.logoCloud.aiTools}
+                                 </p>
+                                 <div className="mt-4 flex flex-wrap items-start justify-center gap-5 md:gap-10">
+                                     {AGENTIC_TOOLS.map((tool) => (
+                                         <div key={tool.name} className="group/tool flex flex-col items-center gap-2">
+                                             <img
+                                                 src={tool.image}
+                                                 alt={tool.name}
+                                                 loading="lazy"
+                                                 className="h-6 md:h-10 w-auto object-contain opacity-70 transition-opacity duration-300 group-hover/tool:opacity-100"
+                                             />
+                                             <span className="font-mono text-[9px] md:text-xs text-white/40 transition-colors duration-300 group-hover/tool:text-white">
+                                                 {tool.name}
+                                             </span>
+                                         </div>
+                                     ))}
+                                 </div>
+                             </div>
                          </div>
                      </PixelBackground>
                  </VercelCard>
