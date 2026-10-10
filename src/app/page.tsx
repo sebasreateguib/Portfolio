@@ -4,6 +4,7 @@ import ScrollImageSequence from '../components/ui/scroll-image-sequence';
 import GithubIntro from '../components/ui/github-intro';
 import ProjectsSection from '../components/ui/projects-section';
 import ExperienceSection from '../components/ui/experience-section';
+import CrtPortal from '../components/ui/crt-portal';
 import WorkPhilosophy from '../components/ui/work-philosophy';
 import EducationSection from '../components/ui/education-section';
 import LogoCloudMarquee from '../components/ui/logo-cloud';
@@ -135,9 +136,11 @@ export default function Home() {
         <div className="bg-black min-h-screen">
           <TopBanner />
           <HeroAscii />
-          <ScrollReveal>
-            <GithubIntro />
-          </ScrollReveal>
+          <CrtPortal enterHref="#about">
+            <ScrollReveal>
+              <GithubIntro />
+            </ScrollReveal>
+          </CrtPortal>
           <ScrollImageSequence />
           <div className="relative w-full bg-black">
             {/* Grid background that spans across the sections */}

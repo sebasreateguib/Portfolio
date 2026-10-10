@@ -13,7 +13,7 @@ export const translations = {
       downloadResume: "Download Resume",
       letsTalk: "Let's talk",
       role: "CS Student @ UTEC.",
-      description: "Passionate about AI & ML Engineering, Full Stack Development, Systems Optimization and Cloud-Native Infrastructure.",
+      description: "Passionate about AI Engineering, Full Stack Development, Systems Optimization and Cloud-Native & Data Infrastructure.",
       metrics: {
         metric1: { value: "3rd", label: "YEAR CS" },
         metric2: { value: "5+", label: "FEATURED PROJECTS" },
@@ -177,7 +177,7 @@ export const translations = {
           period: "Aug 2026",
           duration: "1 mo",
           location: "Lima, Peru · Remote",
-          ongoing: true,
+          ongoing: false,
           focus: "Front-End Development and Motion Design",
           capabilities: ["Canvas image sequence", "GSAP ScrollTrigger", "Responsive layouts", "Technical SEO", "WhatsApp ordering", "Live in production"],
           summary:
@@ -211,7 +211,7 @@ export const translations = {
           period: "Aug 2026",
           duration: "1 mo",
           location: "Lima, Peru · Remote",
-          ongoing: true,
+          ongoing: false,
           focus: "Software Infrastructure and Full-Stack Development",
           capabilities: ["Quoting engine", "PDF quotes", "Kanban appointments", "Client directory", "Admin dashboard", "Roles & RLS"],
           summary:
@@ -321,7 +321,7 @@ export const translations = {
       downloadResume: "Descargar CV",
       letsTalk: "Hablemos",
       role: "Estudiante de CS @ UTEC.",
-      description: "Apasionado por Ingeniería IA & ML, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native.",
+      description: "Apasionado por Ingeniería de IA, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native y de Datos.",
       metrics: {
         metric1: { value: "3er", label: "AÑO CS" },
         metric2: { value: "5+", label: "PROYECTOS DESTACADOS" },
@@ -485,7 +485,7 @@ export const translations = {
           period: "Ago 2026",
           duration: "1 mes",
           location: "Lima, Perú · Remoto",
-          ongoing: true,
+          ongoing: false,
           focus: "Desarrollo Front-End y Motion Design",
           capabilities: ["Secuencia en Canvas", "GSAP ScrollTrigger", "Layouts responsive", "SEO técnico", "Pedidos por WhatsApp", "En producción"],
           summary:
@@ -519,7 +519,7 @@ export const translations = {
           period: "Ago 2026",
           duration: "1 mes",
           location: "Lima, Perú · Remoto",
-          ongoing: true,
+          ongoing: false,
           focus: "Infraestructura de Software y Desarrollo Full-Stack",
           capabilities: ["Motor de cotización", "Cotizaciones en PDF", "Citas en Kanban", "Directorio de clientes", "Dashboard admin", "Roles y RLS"],
           summary:

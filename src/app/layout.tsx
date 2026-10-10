@@ -1,11 +1,18 @@
 // deploy trigger
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Geist } from "next/font/google";
+import { Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+// Only the scroll portal's word uses it; a heavy mono reads as cut-out type.
+const portalFont = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["800"],
+  variable: "--font-portal",
+});
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -34,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("scroll-smooth", "bg-black", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
+    <html lang="en" className={cn("scroll-smooth", "bg-black", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable, portalFont.variable)}>
       <body className="antialiased bg-black min-h-screen">
         <LanguageProvider>
           {children}
