@@ -140,8 +140,8 @@ export default function HeroAscii() {
                 className="absolute top-0 left-0 right-0 z-20 border-b border-white/20"
             >
                 <div className="container mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2 lg:gap-4 group cursor-pointer">
-                        <div className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12 group-hover:text-blue-400 transition-colors duration-300">
+                    <div className="flex items-center gap-2 lg:gap-4">
+                        <div className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12 select-none">
                             S.REATEGUI
                         </div>
                         <div className="hidden sm:block lg:hidden xl:block h-3 lg:h-4 w-px bg-white/40"></div>
