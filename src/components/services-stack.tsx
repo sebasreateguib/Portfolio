@@ -62,7 +62,7 @@ function Person({ at, color = INK, s = 1, opacity = 1 }: { at: Pt; color?: strin
 }
 
 /* ------------------------------------------------------------------------- *
- * Frontend freelance (Sunrise Energy · Yeyo Maki): a sunrise scrubbed frame   *
+ * Frontend freelance (Yeyo Maki · Buena Vista): a sunrise scrubbed frame      *
  * by frame on a canvas, pinned by ScrollTrigger, reflowed onto a phone,       *
  * marked up for search, wired to WhatsApp, and shipped to two live domains.   *
  * ------------------------------------------------------------------------- */
@@ -80,7 +80,7 @@ const F_QUERY = "sushi lima";
 const F_SLOTS = [262, 304, 346];
 const F_CTA: Pt = [725, 274];
 const F_TO_CHAT: [Pt, Pt, Pt, Pt] = [F_CTA, [820, 440], [1010, 440], [1100, 352]];
-const F_SITES = ["sunrisenergyperu.com", "yeyo-maki.vercel.app"];
+const F_SITES = ["yeyo-maki.vercel.app", "buenavistainmobiliaria.com"];
 
 function Frontend({ t }: { t: number }) {
   const clip = useId().replace(/[^\w-]/g, "");

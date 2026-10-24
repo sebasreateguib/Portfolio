@@ -47,7 +47,7 @@ export const translations = {
       hi: "Hi there 👋, I'm Sebastian!",
       bio: "I'm a 26 year old Computer Science student based in Lima, Perú. I always enjoy learning new things and giving my best to every project and challenge.",
       bullet1: "I'm currently a <span className=\"text-[#60a5fa] font-semibold\">3rd-year CS Student</span> at UTEC",
-      bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust, NestJS & Nuxt.</span>",
+      bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS.</span>",
       bullet3: "Fun fact: <span className=\"text-[#60a5fa] font-semibold\">I was inspired by Blue Lock's pentagon for the hero design!</span>",
       bullet4: "Focused on <span className=\"text-[#60a5fa] font-semibold\">clean code, modern infrastructure, and AI.</span>",
       activity: "ACTIVITY",
@@ -61,16 +61,6 @@ export const translations = {
       archiveTitle: "Project_Archive",
       archiveHint: "Browse the rest by category — open a file to jump to its repo.",
       list: [
-        {
-          id: 8,
-          title: "YeyoMaki",
-          description: "Premium landing page for a sushi restaurant in Lima. Scroll-driven 240-frame image sequence rendered on an HTML5 Canvas with GSAP ScrollTrigger and ScrollSmoother, interactive menu with prices and tags, offers section, delivery schedule and direct WhatsApp ordering.",
-          tech: ["React", "TypeScript", "Vite", "GSAP", "ScrollTrigger", "HTML5 Canvas"],
-          github: "#",
-          live: "https://yeyo-maki.vercel.app",
-          image: "/yeyomaki.jpg",
-          year: "2026"
-        },
         {
           id: 4,
           title: "SanaFlow",
@@ -172,34 +162,34 @@ export const translations = {
         {
           id: "frontend-freelance",
           role: "Frontend Developer",
-          company: "Sunrise Energy Peru · Yeyo Maki",
+          company: "Yeyo Maki · Buena Vista",
           type: "Freelance",
           period: "Aug 2026",
           duration: "1 mo",
           location: "Lima, Peru · Remote",
           ongoing: false,
           focus: "Front-End Development and Motion Design",
-          capabilities: ["Canvas image sequence", "GSAP ScrollTrigger", "Responsive layouts", "Technical SEO", "WhatsApp ordering", "Live in production"],
+          capabilities: ["Canvas image sequence", "GSAP ScrollTrigger", "Interactive galleries", "Responsive layouts", "WhatsApp conversion", "Live in production"],
           summary:
-            "Two scroll-driven landing pages built on the same stack — React + TypeScript on Vite, with GSAP ScrollTrigger choreography and an image sequence rendered frame by frame on an HTML5 Canvas — for a photovoltaic solar engineering firm and a premium sushi restaurant in Lima.",
-          tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "HTML5 Canvas", "CSS3", "Lucide React"],
+            "Two scroll-driven sites built with React on Vite and choreographed with GSAP ScrollTrigger — for a premium sushi restaurant and a residential real estate developer in Lima.",
+          tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "Lenis", "Framer Motion", "HTML5 Canvas", "CSS3"],
           highlights: [
-            "Scroll-linked image sequences rendered frame by frame on an HTML5 Canvas",
-            "Immersive scroll choreography with GSAP ScrollTrigger and ScrollSmoother: pinned sections, scrubbed timelines, and reveal animations",
+            "Scroll-linked image sequence rendered frame by frame on an HTML5 Canvas",
+            "Immersive scroll choreography with GSAP ScrollTrigger, ScrollSmoother, and Lenis: pinned sections, scrubbed timelines, and reveal animations",
+            "Drag, pinch, and zoom image galleries for building renders and floor plans",
             "Premium CSS3 styling: glassmorphism, CSS variables, and mobile-first responsive layouts",
-            "Full technical SEO with JSON-LD structured data, Open Graph, and optimized meta tags",
-            "Conversion paths wired straight to the client: WhatsApp ordering and social integration"
+            "Conversion paths wired straight to the client: WhatsApp ordering and a pre-filled WhatsApp chat widget"
           ],
           clients: [
-            {
-              name: "Sunrise Energy Peru",
-              detail: "Corporate landing page for a photovoltaic solar engineering firm, with full technical SEO and iconography by Lucide React.",
-              link: "https://sunrisenergyperu.com"
-            },
             {
               name: "Yeyo Maki",
               detail: "Landing page for a premium sushi restaurant: 240-frame Canvas sequence, interactive menu with prices and tags, offers, delivery schedule, and WhatsApp ordering.",
               link: "https://yeyo-maki.vercel.app"
+            },
+            {
+              name: "Buena Vista Inmobiliaria",
+              detail: "Site for a residential real estate developer: the Virginia 281 project in San Miguel with a virtual tour, zoomable renders and floor plans, a neighborhood map, and a WhatsApp chat for inquiries.",
+              link: "https://buenavistainmobiliaria.com"
             }
           ]
         },
@@ -355,7 +345,7 @@ export const translations = {
       hi: "¡Hola 👋, soy Sebastian!",
       bio: "Soy un estudiante de Ciencia de la Computación de 26 años viviendo en Lima, Perú. Siempre disfruto aprender cosas nuevas y dar lo mejor de mí en cada proyecto y desafío.",
       bullet1: "Actualmente soy un <span className=\"text-[#60a5fa] font-semibold\">Estudiante de 3er año de CC</span> en UTEC",
-      bullet2: "Actualmente estoy aprendiendo tecnologías como <span className=\"text-[#60a5fa] font-semibold\">Rust, NestJS & Nuxt</span>",
+      bullet2: "Actualmente estoy aprendiendo tecnologías como <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS</span>",
       bullet3: "Dato curioso: <span className=\"text-[#60a5fa] font-semibold\">¡Me inspiré en el pentágono de Blue Lock para el diseño!</span>",
       bullet4: "Enfocado en <span className=\"text-[#60a5fa] font-semibold\">código limpio, infraestructura moderna e IA.</span>",
       activity: "ACTIVIDAD",
@@ -369,16 +359,6 @@ export const translations = {
       archiveTitle: "Archivo_de_Proyectos",
       archiveHint: "Explora el resto por categoría — abre un archivo para ir a su repo.",
       list: [
-        {
-          id: 8,
-          title: "YeyoMaki",
-          description: "Landing page premium para un restaurante de sushi en Lima. Secuencia de 240 imágenes ligada al scroll y renderizada sobre un Canvas HTML5 con GSAP ScrollTrigger y ScrollSmoother, carta interactiva con precios y etiquetas, sección de ofertas, horarios de delivery y pedidos directos por WhatsApp.",
-          tech: ["React", "TypeScript", "Vite", "GSAP", "ScrollTrigger", "HTML5 Canvas"],
-          github: "#",
-          live: "https://yeyo-maki.vercel.app",
-          image: "/yeyomaki.jpg",
-          year: "2026"
-        },
         {
           id: 4,
           title: "SanaFlow",
@@ -480,34 +460,34 @@ export const translations = {
         {
           id: "frontend-freelance",
           role: "Frontend Developer",
-          company: "Sunrise Energy Peru · Yeyo Maki",
+          company: "Yeyo Maki · Buena Vista",
           type: "Freelance",
           period: "Ago 2026",
           duration: "1 mes",
           location: "Lima, Perú · Remoto",
           ongoing: false,
           focus: "Desarrollo Front-End y Motion Design",
-          capabilities: ["Secuencia en Canvas", "GSAP ScrollTrigger", "Layouts responsive", "SEO técnico", "Pedidos por WhatsApp", "En producción"],
+          capabilities: ["Secuencia en Canvas", "GSAP ScrollTrigger", "Galerías interactivas", "Layouts responsive", "Conversión por WhatsApp", "En producción"],
           summary:
-            "Dos landing pages ligadas al scroll construidas sobre el mismo stack — React + TypeScript sobre Vite, con coreografía de GSAP ScrollTrigger y una secuencia de imágenes renderizada cuadro por cuadro sobre un Canvas HTML5 — para una empresa de ingeniería en energía solar fotovoltaica y un restaurante de sushi premium en Lima.",
-          tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "HTML5 Canvas", "CSS3", "Lucide React"],
+            "Dos sitios ligados al scroll construidos con React sobre Vite y coreografiados con GSAP ScrollTrigger — para un restaurante de sushi premium y una inmobiliaria de proyectos residenciales en Lima.",
+          tech: ["React", "TypeScript", "Vite", "GSAP ScrollTrigger", "ScrollSmoother", "Lenis", "Framer Motion", "HTML5 Canvas", "CSS3"],
           highlights: [
-            "Secuencias de imágenes ligadas al scroll, renderizadas cuadro por cuadro sobre un Canvas HTML5",
-            "Coreografía de scroll inmersiva con GSAP ScrollTrigger y ScrollSmoother: secciones fijadas, timelines scrubbeados y animaciones de aparición",
+            "Secuencia de imágenes ligada al scroll, renderizada cuadro por cuadro sobre un Canvas HTML5",
+            "Coreografía de scroll inmersiva con GSAP ScrollTrigger, ScrollSmoother y Lenis: secciones fijadas, timelines scrubbeados y animaciones de aparición",
+            "Galerías con arrastre, pellizco y zoom para renders del edificio y planos",
             "Estilos CSS3 premium: glassmorphism, variables CSS y layouts responsive mobile-first",
-            "SEO técnico completo con datos estructurados JSON-LD, Open Graph y meta tags optimizados",
-            "Rutas de conversión conectadas directo al cliente: pedidos por WhatsApp e integración con redes"
+            "Rutas de conversión conectadas directo al cliente: pedidos por WhatsApp y un chat de WhatsApp con mensaje prellenado"
           ],
           clients: [
-            {
-              name: "Sunrise Energy Peru",
-              detail: "Landing corporativa para una empresa de ingeniería en energía solar fotovoltaica, con SEO técnico completo e iconografía con Lucide React.",
-              link: "https://sunrisenergyperu.com"
-            },
             {
               name: "Yeyo Maki",
               detail: "Landing para un restaurante de sushi premium: secuencia de 240 frames en Canvas, carta interactiva con precios y etiquetas, ofertas, horarios de delivery y pedidos por WhatsApp.",
               link: "https://yeyo-maki.vercel.app"
+            },
+            {
+              name: "Buena Vista Inmobiliaria",
+              detail: "Sitio para una inmobiliaria de proyectos residenciales: el proyecto Virginia 281 en San Miguel con recorrido virtual, renders y planos con zoom, mapa del entorno y chat de WhatsApp para consultas.",
+              link: "https://buenavistainmobiliaria.com"
             }
           ]
         },
