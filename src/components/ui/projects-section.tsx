@@ -1,8 +1,7 @@
 "use client";
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown, ExternalLink, Brain } from 'lucide-react';
-import { TerminalIcon } from '../term-icon';
+import { ArrowLeft, ArrowRight, ChevronDown, ExternalLink, Brain } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { projectsArchiveItems } from '../../data/projects-archive';
@@ -40,11 +39,6 @@ const projectDetails = {
                 category: 'Geospatial Algorithms',
                 role: 'C++ Systems / Frontend Engineer',
                 signals: ['Custom R-Tree', 'Range + KNN queries', 'Live search benchmarks'],
-            },
-            8: {
-                category: 'Restaurant Landing Page',
-                role: 'Freelance Frontend Developer',
-                signals: ['Canvas image sequence', 'GSAP ScrollTrigger', 'WhatsApp ordering'],
             },
             1: {
                 category: 'Fintech Analytics',
@@ -99,11 +93,6 @@ const projectDetails = {
                 role: 'C++ Systems / Frontend Engineer',
                 signals: ['R-Tree propio', 'Consultas Range + KNN', 'Benchmarks en vivo'],
             },
-            8: {
-                category: 'Landing de Restaurante',
-                role: 'Freelance Frontend Developer',
-                signals: ['Secuencia de imágenes en Canvas', 'GSAP ScrollTrigger', 'Pedidos por WhatsApp'],
-            },
             1: {
                 category: 'Analítica Fintech',
                 role: 'Core Full-Stack, Cloud & Data Engineer',
@@ -144,6 +133,50 @@ export default function ProjectsSection() {
     const copy = projectDetails[language];
     const [expandedProject, setExpandedProject] = useState<number | null>(null);
     const [archiveOpen, setArchiveOpen] = useState(false);
+    const trackRef = useRef<HTMLDivElement>(null);
+    const [rail, setRail] = useState({ first: 0, visible: 1, thumb: 1, offset: 0, atStart: true, atEnd: false });
+    const total = t.projects.list.length;
+
+    // One card plus the flex gap: the distance an arrow click travels
+    const cardStep = useCallback(() => {
+        const el = trackRef.current;
+        const card = el?.firstElementChild as HTMLElement | null;
+        if (!el || !card) return { step: 0, gap: 0 };
+        const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+        return { step: card.offsetWidth + gap, gap };
+    }, []);
+
+    const updateRail = useCallback(() => {
+        const el = trackRef.current;
+        const { step, gap } = cardStep();
+        if (!el || !step) return;
+        const max = el.scrollWidth - el.clientWidth;
+        const thumb = el.clientWidth / el.scrollWidth;
+        setRail({
+            first: Math.round(el.scrollLeft / step),
+            visible: Math.max(1, Math.round((el.clientWidth + gap) / step)),
+            thumb,
+            offset: max > 0 ? (el.scrollLeft / max) * (1 - thumb) : 0,
+            atStart: el.scrollLeft <= 2,
+            atEnd: el.scrollLeft >= max - 2,
+        });
+    }, [cardStep]);
+
+    useEffect(() => {
+        const el = trackRef.current;
+        if (!el) return;
+        updateRail();
+        const observer = new ResizeObserver(updateRail);
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [updateRail, total]);
+
+    const scrollByCard = (dir: 1 | -1) => {
+        trackRef.current?.scrollBy({ left: dir * cardStep().step, behavior: 'smooth' });
+    };
+
+    const last = Math.min(total, rail.first + rail.visible);
+    const pad = (n: number) => String(n).padStart(2, '0');
 
     return (
         <section id="projects" className="bg-transparent py-16 lg:py-24 relative overflow-hidden">
@@ -158,37 +191,36 @@ export default function ProjectsSection() {
                     <SectionDivider label={t.projects.featured} className="mb-0" index="03" />
                 </div>
 
-                {/* Swipe Marquee Ticker */}
-                <div className="mb-6 w-full border-y border-white/[0.07] bg-white/[0.015] py-3 overflow-hidden relative">
-                    {/* Edge fades */}
-                    <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000, transparent)' }} />
-                    <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000, transparent)' }} />
-
-                    {/* Scrolling track */}
-                    <div className="flex whitespace-nowrap" style={{ animation: 'ticker-scroll 8s linear infinite' }}>
-                        {/* Repeat enough copies to fill any screen */}
-                        {Array.from({ length: 6 }).map((_, i) => (
-                            <span key={i} className="flex items-center gap-4 px-4 font-mono text-[10px] md:text-[11px] tracking-[0.18em] uppercase select-none shrink-0">
-                                <span className="text-white/30">{language === 'es' ? 'Desliza para explorar' : 'Swipe to explore'}</span>
-                                <span className="text-blue-400/50">→</span>
-                                <span className="text-white/20">{language === 'es' ? 'Más proyectos disponibles' : 'More projects available'}</span>
-                                <span className="text-blue-400/50">→</span>
-                                <span className="text-white/30">{language === 'es' ? 'Arrastra hacia la derecha' : 'Drag to the right'}</span>
-                                <span className="text-blue-400/50">→</span>
-                            </span>
+                {/* Carousel rail: position counter, scroll thumb, and arrows */}
+                <div className="mb-6 flex w-full items-center gap-4 border-y border-white/[0.07] bg-white/[0.015] px-4 py-3 font-mono text-[10px] md:text-[11px] tracking-[0.18em] uppercase select-none">
+                    <span className="shrink-0 text-white/30">
+                        {copy.eyebrow}_<span className="text-blue-300/80">{last - rail.first > 1 ? `${pad(rail.first + 1)}–${pad(last)}` : pad(rail.first + 1)}</span>
+                        <span className="text-white/20"> / {pad(total)}</span>
+                    </span>
+                    <div className="relative h-px flex-1 bg-white/10">
+                        <div
+                            className="absolute -top-px h-[3px] bg-blue-400/70 shadow-[0_0_10px_rgba(96,165,250,0.6)] transition-[left,width] duration-150 ease-out"
+                            style={{ width: `${rail.thumb * 100}%`, left: `${rail.offset * 100}%` }}
+                        />
+                    </div>
+                    <div className="hidden shrink-0 gap-2 md:flex">
+                        {([[-1, rail.atStart, ArrowLeft, language === 'es' ? 'Proyecto anterior' : 'Previous project'], [1, rail.atEnd, ArrowRight, language === 'es' ? 'Siguiente proyecto' : 'Next project']] as const).map(([dir, disabled, Icon, label]) => (
+                            <button
+                                key={dir}
+                                type="button"
+                                onClick={() => scrollByCard(dir)}
+                                disabled={disabled}
+                                aria-label={label}
+                                className="flex h-8 w-8 items-center justify-center border border-white/10 text-white/50 transition-colors duration-200 hover:border-blue-400/50 hover:text-blue-300 disabled:pointer-events-none disabled:opacity-25"
+                            >
+                                <Icon size={14} />
+                            </button>
                         ))}
                     </div>
                 </div>
 
-                <style>{`
-                    @keyframes ticker-scroll {
-                        0%   { transform: translateX(0); }
-                        100% { transform: translateX(-50%); }
-                    }
-                `}</style>
-
                 {/* Projects Grid / Mobile Carousel */}
-                <div className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+                <div ref={trackRef} onScroll={updateRail} className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
                     {t.projects.list.map((project, index) => {
                         const meta = copy.projects[project.id as keyof typeof copy.projects];
                         const isExpanded = expandedProject === project.id;
@@ -246,8 +278,7 @@ export default function ProjectsSection() {
                                 <div className="relative z-30 flex flex-1 flex-col p-5">
                                     <div className="mb-4">
                                         <span className="mb-2 block font-mono text-[10px] tracking-widest text-blue-300">SYS.{project.year}</span>
-                                        <h3 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-blue-300">
-                                            <TerminalIcon className="shrink-0 text-blue-400" size={20} />
+                                        <h3 className="text-2xl font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-blue-300">
                                             {project.title}
                                         </h3>
                                     </div>
