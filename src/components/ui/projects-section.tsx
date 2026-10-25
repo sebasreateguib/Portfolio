@@ -134,7 +134,7 @@ export default function ProjectsSection() {
     const [expandedProject, setExpandedProject] = useState<number | null>(null);
     const [archiveOpen, setArchiveOpen] = useState(false);
     const trackRef = useRef<HTMLDivElement>(null);
-    const [rail, setRail] = useState({ first: 0, visible: 1, thumb: 1, offset: 0, atStart: true, atEnd: false });
+    const [rail, setRail] = useState({ first: 0, visible: 1, atStart: true, atEnd: false });
     const total = t.projects.list.length;
 
     // One card plus the flex gap: the distance an arrow click travels
@@ -151,12 +151,9 @@ export default function ProjectsSection() {
         const { step, gap } = cardStep();
         if (!el || !step) return;
         const max = el.scrollWidth - el.clientWidth;
-        const thumb = el.clientWidth / el.scrollWidth;
         setRail({
             first: Math.round(el.scrollLeft / step),
             visible: Math.max(1, Math.round((el.clientWidth + gap) / step)),
-            thumb,
-            offset: max > 0 ? (el.scrollLeft / max) * (1 - thumb) : 0,
             atStart: el.scrollLeft <= 2,
             atEnd: el.scrollLeft >= max - 2,
         });
@@ -177,6 +174,9 @@ export default function ProjectsSection() {
 
     const last = Math.min(total, rail.first + rail.visible);
     const pad = (n: number) => String(n).padStart(2, '0');
+    // Fade the edges that still have cards beyond them
+    const fade = `linear-gradient(to right, ${rail.atStart ? '#000' : 'transparent'}, #000 48px, #000 calc(100% - 48px), ${rail.atEnd ? '#000' : 'transparent'})`;
+    const edgeFade = { maskImage: fade, WebkitMaskImage: fade };
 
     return (
         <section id="projects" className="bg-transparent py-16 lg:py-24 relative overflow-hidden">
@@ -191,19 +191,12 @@ export default function ProjectsSection() {
                     <SectionDivider label={t.projects.featured} className="mb-0" index="03" />
                 </div>
 
-                {/* Carousel rail: position counter, scroll thumb, and arrows */}
-                <div className="mb-6 flex w-full items-center gap-4 border-y border-white/[0.07] bg-white/[0.015] px-4 py-3 font-mono text-[10px] md:text-[11px] tracking-[0.18em] uppercase select-none">
-                    <span className="shrink-0 text-white/30">
-                        {copy.eyebrow}_<span className="text-blue-300/80">{last - rail.first > 1 ? `${pad(rail.first + 1)}–${pad(last)}` : pad(rail.first + 1)}</span>
-                        <span className="text-white/20"> / {pad(total)}</span>
+                {/* Carousel hint: position counter and arrows */}
+                <div className="mb-2 flex items-center gap-3 font-mono text-[10px] md:text-[11px] tracking-[0.18em] text-white/30 select-none">
+                    <span>
+                        <span className="text-white/60">{last - rail.first > 1 ? `${pad(rail.first + 1)}–${pad(last)}` : pad(rail.first + 1)}</span> / {pad(total)}
                     </span>
-                    <div className="relative h-px flex-1 bg-white/10">
-                        <div
-                            className="absolute -top-px h-[3px] bg-blue-400/70 shadow-[0_0_10px_rgba(96,165,250,0.6)] transition-[left,width] duration-150 ease-out"
-                            style={{ width: `${rail.thumb * 100}%`, left: `${rail.offset * 100}%` }}
-                        />
-                    </div>
-                    <div className="hidden shrink-0 gap-2 md:flex">
+                    <div className="flex">
                         {([[-1, rail.atStart, ArrowLeft, language === 'es' ? 'Proyecto anterior' : 'Previous project'], [1, rail.atEnd, ArrowRight, language === 'es' ? 'Siguiente proyecto' : 'Next project']] as const).map(([dir, disabled, Icon, label]) => (
                             <button
                                 key={dir}
@@ -211,7 +204,7 @@ export default function ProjectsSection() {
                                 onClick={() => scrollByCard(dir)}
                                 disabled={disabled}
                                 aria-label={label}
-                                className="flex h-8 w-8 items-center justify-center border border-white/10 text-white/50 transition-colors duration-200 hover:border-blue-400/50 hover:text-blue-300 disabled:pointer-events-none disabled:opacity-25"
+                                className="flex h-7 w-7 items-center justify-center text-white/50 transition-colors duration-200 hover:text-white disabled:pointer-events-none disabled:opacity-25"
                             >
                                 <Icon size={14} />
                             </button>
@@ -220,7 +213,7 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Projects Grid / Mobile Carousel */}
-                <div ref={trackRef} onScroll={updateRail} className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+                <div ref={trackRef} onScroll={updateRail} className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', ...edgeFade }}>
                     {t.projects.list.map((project, index) => {
                         const meta = copy.projects[project.id as keyof typeof copy.projects];
                         const isExpanded = expandedProject === project.id;
