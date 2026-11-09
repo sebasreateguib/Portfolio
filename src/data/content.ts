@@ -43,7 +43,7 @@ CS STUDENT @ UTEC
 • Git & GitHub, Postman
 
 🤖 AGENTIC WORKFLOW & AI
-• Claude Code, Codex, Cursor, Gemini, Antigravity, Opencode
+• Claude Code, Cursor, Antigravity, Opencode
 • LangChain, LangGraph, LlamaIndex, Docling, n8n
 • Ollama, Hugging Face, Openrouter, Groq, MCP Servers, SKILLS.MD
 `.trim(),
@@ -68,7 +68,7 @@ ESTUDIANTE DE CC @ UTEC
 • Git y GitHub, Postman
 
 🤖 FLUJO AGÉNTICO E IA
-• Claude Code, Codex, Cursor, Gemini, Antigravity, Opencode
+• Claude Code, Cursor, Antigravity, Opencode
 • LangChain, LangGraph, LlamaIndex, Docling, n8n
 • Ollama, Hugging Face, Openrouter, Groq, MCP Servers, SKILLS.MD
 `.trim()

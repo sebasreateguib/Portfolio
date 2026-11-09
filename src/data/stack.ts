@@ -61,5 +61,4 @@ export const AGENTIC_TOOLS: StackLogo[] = [
   { name: "Claude Code", image: "/Claudecode Color Icon.svg" },
   { name: "Cursor", image: "https://cdn.simpleicons.org/cursor/white" },
   { name: "Antigravity", image: "/Antigravity.svg" },
-  { name: "Codex", image: "/Codex Color Icon.svg" },
 ];

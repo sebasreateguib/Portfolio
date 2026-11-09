@@ -340,7 +340,7 @@ export default function HeroAscii() {
                                     {t.copilot.heroCta}
                                 </button>
 
-                                <a href={language === 'es' ? '/CV-ES.pdf' : '/CV-EN.pdf'} download="Sebastian-Reategui-CV.pdf" className="relative col-span-2 flex min-h-11 items-center justify-center gap-2 px-4 py-2 lg:px-6 lg:py-2.5 bg-transparent text-white font-mono text-xs lg:text-sm border border-white hover:bg-white hover:text-black transition-all duration-200 group">
+                                <a href={language === 'es' ? '/CV-SebastianReategui-ES.pdf' : '/CV-SebastianReategui-EN.pdf'} download={language === 'es' ? 'CV-SebastianReategui-ES.pdf' : 'CV-SebastianReategui-EN.pdf'} className="relative col-span-2 flex min-h-11 items-center justify-center gap-2 px-4 py-2 lg:px-6 lg:py-2.5 bg-transparent text-white font-mono text-xs lg:text-sm border border-white hover:bg-white hover:text-black transition-all duration-200 group">
                                     <span className="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <Download className="w-4 h-4" />
