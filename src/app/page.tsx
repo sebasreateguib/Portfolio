@@ -4,8 +4,8 @@ import ScrollImageSequence from '../components/ui/scroll-image-sequence';
 import GithubIntro from '../components/ui/github-intro';
 import ProjectsSection from '../components/ui/projects-section';
 import ExperienceSection from '../components/ui/experience-section';
-// import ProfilePortal from '../components/ui/profile-portal';
 import WorkPhilosophy from '../components/ui/work-philosophy';
+import DeliveryPipeline from '../components/ui/delivery-pipeline';
 import EducationSection from '../components/ui/education-section';
 import LogoCloudMarquee from '../components/ui/logo-cloud';
 import ContactSection from '../components/ui/contact-section';
@@ -136,13 +136,9 @@ export default function Home() {
         <div className="bg-black min-h-screen">
           <TopBanner />
           <HeroAscii />
-          {/* <ProfilePortal enterHref="#about"> — hidden for now */}
-          <>
-            <ScrollReveal>
-              <GithubIntro />
-            </ScrollReveal>
-          </>
-          {/* </ProfilePortal> */}
+          <ScrollReveal>
+            <GithubIntro />
+          </ScrollReveal>
           <ScrollImageSequence />
           <div className="relative w-full bg-black">
             {/* Grid background that spans across the sections */}
@@ -164,6 +160,10 @@ export default function Home() {
               </ScrollReveal>
             </div>
           </div>
+
+          <ScrollReveal>
+            <DeliveryPipeline />
+          </ScrollReveal>
 
           <ScrollReveal id="Skills">
             <LogoCloudMarquee />

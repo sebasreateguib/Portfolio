@@ -46,21 +46,20 @@ export const STACK_GROUPS: { label: string; logos: StackLogo[] }[] = [
       { name: "Nginx", image: "https://cdn.simpleicons.org/nginx" },
       { name: "Jenkins", image: `${DEVICON}/jenkins/jenkins-original.svg` },
       { name: "Postman", image: `${DEVICON}/postman/postman-original.svg` },
-      { name: "Cursor", image: "https://cdn.simpleicons.org/cursor/white" },
-      { name: "Gemini", image: "/Gemini Color Icon.svg" },
-      { name: "Claude", image: "/Claudecode Color Icon.svg" },
-      { name: "Codex", image: "/Codex Color Icon.svg" },
       { name: "Ollama", image: "https://cdn.simpleicons.org/ollama/white" },
+      { name: "LangChain", image: "https://cdn.simpleicons.org/langchain/white" },
+      { name: "LangGraph", image: "https://cdn.simpleicons.org/langgraph/white" },
+      { name: "LlamaIndex", image: "/LlamaIndex Color Icon.svg" },
+      { name: "n8n", image: "https://cdn.simpleicons.org/n8n" },
       { name: "Hugging Face", image: "/Hugging Face Color Icon.svg" },
-      { name: "Antigravity", image: "/Antigravity.svg" },
     ],
   },
 ];
 
-/** Shown inside the Agentic Development Workflow card, not in the marquee. */
+/** Shown inside the Agentic Development Workflow card, not in the marquee: the tools I build with agents through. */
 export const AGENTIC_TOOLS: StackLogo[] = [
-  { name: "LangChain", image: "https://cdn.simpleicons.org/langchain/white" },
-  { name: "LangGraph", image: "https://cdn.simpleicons.org/langgraph/white" },
-  { name: "n8n", image: "https://cdn.simpleicons.org/n8n" },
-  { name: "LlamaIndex", image: "/LlamaIndex Color Icon.svg" },
+  { name: "Claude Code", image: "/Claudecode Color Icon.svg" },
+  { name: "Cursor", image: "https://cdn.simpleicons.org/cursor/white" },
+  { name: "Antigravity", image: "/Antigravity.svg" },
+  { name: "Codex", image: "/Codex Color Icon.svg" },
 ];

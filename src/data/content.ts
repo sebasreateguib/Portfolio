@@ -7,7 +7,7 @@ and contribute to projects.
 
 **Interests** 🎯
 
-AI, Fintech, Full Stack Development, Infrastructure, Systems Optimization and Computer Architecture.
+AI Engineering, Full Stack Development, Systems Optimization, Cloud-Native & Data Infrastructure.
 `.trim(),
   es: `
 Hola 👋 Soy **Sebastián Reátegui** — un estudiante de Ciencia de la Computación de 26 años en la Universidad de Ingeniería y Tecnología - UTEC. Siempre disfruto aprender cosas nuevas y dar lo mejor de mí en cada proyecto.
@@ -17,7 +17,7 @@ y contribuir en proyectos.
 
 **Intereses** 🎯
 
-IA, Fintech, Desarrollo Full Stack, Infraestructura, Optimización de Sistemas y Arquitectura de Computadores.
+Ingeniería de IA, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native y de Datos.
 `.trim()
 };
 

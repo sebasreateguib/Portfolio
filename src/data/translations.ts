@@ -13,7 +13,7 @@ export const translations = {
       downloadResume: "Download Resume",
       letsTalk: "Let's talk",
       role: "CS Student @ UTEC.",
-      description: "Passionate about AI Engineering, Full Stack Development, Systems Optimization and Cloud-Native & Data Infrastructure.",
+      description: "Passionate about AI Engineering, Full Stack Development, Systems Optimization, Cloud-Native & Data Infrastructure.",
       metrics: {
         metric1: { value: "3rd", label: "YEAR CS" },
         metric2: { value: "5+", label: "FEATURED PROJECTS" },
@@ -43,10 +43,8 @@ export const translations = {
       }
     },
     intro: {
-      readme: "README.md",
       hi: "Hi there 👋, I'm Sebastian!",
       bio: "I'm a 26 year old Computer Science student based in Lima, Perú. I always enjoy learning new things and giving my best to every project and challenge.",
-      bullet1: "I'm currently a <span className=\"text-[#60a5fa] font-semibold\">3rd-year CS Student</span> at UTEC",
       bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS.</span>",
       bullet3: "Fun fact: <span className=\"text-[#60a5fa] font-semibold\">I was inspired by Blue Lock's pentagon for the hero design!</span>",
       bullet4: "Focused on <span className=\"text-[#60a5fa] font-semibold\">clean code, modern infrastructure, and AI.</span>",
@@ -148,7 +146,6 @@ export const translations = {
       badge: "Freelance_&_Client_Work",
       current: "CURRENT",
       stackLabel: "STACK",
-      highlightsLabel: "KEY FEATURES",
       clientsLabel: "CLIENTS",
       capabilitiesLabel: "What I built",
       periodLabel: "Period",
@@ -232,23 +229,11 @@ export const translations = {
     },
     workPhilosophy: {
       title: "Work Philosophy",
-      badge: "Methodology",
-    },
-    skills: {
-      title: "Skills & Technologies",
-      frontend: "Frontend",
-      backend: "Backend",
-      tools: "Tools & Cloud"
+      badge: "Methodology"
     },
     logoCloud: {
       title: "Stack & Workflow",
-      badge: "Tech_Stack_&_Tools",
-      description: "Languages, frameworks, tools and infrastructure I use to build scalable applications.",
-      cvBadge: "CURRICULUM_VITAE",
-      cvTitle: "Want to review my full background?",
-      cvDesc: "Download my complete CV for an in-depth view of my technical skills, software architecture experience, and project history.",
-      cvButton: "Download Resume (.PDF)",
-      aiTools: "Tools_I_Orchestrate"
+      badge: "Tech_Stack_&_Tools"
     },
     contact: {
       title: "Contact",
@@ -257,21 +242,15 @@ export const translations = {
       desc: "Currently open for new opportunities, collaborations, and interesting projects. Feel free to reach out!",
       email: "Copy email",
       emailCopied: "Copied!",
-      github: "GitHub",
       linkedin: "LinkedIn",
       formNamePlaceholder: "Your Name",
       formEmailPlaceholder: "your@email.com",
       formMessagePlaceholder: "How can I help you?",
       formSubmit: "Send Message",
-      formSubmitting: "Sending...",
       formSuccess: "Message sent successfully!",
       formError: "Failed to send message. Please try again."
     },
     copilot: {
-      placeholder: "Ask SR Copilot...",
-      dockTitle: "Chat with SR Copilot",
-      dockSubtitle: "Projects, skills & contact",
-      tapToOpen: "Tap to open",
       heroCta: "Talk to SR Copilot",
       coachmarkTitle: "Curious about my work?",
       coachmarkBody: "Tap below to chat with SR Copilot",
@@ -287,9 +266,7 @@ export const translations = {
       title: "Agentic Development Workflow",
       subtitle: "10x PRODUCTIVITY MULTIPLIER",
       desc: "Prototyping and scaling through parallel agent orchestration, MCP Servers, and custom Skills.",
-      bullet1: "AI-Pair Programming",
-      bullet2: "Automated Code Generation",
-      bullet3: "Rapid Prototyping & CI/CD"
+      tools: "Tools_I_Orchestrate"
     },
     notFound: {
       title: "404 - Page Not Found",
@@ -341,10 +318,8 @@ export const translations = {
       }
     },
     intro: {
-      readme: "README.md",
       hi: "¡Hola 👋, soy Sebastian!",
       bio: "Soy un estudiante de Ciencia de la Computación de 26 años viviendo en Lima, Perú. Siempre disfruto aprender cosas nuevas y dar lo mejor de mí en cada proyecto y desafío.",
-      bullet1: "Actualmente soy un <span className=\"text-[#60a5fa] font-semibold\">Estudiante de 3er año de CC</span> en UTEC",
       bullet2: "Actualmente estoy aprendiendo tecnologías como <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS</span>",
       bullet3: "Dato curioso: <span className=\"text-[#60a5fa] font-semibold\">¡Me inspiré en el pentágono de Blue Lock para el diseño!</span>",
       bullet4: "Enfocado en <span className=\"text-[#60a5fa] font-semibold\">código limpio, infraestructura moderna e IA.</span>",
@@ -446,7 +421,6 @@ export const translations = {
       badge: "Freelance_&_Clientes",
       current: "ACTUAL",
       stackLabel: "STACK",
-      highlightsLabel: "FUNCIONALIDADES CLAVE",
       clientsLabel: "CLIENTES",
       capabilitiesLabel: "Lo que construí",
       periodLabel: "Periodo",
@@ -530,23 +504,11 @@ export const translations = {
     },
     workPhilosophy: {
       title: "Filosofía de Trabajo",
-      badge: "Metodología",
-    },
-    skills: {
-      title: "Habilidades y Tecnologías",
-      frontend: "Frontend",
-      backend: "Backend",
-      tools: "Herramientas y Nube"
+      badge: "Metodología"
     },
     logoCloud: {
       title: "Stack & Workflow",
-      badge: "Tecnologías_y_Herramientas",
-      description: "Lenguajes, frameworks, herramientas e infraestructura que uso para construir aplicaciones escalables.",
-      cvBadge: "CURRÍCULUM_VITAE",
-      cvTitle: "¿Quieres revisar mi experiencia completa?",
-      cvDesc: "Descarga mi CV completo para conocer a detalle mis habilidades técnicas, experiencia en arquitectura de software y trayectoria.",
-      cvButton: "Descargar CV (.PDF)",
-      aiTools: "Herramientas_que_Orquesto"
+      badge: "Tecnologías_y_Herramientas"
     },
     contact: {
       title: "Contacto",
@@ -555,21 +517,15 @@ export const translations = {
       desc: "Actualmente abierto a nuevas oportunidades, colaboraciones y proyectos interesantes. ¡No dudes en contactarme!",
       email: "Copiar correo",
       emailCopied: "¡Copiado!",
-      github: "GitHub",
       linkedin: "LinkedIn",
       formNamePlaceholder: "Tu Nombre",
       formEmailPlaceholder: "tu@correo.com",
       formMessagePlaceholder: "¿En qué te puedo ayudar?",
       formSubmit: "Enviar Mensaje",
-      formSubmitting: "Enviando...",
       formSuccess: "¡Mensaje enviado con éxito!",
       formError: "Error al enviar el mensaje. Intenta de nuevo."
     },
     copilot: {
-      placeholder: "Pregúntale a SR Copilot...",
-      dockTitle: "Chatea con SR Copilot",
-      dockSubtitle: "Proyectos, skills y contacto",
-      tapToOpen: "Toca para abrir",
       heroCta: "Hablar con SR Copilot",
       coachmarkTitle: "¿Curioso sobre mi trabajo?",
       coachmarkBody: "Toca abajo para chatear con SR Copilot",
@@ -585,9 +541,7 @@ export const translations = {
       title: "Agentic Development Workflow",
       subtitle: "MULTIPLICADOR DE PRODUCTIVIDAD 10X",
       desc: "Prototipando y escalando mediante orquestación de agentes en paralelo, MCP Servers y Skills personalizados.",
-      bullet1: "Programación en Pareja con IA",
-      bullet2: "Generación de Código Automatizada",
-      bullet3: "Prototipado Rápido y CI/CD"
+      tools: "Herramientas_que_Orquesto"
     },
     notFound: {
       title: "404 - Página no encontrada",

@@ -81,6 +81,12 @@ const F_SLOTS = [262, 304, 346];
 const F_CTA: Pt = [725, 274];
 const F_TO_CHAT: [Pt, Pt, Pt, Pt] = [F_CTA, [820, 440], [1010, 440], [1100, 352]];
 const F_SITES = ["yeyo-maki.vercel.app", "buenavistainmobiliaria.com"];
+/**
+ * One width for both pills, sized to the longest domain: 17px mono with 1px of
+ * letter spacing runs about 11.2 units a character, so 11.6 leaves room for
+ * wider fallback faces; 64 is the dot's side and the right-hand padding.
+ */
+const F_SITE_W = Math.ceil(64 + Math.max(...F_SITES.map((s) => s.length)) * 11.6);
 
 function Frontend({ t }: { t: number }) {
   const clip = useId().replace(/[^\w-]/g, "");
@@ -258,7 +264,7 @@ function Frontend({ t }: { t: number }) {
         const ping = ((t - 10.6 - i * 0.3) * 0.8) % 1;
         return p > 0 ? (
           <g key={site} transform={scaleAt([800, y + 18], p)}>
-            <rect x={800} y={y} width={330} height={36} rx={18} {...line} strokeWidth={2} fill="#fff" />
+            <rect x={800} y={y} width={F_SITE_W} height={36} rx={18} {...line} strokeWidth={2} fill="#fff" />
             <circle cx={822} cy={y + 18} r={6} fill={ACCENT} />
             <circle cx={822} cy={y + 18} r={6 + 12 * ping} {...line} stroke={ACCENT} strokeWidth={2} strokeOpacity={0.6 * (1 - ping)} />
             <text x={842} y={y + 24} fontSize={17} fill={INK} fillOpacity={0.75} style={mono}>

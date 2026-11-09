@@ -47,11 +47,12 @@ export default function AgenticWorkflow() {
 
                              <div className="mt-6 md:mt-8 w-full">
                                  <p className="font-mono text-[9px] md:text-[10px] tracking-widest uppercase text-white/40">
-                                     {t.logoCloud.aiTools}
+                                     {t.agentic.tools}
                                  </p>
                                  <div className="mt-4 flex flex-wrap items-start justify-center gap-5 md:gap-10">
                                      {AGENTIC_TOOLS.map((tool) => (
                                          <div key={tool.name} className="group/tool flex flex-col items-center gap-2">
+                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                              <img
                                                  src={tool.image}
                                                  alt={tool.name}
