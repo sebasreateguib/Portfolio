@@ -415,4 +415,9 @@
   body {
     @apply bg-background text-foreground;}
   html {
-    @apply font-sans;}}
+    @apply font-sans;}
+  /* Full-bleed bands use 100vw, which counts the scrollbar; clip (unlike
+     hidden) trims that overflow without breaking position: sticky. */
+  html,
+  body {
+    overflow-x: clip;}}

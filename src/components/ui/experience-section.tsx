@@ -27,7 +27,7 @@ export default function ExperienceSection() {
 
     return (
         /* No overflow clipping here: the stacked panels below rely on position: sticky. */
-        <section id="experience" className="bg-transparent pt-16 lg:pt-24 relative">
+        <section id="experience" className="bg-transparent pt-16 lg:pt-24 relative overflow-x-clip">
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
                 <div className="mb-10 md:mb-16">

@@ -258,7 +258,7 @@ export default function ScrollImageSequence() {
           style={{
             position: "sticky",
             top: 0,
-            width: "100vw",
+            width: "100%",
             height: "100vh",
             overflow: "hidden",
             background: "#000",
