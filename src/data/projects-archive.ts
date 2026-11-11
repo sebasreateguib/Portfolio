@@ -103,7 +103,7 @@ export const projectsArchiveItems: ArchiveItem[] = [
     path: "Algorithms/RRadar.md",
     name: "RRadar",
     contentType: "text/markdown",
-    url: "#",
+    url: "https://github.com/sebasreateguib/RRadar",
     updatedAt: "2026-06-01T00:00:00.000Z",
     createdAt: "2026-01-01T00:00:00.000Z",
   },

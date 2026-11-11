@@ -17,6 +17,32 @@ import PageLoader from '../components/ui/page-loader';
 
 const projectsData = [
   {
+    id: 12,
+    artist: "FORMA",
+    album: "REACT | TYPESCRIPT | VITE",
+    tech: ["React", "TypeScript", "Vite", "GSAP", "Lenis", "Multi-Agent Design"],
+    category: "AI",
+    label: "PROPTECH",
+    year: "2026",
+    image: "/forma-compressed.webm",
+    description: "Virtual CFO and autonomous construction auditor: multi-agent hybrid SQL + RAG design that detects cost overruns, explains their cause and projects the margin impact.",
+    github: "https://github.com/sebasreateguib/FORMA",
+    live: null
+  },
+  {
+    id: 11,
+    artist: "MedSimulator AI",
+    album: "FASTAPI | NEXT.JS | PGVECTOR",
+    tech: ["Python", "FastAPI", "Next.js", "TypeScript", "Postgres", "pgvector", "Groq", "Anthropic"],
+    category: "AI",
+    label: "MEDTECH",
+    year: "2026",
+    image: "/medsimu-compressed.webm",
+    description: "AI-powered clinical case simulator with virtual patient roleplay, specialist consults, RAG validation and automated rubric evaluation.",
+    github: "https://github.com/sebasreateguib/MedSimulatorAI",
+    live: null
+  },
+  {
     id: 0,
     artist: "OpenMultimodal",
     album: "PYTHON | AI | PYTORCH",
@@ -79,19 +105,6 @@ const projectsData = [
     image: "/medigo-compressed.mp4",
     description: "Full-Stack Telemedicine Platform with JWT auth, real-time video via Whereby, Stripe payments, AI chatbot (Gemini), and WebSocket chat.",
     github: "https://github.com/sebasreateguib/MediGO-Repository",
-    live: null
-  },
-  {
-    id: 7,
-    artist: "RRadar",
-    album: "C++ | VUE | LEAFLET",
-    tech: ["C++", "Vue.js", "Leaflet", "Vite", "R-Tree"],
-    category: "ALGORITHMS",
-    label: "GEOSPATIAL",
-    year: "2026",
-    image: "/rradar-compressed.mp4",
-    description: "Interactive client-server app to explore geospatial POIs in Lima. Compares Linear Search vs a custom R-Tree (range + KNN), with a Vue.js + Leaflet map visualizing MBRs and live performance benchmarks.",
-    github: "#",
     live: null
   },
   {

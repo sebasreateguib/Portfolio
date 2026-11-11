@@ -60,6 +60,26 @@ export const translations = {
       archiveHint: "Browse the rest by category — open a file to jump to its repo.",
       list: [
         {
+          id: 12,
+          title: "FORMA",
+          description: "Financial & Operations Risk Management Assistant, a virtual CFO and autonomous construction auditor. Designed a multi-agent hybrid system (Text-to-SQL + document RAG) that cross-checks ERP data with field logs to detect cost overruns, explain their cause and project the margin impact. Built the product landing page with an interactive risk console.",
+          tech: ["React", "TypeScript", "Vite", "GSAP", "Lenis", "Multi-Agent Design"],
+          github: "https://github.com/sebasreateguib/FORMA",
+          live: "#",
+          image: "/forma-compressed.webm",
+          year: "2026"
+        },
+        {
+          id: 11,
+          title: "MedSimulator AI",
+          description: "AI Clinical Case Simulator. Students interview a virtual patient, order labs and imaging, consult specialists and make diagnoses, while an async tutor agent evaluates clinical reasoning with a rubric. Every dose and diagnostic criterion is validated against a medical corpus via RAG (Docling + pgvector).",
+          tech: ["Python", "FastAPI", "Next.js", "TypeScript", "Postgres", "pgvector", "Groq", "Anthropic"],
+          github: "https://github.com/sebasreateguib/MedSimulatorAI",
+          live: "#",
+          image: "/medsimu-compressed.webm",
+          year: "2026"
+        },
+        {
           id: 4,
           title: "SanaFlow",
           description: "Intelligent Medical Triage Platform. Designed a 100% Serverless, event-driven architecture using AWS (Lambda, SQS, DynamoDB). Engineered an automated data pipeline that processes massive clinical notes in real-time, leveraging Llama 3 via Groq API for extraction and urgency prioritization.",
@@ -118,16 +138,6 @@ export const translations = {
           live: "#",
           image: "LUCIDE:Brain",
           year: "2025"
-        },
-        {
-          id: 7,
-          title: "RRadar",
-          description: "Interactive client-server app to explore geospatial Points of Interest across Lima. Compares Linear Search vs a custom R-Tree (range + KNN) for spatial queries, with a Vue.js + Leaflet map that visualizes MBRs and live performance benchmarks.",
-          tech: ["C++", "Vue.js", "Leaflet", "Vite", "R-Tree"],
-          github: "#",
-          live: "#",
-          image: "/rradar-compressed.mp4",
-          year: "2026"
         },
         {
           id: 3,
@@ -335,6 +345,26 @@ export const translations = {
       archiveHint: "Explora el resto por categoría — abre un archivo para ir a su repo.",
       list: [
         {
+          id: 12,
+          title: "FORMA",
+          description: "Financial & Operations Risk Management Assistant, un CFO virtual y auditor autónomo de obras. Diseñé un sistema multiagente híbrido (Text-to-SQL + RAG documental) que cruza el ERP con las bitácoras de campo para detectar sobrecostos, explicar su causa y proyectar el impacto en el margen. Construí la landing del producto con una consola de riesgo interactiva.",
+          tech: ["React", "TypeScript", "Vite", "GSAP", "Lenis", "Multi-Agent Design"],
+          github: "https://github.com/sebasreateguib/FORMA",
+          live: "#",
+          image: "/forma-compressed.webm",
+          year: "2026"
+        },
+        {
+          id: 11,
+          title: "MedSimulator AI",
+          description: "Simulador de Casos Clínicos con IA. El estudiante interroga a un paciente virtual, pide laboratorios e imágenes, consulta especialistas y diagnostica, mientras un agente tutor asíncrono evalúa su razonamiento clínico con rúbrica. Cada dosis y criterio diagnóstico se valida contra un corpus médico vía RAG (Docling + pgvector).",
+          tech: ["Python", "FastAPI", "Next.js", "TypeScript", "Postgres", "pgvector", "Groq", "Anthropic"],
+          github: "https://github.com/sebasreateguib/MedSimulatorAI",
+          live: "#",
+          image: "/medsimu-compressed.webm",
+          year: "2026"
+        },
+        {
           id: 4,
           title: "SanaFlow",
           description: "Plataforma de Triaje Médico Inteligente. Arquitectura 100% Serverless orientada a eventos usando AWS (Lambda, SQS, DynamoDB). Diseñé un pipeline automático que procesa notas clínicas masivamente en tiempo real usando Llama 3 (vía Groq) para extraer síntomas y priorizar la urgencia médica.",
@@ -393,16 +423,6 @@ export const translations = {
           live: "#",
           image: "LUCIDE:Brain",
           year: "2025"
-        },
-        {
-          id: 7,
-          title: "RRadar",
-          description: "App cliente-servidor para explorar POIs geoespaciales en Lima. Compara Búsqueda Lineal vs un R-Tree propio (range + KNN), con un mapa en Vue.js + Leaflet que visualiza los MBRs y benchmarks de rendimiento en tiempo real.",
-          tech: ["C++", "Vue.js", "Leaflet", "Vite", "R-Tree"],
-          github: "#",
-          live: "#",
-          image: "/rradar-compressed.mp4",
-          year: "2026"
         },
         {
           id: 3,

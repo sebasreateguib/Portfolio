@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, ChevronDown, ExternalLink, Brain } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown, Brain } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { projectsArchiveItems } from '../../data/projects-archive';
@@ -27,18 +27,21 @@ const projectDetails = {
         details: 'View details',
         hideDetails: 'Hide details',
         repo: 'View Code',
-        demo: 'Live Demo',
-        unavailable: 'Demo soon',
         projects: {
             0: {
                 category: 'Multimodal RAG Agent',
                 role: 'Full-Stack AI Engineer',
                 signals: ['Multimodal Embeddings', 'LlamaParse parsing', 'Qdrant Vector DB'],
             },
-            7: {
-                category: 'Geospatial Algorithms',
-                role: 'C++ Systems / Frontend Engineer',
-                signals: ['Custom R-Tree', 'Range + KNN queries', 'Live search benchmarks'],
+            12: {
+                category: 'Construction Finance AI',
+                role: 'Solution Architect & Frontend Engineer',
+                signals: ['Hybrid SQL + RAG design', 'Multi-agent orchestration', 'Interactive risk console'],
+            },
+            11: {
+                category: 'AI Clinical Simulation',
+                role: 'Full-Stack AI Engineer',
+                signals: ['Multi-agent orchestration', 'RAG dose validation', 'Async rubric evaluation'],
             },
             1: {
                 category: 'Fintech Analytics',
@@ -80,18 +83,21 @@ const projectDetails = {
         details: 'Ver detalles',
         hideDetails: 'Ocultar detalles',
         repo: 'Ver código',
-        demo: 'Demo en vivo',
-        unavailable: 'Demo pronto',
         projects: {
             0: {
                 category: 'Agente Multimodal RAG',
                 role: 'Full-Stack AI Engineer',
                 signals: ['Embeddings Multimodales', 'Parsing con LlamaParse', 'Vector DB Qdrant'],
             },
-            7: {
-                category: 'Algoritmos Geoespaciales',
-                role: 'C++ Systems / Frontend Engineer',
-                signals: ['R-Tree propio', 'Consultas Range + KNN', 'Benchmarks en vivo'],
+            12: {
+                category: 'IA para Finanzas de Obra',
+                role: 'Solution Architect & Frontend Engineer',
+                signals: ['Diseño híbrido SQL + RAG', 'Orquestación multiagente', 'Consola de riesgo interactiva'],
+            },
+            11: {
+                category: 'Simulación Clínica con IA',
+                role: 'Full-Stack AI Engineer',
+                signals: ['Orquestación multiagente', 'Validación de dosis con RAG', 'Evaluación asíncrona con rúbrica'],
             },
             1: {
                 category: 'Analítica Fintech',
@@ -217,7 +223,6 @@ export default function ProjectsSection() {
                     {t.projects.list.map((project, index) => {
                         const meta = copy.projects[project.id as keyof typeof copy.projects];
                         const isExpanded = expandedProject === project.id;
-                        const isLiveAvailable = project.live && project.live !== '#';
 
                         return (
                             <div
@@ -311,7 +316,7 @@ export default function ProjectsSection() {
                                             <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
                                         </button>
 
-                                        <div className="grid grid-cols-2 gap-3">
+                                        <div>
                                             <a
                                                 href={project.github}
                                                 target="_blank"
@@ -322,16 +327,6 @@ export default function ProjectsSection() {
                                                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                                 </svg>
                                                 {copy.repo}
-                                            </a>
-                                            <a
-                                                href={isLiveAvailable ? project.live : undefined}
-                                                target={isLiveAvailable ? '_blank' : undefined}
-                                                rel={isLiveAvailable ? 'noopener noreferrer' : undefined}
-                                                aria-disabled={!isLiveAvailable}
-                                                className={`flex min-h-11 items-center justify-center gap-2 border text-sm font-bold transition-colors duration-200 ${isLiveAvailable ? 'border-blue-400/50 bg-blue-400/10 text-blue-100 hover:bg-blue-400/20' : 'pointer-events-none border-white/10 bg-white/[0.03] text-white/35'}`}
-                                            >
-                                                {isLiveAvailable ? copy.demo : copy.unavailable}
-                                                <ExternalLink className="h-4 w-4" />
                                             </a>
                                         </div>
                                     </div>
