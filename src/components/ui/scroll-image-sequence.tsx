@@ -79,7 +79,6 @@ export default function ScrollImageSequence() {
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [scrollPct, setScrollPct] = useState(0);
-  const [frameDisplay, setFrameDisplay] = useState(1);
 
   // Active copy stage
   const activeCopy = [...copyStages].reverse().find(s => scrollPct >= s.threshold) ?? copyStages[0];
@@ -172,7 +171,6 @@ export default function ScrollImageSequence() {
           frameIdx.current = f;
           drawFrame(f);
           setScrollPct(self.progress);
-          setFrameDisplay(f + 1);
         },
       });
 
@@ -299,10 +297,7 @@ export default function ScrollImageSequence() {
                 display: "flex", alignItems: "center", justifyContent: "space-between",
               }}>
                 <div className="seq-hud" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.2em" }}>
-                  SEQUENCE_01 // MOTIVATION
-                </div>
-                <div className="seq-hud" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.15em" }}>
-                  FRAME {String(frameDisplay).padStart(3, "0")} / {FRAME_COUNT}
+                  {"// MOTIVATION"}
                 </div>
               </div>
 
@@ -351,24 +346,6 @@ export default function ScrollImageSequence() {
                 </div>
               </div>
             </>
-          )}
-
-          {/* Bottom progress bar */}
-          {loaded && (
-            <div className="absolute bottom-6 left-4 right-4 md:bottom-8 md:left-8 md:right-8 z-[15] flex items-center gap-3">
-              <div className="seq-hud text-white/20 text-[9px] tracking-[0.2em] whitespace-nowrap hidden md:block">
-                SCROLL TO CONTINUE
-              </div>
-              <div className="seq-hud text-white/20 text-[9px] tracking-[0.2em] whitespace-nowrap md:hidden">
-                SCROLL
-              </div>
-              <div className="prog-track flex-1">
-                <div className="prog-fill" style={{ width: `${pct}%` }} />
-              </div>
-              <div className="seq-hud text-white/20 text-[9px] tracking-[0.2em] whitespace-nowrap">
-                {pct}%
-              </div>
-            </div>
           )}
         </div>
       </div>

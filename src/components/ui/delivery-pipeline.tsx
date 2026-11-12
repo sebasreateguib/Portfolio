@@ -19,7 +19,6 @@ const copy = {
         title: "How I Ship",
         badge: "Delivery Pipeline",
         lead: "From a blank page to production, every project rides the same line. Point at a station to see what happens there.",
-        figure: "fig. 01 — delivery.pipeline",
         prompt: "run",
         idle: "pick a stage",
         names: ["design", "code", "test", "deploy"],
@@ -41,7 +40,6 @@ const copy = {
         title: "Cómo Entrego",
         badge: "Pipeline de Entrega",
         lead: "De una página en blanco a producción, cada proyecto recorre la misma línea. Pasa el cursor por una estación para ver qué pasa ahí.",
-        figure: "fig. 01 — delivery.pipeline",
         prompt: "run",
         idle: "elige una etapa",
         names: ["diseño", "código", "test", "deploy"],
@@ -147,10 +145,6 @@ export default function DeliveryPipeline() {
                     {CORNERS.map((pos) => (
                         <span key={pos} aria-hidden="true" className={`pointer-events-none absolute ${pos} select-none font-mono text-sm text-white/30`}>+</span>
                     ))}
-                    <div className="flex items-center justify-between border-b border-dashed border-white/10 px-4 py-2.5 font-mono text-[9px] uppercase tracking-widest text-white/35 md:text-[10px]">
-                        <span>{t.figure}</span>
-                        <span className="text-white/20">400 × 320</span>
-                    </div>
 
                     <div className="flex flex-col">
                         <div className="flex flex-col border-b border-dashed border-white/10">
