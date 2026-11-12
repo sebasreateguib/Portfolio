@@ -291,11 +291,11 @@ export default function ScrollImageSequence() {
           {/* Overlays */}
           {loaded && (
             <>
-              {/* Top metadata bar */}
-              <div style={{
-                position: "absolute", top: 32, left: 32, right: 32, zIndex: 15,
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-              }}>
+              {/* Top metadata bar — same container as the About section so the label lines up with its title. */}
+              <div
+                className="container mx-auto px-4 lg:px-8 flex items-center justify-between"
+                style={{ position: "absolute", top: 32, left: 0, right: 0, zIndex: 15 }}
+              >
                 <div className="seq-hud" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.2em" }}>
                   {"// MOTIVATION"}
                 </div>

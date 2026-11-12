@@ -261,7 +261,6 @@ export const translations = {
       formError: "Failed to send message. Please try again."
     },
     copilot: {
-      heroCta: "Talk to SR Copilot",
       coachmarkTitle: "Curious about my work?",
       coachmarkBody: "Tap below to chat with SR Copilot",
       coachmarkDismiss: "Got it"
@@ -546,7 +545,6 @@ export const translations = {
       formError: "Error al enviar el mensaje. Intenta de nuevo."
     },
     copilot: {
-      heroCta: "Hablar con SR Copilot",
       coachmarkTitle: "¿Curioso sobre mi trabajo?",
       coachmarkBody: "Toca abajo para chatear con SR Copilot",
       coachmarkDismiss: "Entendido"
