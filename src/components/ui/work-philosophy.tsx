@@ -151,7 +151,7 @@ export default function WorkPhilosophy() {
         {/* Section Header */}
         <div className="mb-10 md:mb-16">
           <div className="mb-4">
-            <SectionTitle index="04">{t.workPhilosophy.title}</SectionTitle>
+            <SectionTitle>{t.workPhilosophy.title}</SectionTitle>
           </div>
           <div className="flex items-center gap-0 mb-6 md:mb-16">
             <div
@@ -159,8 +159,6 @@ export default function WorkPhilosophy() {
               style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%)' }}
             >
               <span className="font-mono text-[8px] md:text-[10px] tracking-widest uppercase select-none flex items-center gap-1.5 md:gap-2">
-                <span className="text-blue-400 font-bold">04</span>
-                <span className="text-white/20">·</span>
                 <span className="text-white/50">{t.workPhilosophy.badge}</span>
               </span>
             </div>

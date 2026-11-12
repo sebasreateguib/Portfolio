@@ -16,6 +16,7 @@ import { translations } from '../../data/translations';
 import { BotMarkdown } from './bot-markdown';
 import { PiedPiperOnboarding } from "@/components/brainless/blocks/pied-piper-onboarding";
 import { AgentDock } from "../agent-dock";
+import { useLenisLock } from "../smooth-scroll-provider";
 import {
     COPILOT_OPEN_EVENT,
     dismissCopilotCoachmark,
@@ -49,6 +50,7 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
     // Message typed in the floating dock, handed to the terminal on open.
     const [initialPrompt, setInitialPrompt] = React.useState<string | null>(null)
     const shouldReduceMotion = useReducedMotion()
+    useLenisLock(showForm)
 
     const triggerClose = React.useCallback(() => {
         setShowForm(false)
@@ -94,17 +96,6 @@ export function MorphPanel({ openOnMount = false }: { openOnMount?: boolean }) {
             window.clearTimeout(showTimer)
             window.clearTimeout(hideTimer)
         }
-    }, [showForm])
-
-    React.useEffect(() => {
-        if (showForm) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
     }, [showForm])
 
     // Atajo de teclado global (cmd+k o ctrl+k) para abrir/cerrar el panel

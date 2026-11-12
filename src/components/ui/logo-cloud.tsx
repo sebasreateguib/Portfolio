@@ -29,9 +29,9 @@ export default function LogoCloudMarquee({ className }: LogoCloudMarqueeProps) {
                 {/* Section Header */}
                 <div className="mb-16">
                     <div className="mb-4">
-                        <SectionTitle index="04">{t.logoCloud.title}</SectionTitle>
+                        <SectionTitle index="05">{t.logoCloud.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={t.logoCloud.badge} index="04" />
+                    <SectionDivider label={t.logoCloud.badge} index="05" />
                 </div>
 
                 <div className="w-screen relative left-1/2 ml-[-50vw] -mt-8 mb-4">

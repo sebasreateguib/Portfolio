@@ -2,6 +2,13 @@ export type StackLogo = { name: string; image: string };
 
 const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
 
+/** Agentic tools shared by the stack marquee and contextual workflow views. */
+export const AGENTIC_TOOLS: StackLogo[] = [
+  { name: "Claude Code", image: "/Claudecode Color Icon.svg" },
+  { name: "Cursor", image: "https://cdn.simpleicons.org/cursor/white" },
+  { name: "Antigravity", image: "/Antigravity.svg" },
+];
+
 /** Two rows: cloud, data, languages and frontend, then backend and tooling. */
 export const STACK_GROUPS: { label: string; logos: StackLogo[] }[] = [
   {
@@ -52,13 +59,7 @@ export const STACK_GROUPS: { label: string; logos: StackLogo[] }[] = [
       { name: "LlamaIndex", image: "/LlamaIndex Color Icon.svg" },
       { name: "n8n", image: "https://cdn.simpleicons.org/n8n" },
       { name: "Hugging Face", image: "/Hugging Face Color Icon.svg" },
+      ...AGENTIC_TOOLS,
     ],
   },
-];
-
-/** Shown inside the Agentic Development Workflow card, not in the marquee: the tools I build with agents through. */
-export const AGENTIC_TOOLS: StackLogo[] = [
-  { name: "Claude Code", image: "/Claudecode Color Icon.svg" },
-  { name: "Cursor", image: "https://cdn.simpleicons.org/cursor/white" },
-  { name: "Antigravity", image: "/Antigravity.svg" },
 ];

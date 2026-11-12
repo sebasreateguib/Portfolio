@@ -32,9 +32,9 @@ export default function ExperienceSection() {
                 {/* Section Header */}
                 <div className="mb-10 md:mb-16">
                     <div className="mb-4">
-                        <SectionTitle index="04">{copy.title}</SectionTitle>
+                        <SectionTitle index="03">{copy.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={copy.badge} className="mb-0" index="04" />
+                    <SectionDivider label={copy.badge} className="mb-0" index="03" />
                 </div>
 
                 {/* Availability marquee */}

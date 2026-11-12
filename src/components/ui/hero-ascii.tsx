@@ -1,5 +1,7 @@
 "use client";
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect, useRef, useTransition } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import { LOGO } from './ascii';
 import { Download, MessageSquare, Menu, X, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,6 +14,7 @@ import { openCopilot } from '../../lib/copilot-events';
 import { Waveform } from './audiovisualizer';
 
 export default function HeroAscii() {
+    const heroRef = useRef<HTMLElement>(null);
     const { language, setLanguage } = useLanguage();
     const { phase, skipHeroTypewriter } = useLoaderTransition();
     const t = translations[language];
@@ -110,10 +113,51 @@ export default function HeroAscii() {
     const scanRow = tick < L * 3 ? tick % L : -1;
     const heroVisible = phase !== "loading";
 
+    useEffect(() => {
+        const hero = heroRef.current;
+        if (
+            !hero ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            window.matchMedia('(hover: none) and (pointer: coarse)').matches
+        ) {
+            return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        const context = gsap.context(() => {
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: hero,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
+
+            timeline
+                .to('[data-hero-parallax="background"]', {
+                    yPercent: 65,
+                    ease: 'none',
+                }, 0)
+                .to('[data-hero-parallax="content"]', {
+                    yPercent: 34,
+                    ease: 'none',
+                }, 0)
+                .to('[data-hero-parallax="detail"]', {
+                    yPercent: 12,
+                    ease: 'none',
+                }, 0);
+        }, hero);
+
+        return () => context.revert();
+    }, []);
+
     return (
-        <main id="hero" className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
+        <main ref={heroRef} id="hero" className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
             {/* Hero video background */}
             <motion.div
+                data-hero-parallax="background"
                 initial={false}
                 animate={{ opacity: heroVisible ? 1 : 0 }}
                 transition={{ duration: 0.55, ease: "easeOut" }}
@@ -130,7 +174,7 @@ export default function HeroAscii() {
             </motion.div>
 
             {/* Mobile stars background */}
-            <div className="absolute inset-0 w-full h-full lg:hidden stars-bg"></div>
+            <div data-hero-parallax="background" className="absolute inset-0 w-full h-full lg:hidden stars-bg"></div>
 
             {/* Top Header */}
             <motion.div
@@ -228,12 +272,12 @@ export default function HeroAscii() {
             </AnimatePresence>
 
             {/* Corner Frame Accents */}
-            <div className="absolute top-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/30 z-20"></div>
-            <div className="absolute top-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-r-2 border-white/30 z-20"></div>
-            <div className="absolute left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
-            <div className="absolute right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
+            <div data-hero-parallax="detail" className="absolute top-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/30 z-20"></div>
+            <div data-hero-parallax="detail" className="absolute top-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-r-2 border-white/30 z-20"></div>
+            <div data-hero-parallax="detail" className="absolute left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
+            <div data-hero-parallax="detail" className="absolute right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
 
-            <div className="relative z-10 flex min-h-[70vh] lg:min-h-[90vh] items-center pt-16 lg:pt-0" style={{ marginTop: '2vh' }}>
+            <div data-hero-parallax="content" className="relative z-10 flex min-h-[70vh] lg:min-h-[90vh] items-center pt-16 lg:pt-0" style={{ marginTop: '2vh' }}>
                 <div className="container mx-auto px-6 lg:px-8 lg:ml-[2%] xl:ml-[5%]">
                     <motion.div
                         initial={false}

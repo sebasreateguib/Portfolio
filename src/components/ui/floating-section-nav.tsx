@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useLanguage } from "../../context/LanguageContext";
 import { useLoaderTransition } from "../../context/LoaderTransitionContext";
 import { translations } from "../../data/translations";
+import { useSmoothScroll } from "../smooth-scroll-provider";
 
 const SECTIONS = [
     { id: "about", key: "about" as const, short: "ABT" },
@@ -20,6 +21,7 @@ const SECTIONS = [
 export function FloatingSectionNav() {
     const { language } = useLanguage();
     const { phase } = useLoaderTransition();
+    const { scrollTo } = useSmoothScroll();
     const t = translations[language].nav;
     const [mounted, setMounted] = useState(false);
     const [heroInView, setHeroInView] = useState(true);
@@ -74,7 +76,8 @@ export function FloatingSectionNav() {
     }, [visible]);
 
     const handleClick = (id: string) => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        const target = document.getElementById(id);
+        if (target) scrollTo(target);
     };
 
     if (!mounted) return null;

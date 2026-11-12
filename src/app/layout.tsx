@@ -2,6 +2,7 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Geist } from "next/font/google";
 import { LanguageProvider } from "../context/LanguageContext";
+import { SmoothScrollProvider } from "../components/smooth-scroll-provider";
 import "../index.css";
 import { cn } from "@/lib/utils";
 
@@ -34,11 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("scroll-smooth", "bg-black", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
+    <html lang="en" className={cn("bg-black", "text-foreground", spaceGrotesk.variable, "font-sans", geist.variable)}>
       <body className="antialiased bg-black min-h-screen">
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+        <SmoothScrollProvider>
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import * as React from "react"
 import { isValidElement } from "react"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { mergeProps } from "@base-ui/react/merge-props"
@@ -11,11 +11,36 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useLenisLock } from "@/components/smooth-scroll-provider"
 
 export const DialogCreateHandle: typeof DialogPrimitive.createHandle =
   DialogPrimitive.createHandle
 
-export const Dialog: typeof DialogPrimitive.Root = DialogPrimitive.Root
+export function Dialog({
+  open,
+  defaultOpen,
+  onOpenChange,
+  ...props
+}: DialogPrimitive.Root.Props): React.ReactElement {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(
+    defaultOpen ?? false
+  )
+  const isOpen = open ?? uncontrolledOpen
+
+  useLenisLock(isOpen)
+
+  return (
+    <DialogPrimitive.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={(nextOpen, eventDetails) => {
+        setUncontrolledOpen(nextOpen)
+        onOpenChange?.(nextOpen, eventDetails)
+      }}
+      {...props}
+    />
+  )
+}
 
 export const DialogPortal: typeof DialogPrimitive.Portal =
   DialogPrimitive.Portal

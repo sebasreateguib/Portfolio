@@ -192,9 +192,9 @@ export default function ProjectsSection() {
                 {/* Section Header */}
                 <div className="mb-10 md:mb-16">
                     <div className="mb-4">
-                        <SectionTitle index="03">{t.projects.title}</SectionTitle>
+                        <SectionTitle index="02">{t.projects.title}</SectionTitle>
                     </div>
-                    <SectionDivider label={t.projects.featured} className="mb-0" index="03" />
+                    <SectionDivider label={t.projects.featured} className="mb-0" index="02" />
                 </div>
 
                 {/* Carousel hint: position counter and arrows */}
