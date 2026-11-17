@@ -43,7 +43,7 @@ export const translations = {
       }
     },
     intro: {
-      hi: "Hi there 👋, I'm Sebastian!",
+      hi: "Hi there, I'm Sebastian!",
       bio: "I'm a 26 year old Computer Science student based in Lima, Perú. I always enjoy learning new things and giving my best to every project and challenge.",
       bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS.</span>",
       bullet3: "Fun fact: <span className=\"text-[#60a5fa] font-semibold\">I was inspired by Blue Lock's pentagon for the hero design!</span>",
@@ -327,7 +327,7 @@ export const translations = {
       }
     },
     intro: {
-      hi: "¡Hola 👋, soy Sebastian!",
+      hi: "¡Hola, soy Sebastian!",
       bio: "Soy un estudiante de Ciencia de la Computación de 26 años viviendo en Lima, Perú. Siempre disfruto aprender cosas nuevas y dar lo mejor de mí en cada proyecto y desafío.",
       bullet2: "Actualmente estoy aprendiendo tecnologías como <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS</span>",
       bullet3: "Dato curioso: <span className=\"text-[#60a5fa] font-semibold\">¡Me inspiré en el pentágono de Blue Lock para el diseño!</span>",

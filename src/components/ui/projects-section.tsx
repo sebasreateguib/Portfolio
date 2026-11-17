@@ -157,9 +157,16 @@ export default function ProjectsSection() {
         const { step, gap } = cardStep();
         if (!el || !step) return;
         const max = el.scrollWidth - el.clientWidth;
+        // From md up the track bleeds to the viewport's edges and its side padding
+        // is the page gutter: cards snap to the gutter, and only the cards inside
+        // the page column count as "in view".
+        const style = getComputedStyle(el);
+        const padLeft = parseFloat(style.paddingLeft) || 0;
+        const column = el.clientWidth - padLeft - (parseFloat(style.paddingRight) || 0);
+        el.style.scrollPaddingLeft = `${padLeft}px`;
         setRail({
             first: Math.round(el.scrollLeft / step),
-            visible: Math.max(1, Math.round((el.clientWidth + gap) / step)),
+            visible: Math.max(1, Math.round((column + gap) / step)),
             atStart: el.scrollLeft <= 2,
             atEnd: el.scrollLeft >= max - 2,
         });
@@ -218,8 +225,10 @@ export default function ProjectsSection() {
                     </div>
                 </div>
 
-                {/* Projects Grid / Mobile Carousel */}
-                <div ref={trackRef} onScroll={updateRail} className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory scroll-px-6 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', ...edgeFade }}>
+                {/* Projects carousel. From md up it breaks out of the page column: the
+                    first card lines up with the section title, and the rest run off
+                    both edges of the viewport instead of stopping at the gutters. */}
+                <div ref={trackRef} onScroll={updateRail} className="flex gap-5 lg:gap-6 overflow-x-auto pt-4 pb-8 md:pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden md:mx-[calc(50%-50vw)] md:px-[calc(50vw-50%)]" style={{ scrollbarWidth: 'none', ...edgeFade }}>
                     {t.projects.list.map((project, index) => {
                         const meta = copy.projects[project.id as keyof typeof copy.projects];
                         const isExpanded = expandedProject === project.id;
@@ -227,7 +236,7 @@ export default function ProjectsSection() {
                         return (
                             <div
                                 key={project.id}
-                                className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/5 bg-[#030303] shadow-[0_0_0_1px_rgba(255,255,255,0.01),0_24px_80px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-16px)]"
+                                className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/5 bg-[#030303] md:snap-start shadow-[0_0_0_1px_rgba(255,255,255,0.01),0_24px_80px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-16px)]"
                             >
                                 <div className="absolute top-0 left-0 z-30 h-3 w-3 border-l border-t border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>
                                 <div className="absolute top-0 right-0 z-30 h-3 w-3 border-r border-t border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>

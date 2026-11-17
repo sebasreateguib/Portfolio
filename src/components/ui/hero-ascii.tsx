@@ -9,11 +9,16 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useLoaderTransition } from '../../context/LoaderTransitionContext';
 import { translations } from '../../data/translations';
 import { FrameButton } from './frame-button';
-import { ViewportVideo } from './viewport-video';
+import { PixelAvatar } from './pixel-avatar';
 import { Waveform } from './audiovisualizer';
 
 export default function HeroAscii() {
     const heroRef = useRef<HTMLElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const copyRef = useRef<HTMLDivElement>(null);
+    // Where the left-hand copy block ("001" rule down to the SYS.ACT rule) sits
+    // inside the copy layer, so on desktop the avatar spans the same height.
+    const [copyBox, setCopyBox] = useState<{ top: number; height: number } | null>(null);
     const { language, setLanguage } = useLanguage();
     const { phase, skipHeroTypewriter } = useLoaderTransition();
     const t = translations[language];
@@ -90,6 +95,35 @@ export default function HeroAscii() {
         return () => clearInterval(roleInterval);
     }, [showResponse, t.hero.role]);
 
+    useEffect(() => {
+        const content = contentRef.current;
+        const copy = copyRef.current;
+        if (!content || !copy) return;
+
+        // offsetTop ignores transforms, so the entrance and parallax
+        // animations don't skew the measurement.
+        const measure = () => {
+            let top = 0;
+            let el: HTMLElement | null = copy;
+            while (el && el !== content) {
+                top += el.offsetTop;
+                el = el.offsetParent as HTMLElement | null;
+            }
+            if (el === content) setCopyBox({ top, height: copy.offsetHeight });
+        };
+
+        // The copy is vertically centred, so it moves whenever any block
+        // between it and the copy layer changes size, and it grows when the
+        // typewriter adds a line.
+        const observer = new ResizeObserver(measure);
+        for (let el: HTMLElement | null = copy; el; el = el.parentElement) {
+            observer.observe(el);
+            if (el === content) break;
+        }
+        measure();
+        return () => observer.disconnect();
+    }, []);
+
     // Scanner Effect State
     const [tick, setTick] = useState(0);
     const asciiLines = LOGO.split('\n');
@@ -114,15 +148,14 @@ export default function HeroAscii() {
 
     useEffect(() => {
         const hero = heroRef.current;
-        if (
-            !hero ||
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-            window.matchMedia('(hover: none) and (pointer: coarse)').matches
-        ) {
+        if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
         }
 
         gsap.registerPlugin(ScrollTrigger);
+        // Phones too: the hero closes as it scrolls away. Mobile browsers resize the
+        // viewport when the address bar hides; don't re-measure on that, or it jumps.
+        ScrollTrigger.config({ ignoreMobileResize: true });
 
         const context = gsap.context(() => {
             const timeline = gsap.timeline({
@@ -135,10 +168,6 @@ export default function HeroAscii() {
             });
 
             timeline
-                .to('[data-hero-parallax="background"]', {
-                    yPercent: 65,
-                    ease: 'none',
-                }, 0)
                 .to('[data-hero-parallax="content"]', {
                     yPercent: 34,
                     ease: 'none',
@@ -154,26 +183,6 @@ export default function HeroAscii() {
 
     return (
         <main ref={heroRef} id="hero" className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
-            {/* Hero video background */}
-            <motion.div
-                data-hero-parallax="background"
-                initial={false}
-                animate={{ opacity: heroVisible ? 1 : 0 }}
-                transition={{ duration: 0.55, ease: "easeOut" }}
-                className="absolute inset-0 z-0 flex h-full w-full items-center justify-center p-4 md:p-8 lg:p-16"
-            >
-                <div className="h-full w-full opacity-[0.40] md:opacity-[0.60]">
-                    <ViewportVideo
-                        eager
-                        src="/main-hero-compressed.mp4"
-                        wrapperClassName="w-full h-full"
-                        className="h-full w-full object-cover object-center scale-115 lg:object-contain"
-                    />
-                </div>
-            </motion.div>
-
-            {/* Mobile stars background */}
-            <div data-hero-parallax="background" className="absolute inset-0 w-full h-full lg:hidden stars-bg"></div>
 
             {/* Top Header */}
             <motion.div
@@ -276,7 +285,33 @@ export default function HeroAscii() {
             <div data-hero-parallax="detail" className="absolute left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
             <div data-hero-parallax="detail" className="absolute right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
 
-            <div data-hero-parallax="content" className="relative z-10 flex min-h-[70vh] lg:min-h-[90vh] items-center pt-16 lg:pt-0" style={{ marginTop: '2vh' }}>
+            <div ref={contentRef} data-hero-parallax="content" className="relative z-10 flex flex-col lg:flex-row min-h-[70vh] lg:min-h-[90vh] justify-center lg:justify-start items-center pt-16 pb-10 lg:pt-0 lg:pb-0" style={{ marginTop: '2vh' }}>
+                {/* Hero pixel-art avatar (Rive). Replaces /main-hero-compressed.mp4,
+                    which stays in /public but is no longer loaded. It lives in the
+                    same parallax layer as the copy so it stays level with it while
+                    scrolling. On desktop it sits to the right of the copy and spans
+                    its height, from the "001" rule to the SYS.ACT rule. Below lg it
+                    is a small portrait in the empty corner beside the logo: hung
+                    from the "001" rule, flush with the copy's right edge, its
+                    shoulders fading out above the description. The dot lattice
+                    then covers the whole hero. */}
+                <motion.div
+                    initial={false}
+                    animate={{ opacity: heroVisible ? 1 : 0 }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    className="pointer-events-none absolute inset-x-0 top-0 bottom-0 lg:-bottom-12"
+                    style={copyBox === null ? undefined : ({ '--hero-copy-top': `${copyBox.top}px`, '--hero-copy-height': `${copyBox.height}px` } as React.CSSProperties)}
+                >
+                    <PixelAvatar
+                        revealed={heroVisible}
+                        fitArtQuery="(min-width: 1024px)"
+                        backdropGrid
+                        wideGridQuery="(max-width: 1023.98px)"
+                        artClassName="[mask-image:linear-gradient(to_bottom,black_72%,transparent)] lg:[mask-image:none]"
+                        className="absolute right-6 top-[calc(var(--hero-copy-top,6rem)+0.75rem)] size-40 items-start opacity-90 md:size-52 lg:-right-[3%] lg:top-[var(--hero-copy-top,18%)] lg:h-[var(--hero-copy-height,64%)] lg:w-[56%]"
+                    />
+                </motion.div>
+
                 <div className="container mx-auto px-6 lg:px-8 lg:ml-[2%] xl:ml-[5%]">
                     <motion.div
                         initial={false}
@@ -290,6 +325,7 @@ export default function HeroAscii() {
                             delay: phase === "transitioning" ? 0.16 : 0,
                         }}
                         className="max-w-lg relative"
+                        ref={copyRef}
                     >
                         {/* Top decorative line */}
                         <div className="flex items-center gap-2 mb-3 opacity-60">
@@ -334,12 +370,12 @@ export default function HeroAscii() {
                                     {!showResponse && (
                                         <span className="inline-block w-1.5 h-[1.1em] bg-blue-400 ml-1 animate-pulse align-middle -translate-y-px" />
                                     )}
-                                    {showResponse && (
-                                        <span className="block mt-1.5 text-white">
-                                            {roleDisplayText}
-                                            <span className="inline-block w-1.5 h-[1.1em] bg-blue-400 ml-1 animate-pulse align-middle -translate-y-px" />
-                                        </span>
-                                    )}
+                                    {/* Always rendered, hidden until the command is typed, so the
+                                        line's height is reserved and nothing below it jumps. */}
+                                    <span className={`block mt-1.5 text-white ${showResponse ? '' : 'invisible'}`} aria-hidden={!showResponse}>
+                                        {roleDisplayText}
+                                        <span className="inline-block w-1.5 h-[1.1em] bg-blue-400 ml-1 animate-pulse align-middle -translate-y-px" />
+                                    </span>
                                 </span>
                                 {t.hero.description}
                             </p>
@@ -458,21 +494,6 @@ export default function HeroAscii() {
             repeating-linear-gradient(0deg, transparent 0px, transparent 1px, white 1px, white 2px),
             repeating-linear-gradient(90deg, transparent 0px, transparent 1px, white 1px, white 2px);
           background-size: 3px 3px;
-        }
-        
-        .stars-bg {
-          background-image: 
-            radial-gradient(1px 1px at 20% 30%, white, transparent),
-            radial-gradient(1px 1px at 60% 70%, white, transparent),
-            radial-gradient(1px 1px at 50% 50%, white, transparent),
-            radial-gradient(1px 1px at 80% 10%, white, transparent),
-            radial-gradient(1px 1px at 90% 60%, white, transparent),
-            radial-gradient(1px 1px at 33% 80%, white, transparent),
-            radial-gradient(1px 1px at 15% 60%, white, transparent),
-            radial-gradient(1px 1px at 70% 40%, white, transparent);
-          background-size: 200% 200%, 180% 180%, 250% 250%, 220% 220%, 190% 190%, 240% 240%, 210% 210%, 230% 230%;
-          background-position: 0% 0%, 40% 40%, 60% 60%, 20% 20%, 80% 80%, 30% 30%, 70% 70%, 50% 50%;
-          opacity: 0.3;
         }
       `}</style>
         </main>
