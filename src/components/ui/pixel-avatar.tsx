@@ -32,6 +32,8 @@ const FIELD_LEFT_CELLS = 16
 const RAGGED_PAD_TOP = 6
 const RAGGED_PAD_SIDE = 10
 const RAGGED_TOP_ROWS = 8
+/** Ragged mode: the field starts at least this far (CSS px) above the glyph's box, whatever size the art came out. */
+const RAGGED_ABOVE_GLYPH = 18
 /** Ragged mode: the field reaches left behind the copy to this far (CSS px) from the section's left edge. */
 const RAGGED_LEFT_GAP = 0
 /** Ragged mode: columns the left edge frays over, short enough to leave solid field left of the copy. */
@@ -284,11 +286,18 @@ export function PixelAvatar({
             } else if (ragged?.matches) {
                 const left = pageLeft(section) - pageLeft(box) + RAGGED_LEFT_GAP
                 const ox = Math.max(RAGGED_PAD_SIDE, Math.floor((slot.offsetLeft - left) / cell))
+                // The art's size (and so, bottom-anchored, its top) varies with the screen's
+                // pixel ratio; the field's top doesn't: it always starts just above the glyph.
+                let oy = RAGGED_PAD_TOP
+                if (glyphEl) {
+                    const glyphTop = pageTop(glyphEl) - pageTop(box)
+                    oy = Math.max(oy, Math.ceil((slot.offsetTop - glyphTop + RAGGED_ABOVE_GLYPH) / cell))
+                }
                 layout = {
                     cols: ox + ART_SIZE + RAGGED_PAD_SIDE,
-                    rows: ART_SIZE + RAGGED_PAD_TOP,
+                    rows: ART_SIZE + oy,
                     ox,
-                    oy: RAGGED_PAD_TOP,
+                    oy,
                     ragged: true,
                     raggedRows: RAGGED_TOP_ROWS,
                     raggedLeftCols: RAGGED_LEFT_COLS,

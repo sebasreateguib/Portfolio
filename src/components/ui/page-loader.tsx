@@ -14,6 +14,8 @@ const REDUCED_MOTION_DELAY_MS = 450;
 const TRANSITION_DURATION_MS = 650;
 /** How long the intro's S.REATEGUI takes to fly into the header logo's place. */
 const FLIGHT_MS = 750;
+/** The flight waits for the web fonts (they set the header logo's metrics), but never longer than this. */
+const FONTS_WAIT_MS = 1500;
 
 /**
  * The intro's logo travels from the centre to the header logo (`data-hero-logo`):
@@ -76,6 +78,13 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
 
         // First the logo flies to the header logo's place (the page is laid out
         // behind the overlay, so it can be measured), then the hero appears under it.
+        // On a phone the web fonts can still be loading after the intro; when they swap
+        // in, the header's text (and so its logo) moves. So take off once they're in.
+        const fontsReady = document.fonts?.ready ?? Promise.resolve();
+        Promise.race([fontsReady, new Promise((resolve) => window.setTimeout(resolve, FONTS_WAIT_MS))]).then(takeOff);
+    }, [prefersReducedMotion]);
+
+    const takeOff = () => {
         const from = logoRef.current?.getBoundingClientRect();
         // The slanted text itself on both ends (its box widens with the skew), so the
         // scale and centres compare like with like.
@@ -91,7 +100,7 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
             setPhase("transitioning");
             window.setTimeout(() => setPhase("revealed"), TRANSITION_DURATION_MS);
         }, canFly ? FLIGHT_MS : 0);
-    }, [prefersReducedMotion]);
+    };
 
     useEffect(() => {
         const delay = prefersReducedMotion ? REDUCED_MOTION_DELAY_MS : LOADER_DISPLAY_MS;
@@ -134,11 +143,12 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                 if (Math.abs(x - f.x) < 0.5 && Math.abs(y - f.y) < 0.5 && Math.abs(scale - f.scale) < 0.002) return f;
                 return { ...f, x, y, scale, settling: true };
             });
+        // Last check at 300ms: its short slide is done well before the swap (TRANSITION_DURATION_MS).
         const frame = requestAnimationFrame(settle);
-        const later = window.setTimeout(settle, 300);
+        const checks = [120, 300].map((ms) => window.setTimeout(settle, ms));
         return () => {
             cancelAnimationFrame(frame);
-            window.clearTimeout(later);
+            checks.forEach((check) => window.clearTimeout(check));
         };
     }, [phase]);
 
@@ -219,7 +229,7 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                             }
                             transition={
                                 flight?.settling
-                                    ? { duration: 0.25, ease: [0.22, 1, 0.36, 1] }
+                                    ? { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
                                     : { duration: FLIGHT_MS / 1000, ease: [0.76, 0, 0.24, 1] }
                             }
                             className="relative z-10"

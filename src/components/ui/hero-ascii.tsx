@@ -350,7 +350,7 @@ export default function HeroAscii() {
                             {/* Below md the logo is drawn in the avatar's field (PixelAvatar's glyph) to fill
                                 this fixed box, so its size, and the room it takes above the whoami, don't
                                 depend on the fallback font a phone uses for the ASCII art's block characters. */}
-                            <div data-thermal-glyph aria-hidden="true" className="mb-6 h-14 w-44 md:hidden" />
+                            <div data-thermal-glyph aria-hidden="true" className="mt-2.5 mb-6 h-14 w-44 md:hidden" />
                             <div className="mb-6 md:mb-7 w-fit max-md:hidden text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
                                 {asciiLines.map((line, i) => {
                                     const isScanning = i === scanRow;
@@ -381,7 +381,7 @@ export default function HeroAscii() {
                                 {/* Below md these lines sit on the avatar's field: a crisp 1px black outline
                                     (eight offsets) plus a soft dark halo keeps them readable on the greys,
                                     and data-thermal-dim drops the field a tone behind them. */}
-                                <span data-thermal-dim className="text-white font-bold block w-fit mb-10 md:mb-2 [text-shadow:1px_0_0_#000,-1px_0_0_#000,0_1px_0_#000,0_-1px_0_#000,1px_1px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,0_0_6px_rgb(0_0_0/90%)] md:[text-shadow:none]">
+                                <span data-thermal-dim className="text-white font-bold block w-fit mb-[30px] md:mb-2 [text-shadow:1px_0_0_#000,-1px_0_0_#000,0_1px_0_#000,0_-1px_0_#000,1px_1px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,0_0_6px_rgb(0_0_0/90%)] md:[text-shadow:none]">
                                     <span className="text-blue-400">guest@sreategui:~$ </span>
                                     <span>{commandText}</span>
                                     {!showResponse && (
