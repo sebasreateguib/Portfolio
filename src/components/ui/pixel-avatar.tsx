@@ -36,8 +36,6 @@ const RAGGED_TOP_ROWS = 8
 const RAGGED_LEFT_GAP = 0
 /** Ragged mode: columns the left edge frays over, short enough to leave solid field left of the copy. */
 const RAGGED_LEFT_COLS = 8
-/** Ragged mode: how many times taller than the ASCII art's lines the glyph is drawn. */
-const GLYPH_STRETCH = 1.3
 
 const levelFor = (pixelate: number) => PIXELATE_AT.filter((at) => pixelate >= at).length
 
@@ -74,8 +72,8 @@ interface PixelAvatarProps {
     raggedQuery?: string
     /**
      * Ragged mode only: ASCII art (its '█' blocks) drawn in blue cells in the field,
-     * over the element marked `data-thermal-glyph` in the section, scaled to its
-     * width. That element should hide itself while the query matches.
+     * stretched to fill the element marked `data-thermal-glyph` in the section (a
+     * fixed-size box, so the result doesn't depend on fonts), shadow included.
      */
     glyph?: string
 }
@@ -242,14 +240,13 @@ export function PixelAvatar({
         /** Ragged mode: sets the glyph into the grid over its element, given the page position of the grid's top-left cell. */
         const placeGlyph = (originX: number, originY: number, cell: number) => {
             if (!glyph || !glyphEl) return engine.setGlyph(null)
-            // Each character covers the cells it covers as rendered (fractions and all),
-            // stretched GLYPH_STRETCH times taller; the shadow falls half a character
-            // right and a bit over half a line down, like the art's outline.
-            const lines = glyph.split('\n')
+            // The art's rows with blocks in them fill the box, shadow included: it falls
+            // half a character right and a bit over half a line down, like the art's outline.
+            const lines = glyph.split('\n').filter((line) => line.includes('█')).map((line) => line.trimEnd())
             const artCols = Math.max(...lines.map((line) => line.length))
-            const sx = glyphEl.offsetWidth / cell / artCols
-            const sy = (glyphEl.offsetHeight / cell / lines.length) * GLYPH_STRETCH
-            const shape = glyphFromAscii(glyph, sx, sy, Math.max(1, Math.round(sx * 0.5)), Math.max(1, Math.round(sy * 0.6)))
+            const sx = glyphEl.offsetWidth / cell / (artCols + 0.5)
+            const sy = glyphEl.offsetHeight / cell / (lines.length + 0.6)
+            const shape = glyphFromAscii(lines.join('\n'), sx, sy, Math.max(1, Math.round(sx * 0.5)), Math.max(1, Math.round(sy * 0.6)))
             engine.setGlyph({
                 ...shape,
                 x: Math.round((pageLeft(glyphEl) - originX) / cell),

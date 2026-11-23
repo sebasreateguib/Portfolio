@@ -318,7 +318,7 @@ export default function HeroAscii() {
                         raggedQuery="(max-width: 767.98px)"
                         glyph={LOGO}
                         backdropGrid
-                        className="absolute right-4 top-[calc(var(--hero-copy-top,6rem)+1.5rem)] size-40 items-start opacity-90 md:-right-[3%] md:top-[calc(var(--hero-copy-top,18%)_+_var(--hero-copy-height,64%)_*_0.125)] md:h-[calc(var(--hero-copy-height,64%)_*_0.75)] md:w-[56%]"
+                        className="absolute right-4 top-[calc(var(--hero-copy-top,6rem)+1.5rem)] size-40 items-end opacity-90 md:items-start md:-right-[3%] md:top-[calc(var(--hero-copy-top,18%)_+_var(--hero-copy-height,64%)_*_0.125)] md:h-[calc(var(--hero-copy-height,64%)_*_0.75)] md:w-[56%]"
                     />
                 </motion.div>
 
@@ -347,7 +347,11 @@ export default function HeroAscii() {
                         {/* Title with dithered accent */}
                         <div className="relative">
                             <div className="hidden md:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
-                            <div data-thermal-glyph className="mb-6 md:mb-7 w-fit max-md:invisible text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
+                            {/* Below md the logo is drawn in the avatar's field (PixelAvatar's glyph) to fill
+                                this fixed box, so its size, and the room it takes above the whoami, don't
+                                depend on the fallback font a phone uses for the ASCII art's block characters. */}
+                            <div data-thermal-glyph aria-hidden="true" className="mb-6 h-14 w-44 md:hidden" />
+                            <div className="mb-6 md:mb-7 w-fit max-md:hidden text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
                                 {asciiLines.map((line, i) => {
                                     const isScanning = i === scanRow;
                                     const rowColor = 'text-blue-400';
@@ -377,7 +381,7 @@ export default function HeroAscii() {
                                 {/* Below md these lines sit on the avatar's field: a crisp 1px black outline
                                     (eight offsets) plus a soft dark halo keeps them readable on the greys,
                                     and data-thermal-dim drops the field a tone behind them. */}
-                                <span data-thermal-dim className="text-white font-bold block w-fit mb-5 md:mb-2 [text-shadow:1px_0_0_#000,-1px_0_0_#000,0_1px_0_#000,0_-1px_0_#000,1px_1px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,0_0_6px_rgb(0_0_0/90%)] md:[text-shadow:none]">
+                                <span data-thermal-dim className="text-white font-bold block w-fit mb-10 md:mb-2 [text-shadow:1px_0_0_#000,-1px_0_0_#000,0_1px_0_#000,0_-1px_0_#000,1px_1px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,0_0_6px_rgb(0_0_0/90%)] md:[text-shadow:none]">
                                     <span className="text-blue-400">guest@sreategui:~$ </span>
                                     <span>{commandText}</span>
                                     {!showResponse && (
