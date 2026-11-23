@@ -16,7 +16,7 @@ export const translations = {
       description: "Passionate about AI Engineering, Full Stack Development, Systems Optimization, Cloud-Native & Data Infrastructure.",
       metrics: {
         metric1: { value: "3rd", label: "YEAR CS" },
-        metric2: { value: "5+", label: "FEATURED PROJECTS" },
+        metric2: { value: "10+", label: "PROJECTS" },
         metric3: { value: "AI & SW", label: "FOCUSED ENG." }
       }
     },
@@ -45,9 +45,6 @@ export const translations = {
     intro: {
       hi: "Hi there, I'm Sebastian!",
       bio: "I'm a 26 year old Computer Science student based in Lima, Perú. I always enjoy learning new things and giving my best to every project and challenge.",
-      bullet2: "I'm currently learning new languages and technologies like <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS.</span>",
-      bullet3: "Fun fact: <span className=\"text-[#60a5fa] font-semibold\">I was inspired by Blue Lock's pentagon for the hero design!</span>",
-      bullet4: "Focused on <span className=\"text-[#60a5fa] font-semibold\">clean code, modern infrastructure, and AI.</span>",
       activity: "ACTIVITY",
       less: "Less",
       more: "More"
@@ -300,7 +297,7 @@ export const translations = {
       description: "Apasionado por Ingeniería de IA, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native y de Datos.",
       metrics: {
         metric1: { value: "3er", label: "AÑO CS" },
-        metric2: { value: "5+", label: "PROYECTOS DESTACADOS" },
+        metric2: { value: "10+", label: "PROYECTOS" },
         metric3: { value: "IA & SW", label: "ENFOQUE TÉC." }
       }
     },
@@ -329,9 +326,6 @@ export const translations = {
     intro: {
       hi: "¡Hola, soy Sebastian!",
       bio: "Soy un estudiante de Ciencia de la Computación de 26 años viviendo en Lima, Perú. Siempre disfruto aprender cosas nuevas y dar lo mejor de mí en cada proyecto y desafío.",
-      bullet2: "Actualmente estoy aprendiendo tecnologías como <span className=\"text-[#60a5fa] font-semibold\">Rust & NestJS</span>",
-      bullet3: "Dato curioso: <span className=\"text-[#60a5fa] font-semibold\">¡Me inspiré en el pentágono de Blue Lock para el diseño!</span>",
-      bullet4: "Enfocado en <span className=\"text-[#60a5fa] font-semibold\">código limpio, infraestructura moderna e IA.</span>",
       activity: "ACTIVIDAD",
       less: "Menos",
       more: "Más"

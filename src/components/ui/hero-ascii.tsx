@@ -187,13 +187,23 @@ export default function HeroAscii() {
             {/* Top Header */}
             <motion.div
                 initial={false}
-                animate={{ opacity: heroVisible ? 1 : 0, y: heroVisible ? 0 : -12 }}
+                // Opacity only: the loader's S.REATEGUI lands exactly on the logo below,
+                // so the header can't slide in under it.
+                animate={{ opacity: heroVisible ? 1 : 0 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                data-thermal-field-top
                 className="absolute top-0 left-0 right-0 z-20 border-b border-white/20"
             >
                 <div className="container mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2 lg:gap-4">
-                        <div className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12 select-none">
+                        {/* data-hero-logo: where the loader's S.REATEGUI flies to (page-loader.tsx).
+                            Hidden until the loader is gone, then shown in the same frame the
+                            landed logo goes: a swap, never two logos on screen together. */}
+                        <div
+                            data-hero-logo
+                            style={{ opacity: phase === "revealed" ? 1 : 0 }}
+                            className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12 select-none"
+                        >
                             S.REATEGUI
                         </div>
                         <div className="hidden sm:block lg:hidden xl:block h-3 lg:h-4 w-px bg-white/40"></div>
@@ -285,34 +295,34 @@ export default function HeroAscii() {
             <div data-hero-parallax="detail" className="absolute left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
             <div data-hero-parallax="detail" className="absolute right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
 
-            <div ref={contentRef} data-hero-parallax="content" className="relative z-10 flex flex-col lg:flex-row min-h-[70vh] lg:min-h-[90vh] justify-center lg:justify-start items-center pt-16 pb-10 lg:pt-0 lg:pb-0" style={{ marginTop: '2vh' }}>
-                {/* Hero pixel-art avatar (Rive). Replaces /main-hero-compressed.mp4,
-                    which stays in /public but is no longer loaded. It lives in the
-                    same parallax layer as the copy so it stays level with it while
-                    scrolling. On desktop it sits to the right of the copy and spans
-                    its height, from the "001" rule to the SYS.ACT rule. Below lg it
-                    is a small portrait in the empty corner beside the logo: hung
-                    from the "001" rule, flush with the copy's right edge, its
-                    shoulders fading out above the description. The dot lattice
-                    then covers the whole hero. */}
+            <div ref={contentRef} data-hero-parallax="content" className="relative z-10 flex flex-col md:flex-row min-h-[70vh] md:min-h-[90vh] justify-center md:justify-start items-center pt-16 pb-10 lg:pt-0 md:pb-0" style={{ marginTop: '2vh' }}>
+                {/* Hero pixel-art avatar (Rive). It lives in the same parallax
+                    layer as the copy so it stays level with it while scrolling.
+                    On desktop it sits to the right of the copy, three quarters of
+                    its height, centred on the copy block (the "001" rule down to
+                    the SYS.ACT rule).
+                    Below md it is a small portrait in the empty corner beside the
+                    logo: hung from the "001" rule, flush with the copy's right
+                    edge, its field fraying away on every side. */}
                 <motion.div
                     initial={false}
                     animate={{ opacity: heroVisible ? 1 : 0 }}
                     transition={{ duration: 0.55, ease: "easeOut" }}
-                    className="pointer-events-none absolute inset-x-0 top-0 bottom-0 lg:-bottom-12"
+                    className="pointer-events-none absolute inset-x-0 top-0 bottom-0 md:-bottom-12"
                     style={copyBox === null ? undefined : ({ '--hero-copy-top': `${copyBox.top}px`, '--hero-copy-height': `${copyBox.height}px` } as React.CSSProperties)}
                 >
                     <PixelAvatar
                         revealed={heroVisible}
-                        fitArtQuery="(min-width: 1024px)"
+                        fitArtQuery="(min-width: 768px)"
+                        fieldQuery="(min-width: 768px)"
+                        raggedQuery="(max-width: 767.98px)"
+                        glyph={LOGO}
                         backdropGrid
-                        wideGridQuery="(max-width: 1023.98px)"
-                        artClassName="[mask-image:linear-gradient(to_bottom,black_72%,transparent)] lg:[mask-image:none]"
-                        className="absolute right-6 top-[calc(var(--hero-copy-top,6rem)+0.75rem)] size-40 items-start opacity-90 md:size-52 lg:-right-[3%] lg:top-[var(--hero-copy-top,18%)] lg:h-[var(--hero-copy-height,64%)] lg:w-[56%]"
+                        className="absolute right-4 top-[calc(var(--hero-copy-top,6rem)+1.5rem)] size-40 items-start opacity-90 md:-right-[3%] md:top-[calc(var(--hero-copy-top,18%)_+_var(--hero-copy-height,64%)_*_0.125)] md:h-[calc(var(--hero-copy-height,64%)_*_0.75)] md:w-[56%]"
                     />
                 </motion.div>
 
-                <div className="container mx-auto px-6 lg:px-8 lg:ml-[2%] xl:ml-[5%]">
+                <div className="container mx-auto px-6 md:px-8 md:ml-[2%] xl:ml-[5%]">
                     <motion.div
                         initial={false}
                         animate={{
@@ -324,7 +334,7 @@ export default function HeroAscii() {
                             ease: [0.22, 1, 0.36, 1],
                             delay: phase === "transitioning" ? 0.16 : 0,
                         }}
-                        className="max-w-lg relative"
+                        className="max-w-lg md:max-w-[44vw] lg:max-w-lg relative"
                         ref={copyRef}
                     >
                         {/* Top decorative line */}
@@ -336,8 +346,8 @@ export default function HeroAscii() {
 
                         {/* Title with dithered accent */}
                         <div className="relative">
-                            <div className="hidden lg:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
-                            <div className="mb-7 text-[9px] md:text-[12px] lg:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
+                            <div className="hidden md:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
+                            <div data-thermal-glyph className="mb-4 md:mb-7 w-fit max-md:invisible text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
                                 {asciiLines.map((line, i) => {
                                     const isScanning = i === scanRow;
                                     const rowColor = 'text-blue-400';
@@ -355,7 +365,7 @@ export default function HeroAscii() {
                         </div>
 
                         {/* Decorative dots pattern - desktop only */}
-                        <div className="hidden lg:flex gap-1 mb-8 opacity-40 flex-wrap max-w-max">
+                        <div className="hidden md:flex gap-1 mb-8 opacity-40 flex-wrap max-w-max">
                             {Array.from({ length: 52 }).map((_, i) => (
                                 <div key={i} className="w-0.5 h-0.5 bg-white rounded-full shrink-0"></div>
                             ))}
@@ -363,8 +373,11 @@ export default function HeroAscii() {
 
                         {/* Description with subtle grid pattern */}
                         <div className="relative">
-                            <p className="text-xs lg:text-base text-gray-200 mb-5 lg:mb-6 leading-relaxed font-mono opacity-100 max-w-md [text-shadow:_0_2px_4px_rgb(0_0_0_/_100%),_0_0_10px_rgb(0_0_0_/_100%)] lg:[text-shadow:_none]">
-                                <span className="text-white font-bold block mb-2">
+                            <p className="text-xs md:text-base text-gray-200 mb-5 md:mb-6 leading-relaxed font-mono opacity-100 max-w-md [text-shadow:_0_2px_4px_rgb(0_0_0_/_100%),_0_0_10px_rgb(0_0_0_/_100%)] md:[text-shadow:_none]">
+                                {/* Below md these lines sit on the avatar's field: a crisp 1px black outline
+                                    (eight offsets) plus a soft dark halo keeps them readable on the greys,
+                                    and data-thermal-dim drops the field a tone behind them. */}
+                                <span data-thermal-dim className="text-white font-bold block w-fit mb-7 md:mb-2 [text-shadow:1px_0_0_#000,-1px_0_0_#000,0_1px_0_#000,0_-1px_0_#000,1px_1px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,0_0_6px_rgb(0_0_0/90%)] md:[text-shadow:none]">
                                     <span className="text-blue-400">guest@sreategui:~$ </span>
                                     <span>{commandText}</span>
                                     {!showResponse && (
@@ -381,63 +394,63 @@ export default function HeroAscii() {
                             </p>
 
                             {/* Technical corner accent - desktop only */}
-                            <div className="hidden lg:block absolute -right-4 top-1/2 w-3 h-3 border border-white opacity-30" style={{ transform: 'translateY(-50%)' }}>
+                            <div className="hidden md:block absolute -right-4 top-1/2 w-3 h-3 border border-white opacity-30" style={{ transform: 'translateY(-50%)' }}>
                                 <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-white" style={{ transform: 'translate(-50%, -50%)' }}></div>
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-8 lg:gap-10">
+                        <div className="flex flex-col gap-8 md:gap-10">
                             {/* Quick Metrics */}
-                            <div className="order-2 lg:order-1 flex items-center gap-4 lg:gap-8 opacity-90 max-w-max border-t border-white/10 pt-6 lg:border-t-0 lg:pt-0">
+                            <div className="order-2 md:order-1 flex items-center gap-4 md:gap-8 opacity-90 md:max-w-max border-t border-white/10 pt-6 md:border-t-0 md:pt-0">
                                 <div className="flex flex-col">
-                                    <span className="text-white font-extrabold text-xl lg:text-3xl tracking-tight">{t.hero.metrics.metric1.value}</span>
-                                    <span className="text-[9px] lg:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric1.label}</span>
+                                    <span className="text-white font-extrabold text-xl md:text-3xl tracking-tight">{t.hero.metrics.metric1.value}</span>
+                                    <span className="text-[9px] md:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric1.label}</span>
                                 </div>
-                                <div className="w-px h-8 lg:h-10 bg-white/10"></div>
+                                <div className="w-px h-8 md:h-10 bg-white/10"></div>
                                 <div className="flex flex-col">
-                                    <span className="text-white font-extrabold text-xl lg:text-3xl tracking-tight">{t.hero.metrics.metric2.value}</span>
-                                    <span className="text-[9px] lg:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric2.label}</span>
+                                    <span className="text-white font-extrabold text-xl md:text-3xl tracking-tight">{t.hero.metrics.metric2.value}</span>
+                                    <span className="text-[9px] md:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric2.label}</span>
                                 </div>
-                                <div className="w-px h-8 lg:h-10 bg-white/10"></div>
+                                <div className="w-px h-8 md:h-10 bg-white/10"></div>
                                 <div className="flex flex-col items-start">
-                                    <span className="text-white font-extrabold text-xl lg:text-3xl tracking-tight">{t.hero.metrics.metric3.value}</span>
-                                    <span className="text-[9px] lg:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric3.label}</span>
+                                    <span className="text-white font-extrabold text-xl md:text-3xl tracking-tight">{t.hero.metrics.metric3.value}</span>
+                                    <span className="text-[9px] md:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric3.label}</span>
                                 </div>
                             </div>
 
                             {/* Buttons with technical accents */}
-                            <div className="order-1 lg:order-2 grid w-[min(100%,19rem)] grid-cols-2 gap-2 lg:grid-cols-3 lg:w-full lg:max-w-none lg:gap-3">
+                            <div className="order-1 md:order-2 grid w-full grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3 md:w-full md:max-w-none md:gap-3">
                                 <a
                                     href="https://www.linkedin.com/in/sebasreateguib"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="relative col-span-2 lg:col-span-1 flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 lg:px-6 lg:py-3 bg-blue-500/20 text-white font-mono text-xs lg:text-sm border border-blue-400/70 hover:bg-blue-500/35 hover:border-blue-300 transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+                                    className="relative col-span-2 md:col-span-1 flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-blue-500/20 text-white font-mono text-xs md:text-xs lg:text-sm border border-blue-400/70 hover:bg-blue-500/35 hover:border-blue-300 transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
                                 >
-                                    <span className="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                                    <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                    <span className="hidden md:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                    <span className="hidden md:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <svg className="w-4 h-4 fill-current text-blue-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                                     </svg>
                                     {t.contact.linkedin}
                                 </a>
 
-                                <a href={language === 'es' ? '/CV-SebastianReategui-ES.pdf' : '/CV-SebastianReategui-EN.pdf'} download={language === 'es' ? 'CV-SebastianReategui-ES.pdf' : 'CV-SebastianReategui-EN.pdf'} className="relative col-span-2 lg:col-span-3 order-last flex min-h-11 items-center justify-center gap-2 px-4 py-2 lg:px-6 lg:py-2.5 bg-transparent text-white font-mono text-xs lg:text-sm border border-white hover:bg-white hover:text-black transition-all duration-200 group">
-                                    <span className="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                                    <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                <a href={language === 'es' ? '/CV-SebastianReategui-ES.pdf' : '/CV-SebastianReategui-EN.pdf'} download={language === 'es' ? 'CV-SebastianReategui-ES.pdf' : 'CV-SebastianReategui-EN.pdf'} className="relative col-span-2 md:col-span-1 lg:col-span-3 order-last flex min-h-11 items-center justify-center gap-2 whitespace-nowrap px-4 py-2 md:px-3 lg:px-6 md:py-2.5 bg-transparent text-white font-mono text-xs md:text-xs lg:text-sm border border-white hover:bg-white hover:text-black transition-all duration-200 group">
+                                    <span className="hidden md:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                    <span className="hidden md:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <Download className="w-4 h-4" />
                                     {t.hero.downloadResume}
                                 </a>
 
-                                <a href="https://github.com/sebasreateguib" target="_blank" rel="noopener noreferrer" className="relative col-span-2 lg:col-span-1 flex min-h-11 items-center justify-center gap-2 px-3 py-2 lg:px-6 lg:py-2.5 bg-transparent border border-white text-white font-mono text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200">
+                                <a href="https://github.com/sebasreateguib" target="_blank" rel="noopener noreferrer" className="relative col-span-2 md:col-span-1 flex min-h-11 items-center justify-center gap-2 px-3 py-2 md:px-6 md:py-2.5 bg-transparent border border-white text-white font-mono text-xs md:text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200">
                                     <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
                                     GitHub
                                 </a>
 
-                                <a href="#contact" className="relative col-span-2 lg:col-span-1 hidden lg:flex min-h-11 items-center justify-center gap-2 px-3 py-2 lg:px-6 lg:py-2.5 bg-transparent border border-white text-white font-mono text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200 group">
-                                    <span className="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                                    <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                <a href="#contact" className="relative col-span-2 md:col-span-1 hidden md:flex min-h-11 items-center justify-center gap-2 px-3 py-2 md:px-6 md:py-2.5 bg-transparent border border-white text-white font-mono text-xs md:text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200 group">
+                                    <span className="hidden md:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                    <span className="hidden md:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <MessageSquare className="w-4 h-4" />
                                     {t.hero.letsTalk}
                                 </a>
@@ -445,7 +458,7 @@ export default function HeroAscii() {
                         </div>
 
                         {/* Bottom technical notation - desktop only */}
-                        <div className="hidden lg:flex items-center gap-2 mt-8 opacity-40">
+                        <div className="hidden md:flex items-center gap-2 mt-8 opacity-40">
                             <span className="text-white text-[9px] font-mono">∞</span>
                             <div className="flex-1 h-px bg-white"></div>
                             <span className="text-white text-[9px] font-mono">SYS.ACT</span>

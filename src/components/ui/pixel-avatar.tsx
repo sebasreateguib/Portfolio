@@ -1,54 +1,47 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import {
-    Alignment,
-    EventType,
-    Fit,
-    Layout,
-    Rive,
-    type ViewModelInstanceBoolean,
-    type ViewModelInstanceNumber,
-} from '@rive-app/canvas'
 import { cn } from '../../lib/utils'
+import { createThermalAvatar, glyphFromAscii, type ThermalLayout, type ThermalRect } from './thermal-avatar'
 
-/** Logical size of the pixel art: the artboard is 96x96, one unit per pixel. */
+/** Logical size of the pixel art: 96x96, one cell per pixel. */
 const ART_SIZE = 96
 /** Empty rows above the hair in the artwork. */
 const EMPTY_TOP_ROWS = 3
 /**
  * How far the avatar's section has to scroll up — as a fraction of its height —
- * for `pixelate` to reach 1. The file steps through its mosaics at 0.15, 0.35,
- * 0.55 and 0.75 of that.
+ * for the scroll mosaic to reach its last step (see PIXELATE_AT).
  */
 const PIXELATE_DISTANCE = 0.6
-/**
- * In-flow mode: `pixelate` starts once the avatar's top edge rises past this
- * fraction of the viewport height, and reaches 1 one avatar-height later.
- */
-const IN_FLOW_PIXELATE_START = 0.2
-/** In-flow mode: how much of the avatar must have scrolled into view for the entrance. */
-const IN_FLOW_REVEAL_RATIO = 0.7
 
 /*
- * Backdrop grid: a faint dot lattice on the avatar's own pixel grid, so the art
- * sits on its canvas. While the face is sharp there is a dot every GRID_STEP art
- * pixels; as the face breaks into mosaics the lattice coarsens with it.
+ * Backdrop lattice: the art's own grid of cells, faintly lit, across the
+ * section, so the field reads as the lit part of one larger pixel display. As
+ * the face breaks into mosaics the lattice coarsens with it.
  */
-const GRID_STEP = 4
-const GRID_DOT_ALPHA = 0.2
-/** Mosaic block (art px) per pixelate level, and where each level starts.
- *  Mirrors MOSAIC_BLOCKS / PIXELATE_AT in src/design/avatar-rive/tools/generate_scene.py. */
+const GRID_CELL_ALPHA = 0.04
+/** Mosaic block (art px) per pixelate level, and the scroll progress where each level starts. */
 const MOSAIC_BLOCKS = [1, 2, 4, 6, 12]
 const PIXELATE_AT = [0.15, 0.35, 0.55, 0.75]
-/** The file's "Intro" timeline as [ms after reveal, level]: 12px, 6px, 4px, 2px,
- *  sharp at frames 0, 14, 22, 29 and 35 (60 fps). */
+/** The entrance as [ms after reveal, level]: 12px, 6px, 4px, 2px blocks, then sharp. */
 const INTRO_STEPS: [number, number][] = [[0, 4], [233, 3], [367, 2], [483, 1], [583, 0]]
+
+/** Panel mode: columns of field kept left of the art, over which its left edge frays. */
+const FIELD_LEFT_CELLS = 16
+/** Ragged mode: cells of field added above and beside the art for the edges to fray into, and how many rows the top frays over (short of the hair). */
+const RAGGED_PAD_TOP = 6
+const RAGGED_PAD_SIDE = 10
+const RAGGED_TOP_ROWS = 8
+/** Ragged mode: the field reaches left behind the copy to this far (CSS px) from the section's left edge. */
+const RAGGED_LEFT_GAP = 0
+/** Ragged mode: columns the left edge frays over, short enough to leave solid field left of the copy. */
+const RAGGED_LEFT_COLS = 8
+/** Ragged mode: how many times taller than the ASCII art's lines the glyph is drawn. */
+const GLYPH_STRETCH = 1.3
 
 const levelFor = (pixelate: number) => PIXELATE_AT.filter((at) => pixelate >= at).length
 
 interface PixelAvatarProps {
-    src?: string
     className?: string
     /**
      * While this media query matches, the visible art (hair to shoulders, without
@@ -57,64 +50,64 @@ interface PixelAvatarProps {
      * edge and the shoulders end within half a pixel step of its bottom edge.
      */
     fitArtQuery?: string
-    /**
-     * While this media query matches, the avatar is a block in the page flow
-     * rather than a backdrop: the entrance waits until it scrolls into view, and
-     * it breaks into blocks as it leaves the top of the viewport, measured from
-     * its own position rather than its section's.
-     */
-    inFlowQuery?: string
-    /** Draw the dot lattice behind the avatar (see GRID_STEP). */
+    /** Draw the cell lattice behind the avatar, across its section (see GRID_CELL_ALPHA). */
     backdropGrid?: boolean
-    /**
-     * While this media query matches, the lattice is a backdrop for the whole
-     * section rather than a halo around the avatar: it spans the viewport's
-     * width and reaches up to the section's top edge.
-     */
-    wideGridQuery?: string
-    /** Classes for the art alone (the canvas), e.g. to dim it without dimming the lattice. */
-    artClassName?: string
     /**
      * The entrance (blocks sharpening into the face) waits for this. Pass false
      * while the avatar is still hidden behind a loader, then flip it to true.
      */
     revealed?: boolean
+    /**
+     * While this media query matches, the field is a panel rather than the art's
+     * square: it runs from just left of the face to the section's right edge, and
+     * from under the element marked `data-thermal-field-top` (else the section's
+     * top) down to the shoulders. Its left edge frays; top and right stay straight.
+     */
+    fieldQuery?: string
+    /**
+     * While this media query matches (and `fieldQuery` doesn't), the field runs
+     * from RAGGED_LEFT_GAP off the section's left edge (behind the copy) to
+     * RAGGED_PAD_SIDE cells right of the art, RAGGED_PAD_TOP cells above it,
+     * fraying at the top, sides and bottom instead of ending in straight edges.
+     * Elements marked `data-thermal-dim` drop the field a tone behind them.
+     */
+    raggedQuery?: string
+    /**
+     * Ragged mode only: ASCII art (its '█' blocks) drawn in blue cells in the field,
+     * over the element marked `data-thermal-glyph` in the section, scaled to its
+     * width. That element should hide itself while the query matches.
+     */
+    glyph?: string
 }
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
 
 /**
- * Pixel-art avatar driven by the "Avatar" state machine in /avatar.riv
- * (source: src/design/avatar-rive).
+ * The hero's pixel-art portrait, drawn by the thermal renderer (thermal-avatar.ts)
+ * from src/data/avatar-grid.ts: grey cells with drifting clouds, a blink, breath
+ * and the occasional row-slice glitch.
  *
- * The file renders into a 96x96 drawing surface — exactly one canvas pixel per
- * art pixel — and CSS scales it up with nearest-neighbour sampling, sized to a
- * whole multiple of 96 device pixels so every art pixel stays square and sharp.
- *
- * View model "Avatar":
- *   revealed   true = play the entrance: 12px blocks resolving into the face
- *   pixelate   0..1, scroll progress; the face steps back into blocks as it rises
- *   motion     false = prefers-reduced-motion: no entrance, no glitches
- *   autoLook   always set false: the pupils and head hold still, centred
- *              (lookX / lookY stay in the file, unused)
- * Blinking, breathing and the occasional row-slice glitch run inside the file.
+ * Every art pixel is a whole number of device pixels, so cells stay square and
+ * sharp. On reveal the face resolves out of 12px blocks; as the section scrolls
+ * away it steps back into blocks, and the backdrop lattice coarsens with it.
  */
 export function PixelAvatar({
-    src = '/avatar.riv',
     className,
     fitArtQuery,
-    inFlowQuery,
     backdropGrid = false,
-    wideGridQuery,
-    artClassName,
     revealed = true,
+    fieldQuery,
+    raggedQuery,
+    glyph,
 }: PixelAvatarProps) {
     const boxRef = useRef<HTMLDivElement>(null)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const gridRef = useRef<HTMLDivElement>(null)
+    // Holds the art's place in the layout, while the canvas (which may reach well
+    // past it) is positioned around it.
+    const slotRef = useRef<HTMLDivElement>(null)
     const revealedRef = useRef(revealed)
-    // Pushes `revealed` (and, in flow, whether the avatar has been seen) into the
-    // file; set by the main effect once the file has loaded.
+    // Pushes `revealed` into the renderer; set by the main effect.
     const syncRevealed = useRef<(() => void) | null>(null)
 
     useEffect(() => {
@@ -125,12 +118,11 @@ export function PixelAvatar({
     useEffect(() => {
         const box = boxRef.current
         const canvas = canvasRef.current
-        if (!box || !canvas) return
+        const slot = slotRef.current
+        if (!box || !canvas || !slot) return
 
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         const section = box.closest<HTMLElement>('section, main') ?? box
-        const inFlow = inFlowQuery ? window.matchMedia(inFlowQuery) : null
-        const wideGrid = wideGridQuery ? window.matchMedia(wideGridQuery) : null
 
         // offsetTop ignores transforms: entrance animations (the loader slides
         // the page in) move on-screen rects without any scrolling, and would
@@ -142,16 +134,27 @@ export function PixelAvatar({
             }
             return top
         }
+        const pageLeft = (el: HTMLElement) => {
+            let left = 0
+            for (let node: HTMLElement | null = el; node; node = node.offsetParent as HTMLElement | null) {
+                left += node.offsetLeft
+            }
+            return left
+        }
 
-        // ---- backdrop grid, drawn on the same device-pixel lattice as the art
+        const engine = createThermalAvatar(canvas, { motion: !reducedMotion })
+
+        // ---- backdrop lattice, on the same device-pixel grid as the art
         const grid = gridRef.current
         let pixelDevice = 1 // device pixels per art pixel, set by fitCanvas
         let gridLevel = 0
         const drawGrid = () => {
             if (!grid) return
             const dpr = window.devicePixelRatio || 1
-            const cell = (pixelDevice * Math.max(GRID_STEP, MOSAIC_BLOCKS[gridLevel])) / dpr
-            const dot = Math.max(1, Math.round(pixelDevice / 3)) / dpr
+            const block = MOSAIC_BLOCKS[gridLevel]
+            const cell = (pixelDevice * block) / dpr
+            // the art's seams: one device pixel at the right and bottom of each cell
+            const seam = pixelDevice * block >= 4 ? 1 / dpr : 0
             const size = canvas.offsetWidth
             // the layer reaches well past the box; the hero clips it
             const reach = Math.max(window.innerWidth, window.innerHeight) * 1.5
@@ -159,28 +162,20 @@ export function PixelAvatar({
             const originY = reach + canvas.offsetTop
             const tile =
                 `<svg xmlns='http://www.w3.org/2000/svg' width='${cell}' height='${cell}'>` +
-                `<rect width='${dot}' height='${dot}' fill='white' fill-opacity='${GRID_DOT_ALPHA}'/></svg>`
+                `<rect width='${cell - seam}' height='${cell - seam}' fill='white' fill-opacity='${GRID_CELL_ALPHA}'/></svg>`
             grid.style.inset = `${-reach}px`
             grid.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`
             grid.style.backgroundSize = `${cell}px ${cell}px`
             grid.style.backgroundPosition = `${originX}px ${originY}px`
-            // Fade out away from the face. Beside the copy (desktop) the lattice
-            // stays around the avatar; in flow (below the copy) it reaches up to
-            // the top of the section so the copy sits on it too.
+            // Fade out away from the face, reaching the whole section: across the
+            // viewport, up to the section's top and down to its bottom.
             const centerX = originX + size / 2
             const centerY = originY + size * 0.42
-            let radiusX = size * 1.15
-            let radiusY = size * 0.95
-            let solid = 40 // % of the radius drawn at full strength
-            if (inFlow?.matches || wideGrid?.matches) {
-                const sectionTop = reach + pageTop(section) - pageTop(box)
-                radiusX = Math.max(radiusX, window.innerWidth * 0.95)
-                radiusY = Math.max(radiusY, (centerY - sectionTop) * 1.25)
-                solid = 60
-            }
-            const mask =
-                `radial-gradient(${radiusX}px ${radiusY}px at ${centerX}px ${centerY}px, ` +
-                `#000 ${solid}%, transparent 100%)`
+            const sectionTop = reach + pageTop(section) - pageTop(box)
+            const sectionBottom = sectionTop + section.offsetHeight
+            const radiusX = Math.max(size * 1.15, window.innerWidth * 0.95)
+            const radiusY = Math.max(size * 0.95, (centerY - sectionTop) * 1.25, (sectionBottom - centerY) * 1.05)
+            const mask = `radial-gradient(${radiusX}px ${radiusY}px at ${centerX}px ${centerY}px, #000 60%, transparent 100%)`
             grid.style.maskImage = mask
             grid.style.webkitMaskImage = mask
         }
@@ -188,6 +183,7 @@ export function PixelAvatar({
             if (level === gridLevel) return
             gridLevel = level
             drawGrid()
+            engine.setBlock(MOSAIC_BLOCKS[level])
         }
 
         // ---- crisp sizing: every art pixel is a whole number of device pixels
@@ -208,85 +204,154 @@ export function PixelAvatar({
             }
             pixel = Math.max(1, pixel)
             const cssSize = (pixel * ART_SIZE) / dpr
-            canvas.style.width = `${cssSize}px`
-            canvas.style.height = `${cssSize}px`
-            canvas.style.marginTop = fitArt?.matches ? `${(-pixel * EMPTY_TOP_ROWS) / dpr}px` : ''
+            slot.style.width = `${cssSize}px`
+            slot.style.height = `${cssSize}px`
+            slot.style.marginTop = fitArt?.matches ? `${(-pixel * EMPTY_TOP_ROWS) / dpr}px` : ''
             pixelDevice = pixel
+            fitThermal(pixel / dpr, pixel, cssSize)
+            // after the layout: the lattice lines up with where the canvas now sits
             drawGrid()
         }
+
+        // Lays the renderer's grid out around the art's slot: the art square alone,
+        // the panel (fieldQuery) or the ragged field (raggedQuery).
+        const wideField = fieldQuery ? window.matchMedia(fieldQuery) : null
+        const ragged = raggedQuery ? window.matchMedia(raggedQuery) : null
+        const glyphEl = glyph ? section.querySelector<HTMLElement>('[data-thermal-glyph]') : null
+        const dimEls = Array.from(section.querySelectorAll<HTMLElement>('[data-thermal-dim]'))
+        // Ragged mode: page position of the grid's top-left cell and the cell size, for placeDim.
+        let gridOrigin: { x: number; y: number; cell: number } | null = null
+        /** Drops the field a tone behind the elements marked `data-thermal-dim` (copy that sits on it). */
+        const placeDim = () => {
+            if (!gridOrigin) return engine.setDim([])
+            const { x: originX, y: originY, cell } = gridOrigin
+            const rects: ThermalRect[] = []
+            for (const el of dimEls) {
+                if (el.offsetWidth === 0 || el.offsetHeight === 0) continue
+                const x = pageLeft(el) - originX
+                const y = pageTop(el) - originY
+                rects.push([
+                    Math.floor(x / cell),
+                    Math.floor(y / cell),
+                    Math.ceil((x + el.offsetWidth) / cell),
+                    Math.ceil((y + el.offsetHeight) / cell),
+                ])
+            }
+            engine.setDim(rects)
+        }
+        /** Ragged mode: sets the glyph into the grid over its element, given the page position of the grid's top-left cell. */
+        const placeGlyph = (originX: number, originY: number, cell: number) => {
+            if (!glyph || !glyphEl) return engine.setGlyph(null)
+            // Each character covers the cells it covers as rendered (fractions and all),
+            // stretched GLYPH_STRETCH times taller; the shadow falls half a character
+            // right and a bit over half a line down, like the art's outline.
+            const lines = glyph.split('\n')
+            const artCols = Math.max(...lines.map((line) => line.length))
+            const sx = glyphEl.offsetWidth / cell / artCols
+            const sy = (glyphEl.offsetHeight / cell / lines.length) * GLYPH_STRETCH
+            const shape = glyphFromAscii(glyph, sx, sy, Math.max(1, Math.round(sx * 0.5)), Math.max(1, Math.round(sy * 0.6)))
+            engine.setGlyph({
+                ...shape,
+                x: Math.round((pageLeft(glyphEl) - originX) / cell),
+                y: Math.round((pageTop(glyphEl) - originY) / cell),
+            })
+        }
+        const fieldTop = section.querySelector<HTMLElement>('[data-thermal-field-top]')
+        const fitThermal = (cell: number, pixel: number, cssSize: number) => {
+            let layout: ThermalLayout = { cols: ART_SIZE, rows: ART_SIZE, ox: 0, oy: 0 }
+            if (wideField?.matches) {
+                const boxLeft = pageLeft(box)
+                const boxTop = pageTop(box)
+                const right = pageLeft(section) + section.offsetWidth - boxLeft
+                // The face sits in the hero's parallax layer and the header doesn't: take
+                // out how far that layer is shifted from the section right now, so the
+                // field starts flush under the header. (The section, not the header: the
+                // header has its own entrance slide; the loader's transform cancels out.)
+                const shift =
+                    box.getBoundingClientRect().top - boxTop - (section.getBoundingClientRect().top - pageTop(section))
+                const top =
+                    (fieldTop ? pageTop(fieldTop) + fieldTop.offsetHeight : pageTop(section)) - boxTop - shift
+                const ox = FIELD_LEFT_CELLS
+                const oy = Math.max(0, Math.floor((slot.offsetTop - top) / cell))
+                const extra = Math.max(0, Math.ceil((right - slot.offsetLeft - cssSize) / cell))
+                // The panel's left edge frays away like its bottom drips; the edges against
+                // the page's frame (top, under the header, and right) stay straight.
+                layout = {
+                    cols: ox + ART_SIZE + extra,
+                    rows: oy + ART_SIZE,
+                    ox,
+                    oy,
+                    frayLeft: true,
+                    raggedLeftCols: FIELD_LEFT_CELLS,
+                }
+            } else if (ragged?.matches) {
+                const left = pageLeft(section) - pageLeft(box) + RAGGED_LEFT_GAP
+                const ox = Math.max(RAGGED_PAD_SIDE, Math.floor((slot.offsetLeft - left) / cell))
+                layout = {
+                    cols: ox + ART_SIZE + RAGGED_PAD_SIDE,
+                    rows: ART_SIZE + RAGGED_PAD_TOP,
+                    ox,
+                    oy: RAGGED_PAD_TOP,
+                    ragged: true,
+                    raggedRows: RAGGED_TOP_ROWS,
+                    raggedLeftCols: RAGGED_LEFT_COLS,
+                }
+            }
+            canvas.style.left = `${slot.offsetLeft - layout.ox * cell}px`
+            canvas.style.top = `${slot.offsetTop - layout.oy * cell}px`
+            canvas.style.width = `${layout.cols * cell}px`
+            canvas.style.height = `${layout.rows * cell}px`
+            engine.resize(pixel, layout)
+
+            if (ragged?.matches && !wideField?.matches) {
+                gridOrigin = {
+                    x: pageLeft(box) + slot.offsetLeft - layout.ox * cell,
+                    y: pageTop(box) + slot.offsetTop - layout.oy * cell,
+                    cell,
+                }
+                placeGlyph(gridOrigin.x, gridOrigin.y, cell)
+            } else {
+                gridOrigin = null
+                engine.setGlyph(null)
+            }
+            placeDim()
+        }
         fitCanvas()
+        // The copy's lines grow as they're typed out: keep the dimmed area in step.
+        const dimObserver = new ResizeObserver(placeDim)
+        dimEls.forEach((el) => dimObserver.observe(el))
         const resizeObserver = new ResizeObserver(fitCanvas)
         resizeObserver.observe(box)
-        // the in-flow mask reaches the section's top, which moves as it resizes
-        if (backdropGrid) resizeObserver.observe(section)
+        // the field and the lattice reach the section's edges, which move as it resizes
+        resizeObserver.observe(section)
         fitArt?.addEventListener('change', fitCanvas)
-        wideGrid?.addEventListener('change', drawGrid)
-
-        const rive = new Rive({
-            src,
-            canvas,
-            stateMachine: 'Avatar',
-            autoplay: true,
-            autoBind: true,
-            // The file has no pointer listeners; skip Rive's canvas listeners.
-            shouldDisableRiveListeners: true,
-            layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
-        })
-
-        // The runtime resizes its drawing surface to CSS size x devicePixelRatio
-        // whenever the canvas is (re)shown. Keep it at 96x96 instead: one drawing
-        // pixel per art pixel, upscaled by CSS with `image-rendering: pixelated`.
-        rive.resizeDrawingSurfaceToCanvas = () => {
-            const width = canvas.clientWidth
-            if (width === 0) return
-            rive.devicePixelRatioUsed = ART_SIZE / width
-            canvas.width = ART_SIZE
-            canvas.height = ART_SIZE
-            rive.resizeToCanvas()
-            rive.drawFrame()
-        }
+        wideField?.addEventListener('change', fitCanvas)
+        ragged?.addEventListener('change', fitCanvas)
 
         // ---- scroll: the face breaks back down into blocks as it scrolls away
-        let pixelate: ViewModelInstanceNumber | null = null
-        let revealedInput: ViewModelInstanceBoolean | null = null
         let seen = false
         let introTimers: number[] = []
         let introRunning = false
         let introPlayed = false
         let frame = 0
 
-        // How much of the avatar is above the bottom of the viewport, by layout
-        // position, so the loader's slide-in can't count as being on screen.
-        const shownRatio = () => {
-            const height = box.offsetHeight
-            return height === 0 ? 0 : (window.scrollY + window.innerHeight - pageTop(box)) / height
-        }
-
         const applyScroll = () => {
             frame = 0
             syncRevealed.current?.()
-            if (!pixelate) return
-            if (inFlow?.matches) {
-                const height = box.offsetHeight
-                if (height === 0) return
-                const passed = window.scrollY + window.innerHeight * IN_FLOW_PIXELATE_START - pageTop(box)
-                pixelate.value = clamp01(passed / height)
-            } else {
-                const height = section.offsetHeight
-                if (height === 0) return
-                pixelate.value = clamp01((window.scrollY - pageTop(section)) / (height * PIXELATE_DISTANCE))
-            }
-            if (!introRunning) setGridLevel(levelFor(pixelate.value))
+            const height = section.offsetHeight
+            if (height === 0) return
+            const value = clamp01((window.scrollY - pageTop(section)) / (height * PIXELATE_DISTANCE))
+            if (!introRunning) setGridLevel(levelFor(value))
         }
 
-        // The grid appears with the face (in flow: as soon as the hero shows, since
-        // it backs the copy too) and steps through the intro with it.
-        const showGrid = (withIntro: boolean) => {
-            if (!grid) return
-            grid.style.opacity = '1'
-            if (!withIntro || introPlayed || reducedMotion) return
+        // The lattice appears with the face and steps through the entrance with it.
+        const showFace = () => {
+            if (grid) grid.style.opacity = '1'
+            if (introPlayed || reducedMotion) return
             introPlayed = true
             introRunning = true
+            // The face starts in its biggest blocks, before its first frame shows.
+            setGridLevel(INTRO_STEPS[0][1])
             introTimers = INTRO_STEPS.map(([ms, level]) =>
                 window.setTimeout(() => {
                     setGridLevel(level)
@@ -298,54 +363,30 @@ export function PixelAvatar({
             )
         }
 
-        // In flow, the entrance also waits for the avatar to be on screen. Once
-        // it has started it stays started.
+        // Once revealed it stays revealed.
         syncRevealed.current = () => {
-            if (!revealedInput) return
-            if (!seen && revealedRef.current) {
-                seen = !inFlow?.matches || shownRatio() >= IN_FLOW_REVEAL_RATIO
-            }
-            revealedInput.value = seen
-            if (seen) showGrid(true)
-            else if (revealedRef.current && inFlow?.matches) showGrid(false)
+            if (!seen && revealedRef.current) seen = true
+            // The hero has settled by the time it's revealed; lay the field out against it.
+            if (seen && !introPlayed) fitCanvas()
+            if (seen) showFace()
+            engine.setRevealed(seen)
         }
-        const onModeChange = () => {
-            drawGrid()
-            syncRevealed.current?.()
-            applyScroll()
-        }
-        inFlow?.addEventListener('change', onModeChange)
 
         const onScroll = () => {
             if (!frame) frame = requestAnimationFrame(applyScroll)
         }
-
-        rive.on(EventType.Load, () => {
-            rive.resizeDrawingSurfaceToCanvas()
-            const vm = rive.viewModelInstance
-            const motion = vm?.boolean('motion')
-            if (motion) motion.value = !reducedMotion
-            // The pupils never move: no wandering gaze, on any screen size.
-            const autoLook = vm?.boolean('autoLook')
-            if (autoLook) autoLook.value = false
-            pixelate = vm?.number('pixelate') ?? null
-            revealedInput = vm?.boolean('revealed') ?? null
-            syncRevealed.current?.()
-            applyScroll()
-        })
-
         if (!reducedMotion) {
             window.addEventListener('scroll', onScroll, { passive: true })
             window.addEventListener('resize', onScroll, { passive: true })
         }
 
         // ---- only animate while the hero is on screen
-        const visibility = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) rive.startRendering()
-            else rive.stopRendering()
-        })
+        const visibility = new IntersectionObserver(([entry]) => engine.setPlaying(entry.isIntersecting))
         visibility.observe(box)
 
+        syncRevealed.current()
+        applyScroll()
+        engine.setPlaying(true)
 
         return () => {
             cancelAnimationFrame(frame)
@@ -353,14 +394,15 @@ export function PixelAvatar({
             window.removeEventListener('scroll', onScroll)
             window.removeEventListener('resize', onScroll)
             syncRevealed.current = null
-            inFlow?.removeEventListener('change', onModeChange)
             visibility.disconnect()
             resizeObserver.disconnect()
+            dimObserver.disconnect()
             fitArt?.removeEventListener('change', fitCanvas)
-            wideGrid?.removeEventListener('change', drawGrid)
-            rive.cleanup()
+            wideField?.removeEventListener('change', fitCanvas)
+            ragged?.removeEventListener('change', fitCanvas)
+            engine.destroy()
         }
-    }, [src, fitArtQuery, inFlowQuery, wideGridQuery, backdropGrid])
+    }, [fitArtQuery, backdropGrid, fieldQuery, raggedQuery, glyph])
 
     return (
         <div ref={boxRef} className={cn('relative flex items-center justify-center', className)}>
@@ -371,12 +413,13 @@ export function PixelAvatar({
                     className="pointer-events-none absolute bg-repeat opacity-0 transition-opacity duration-500"
                 />
             )}
+            <div ref={slotRef} aria-hidden="true" className="block shrink-0" />
             <canvas
                 ref={canvasRef}
                 width={ART_SIZE}
                 height={ART_SIZE}
                 aria-hidden="true"
-                className={cn('relative block select-none [image-rendering:pixelated]', artClassName)}
+                className="absolute left-0 top-0 block max-w-none select-none [image-rendering:pixelated]"
             />
         </div>
     )

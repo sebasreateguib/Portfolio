@@ -6,6 +6,13 @@ html.lenis {
   height: auto;
 }
 
+/* Keep the scrollbar's space even while the loader locks scrolling: otherwise the
+   page is wider during the intro and everything centred shifts sideways when it
+   unlocks, so the intro's S.REATEGUI would land beside the header logo. */
+html {
+  scrollbar-gutter: stable;
+}
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }

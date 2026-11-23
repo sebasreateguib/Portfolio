@@ -12,7 +12,13 @@ interface ScrollRevealProps {
 }
 
 export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevealProps) {
-    const shouldReduceMotion = useReducedMotion();
+    const prefersReducedMotion = useReducedMotion();
+    // Read the preference only after hydration: the server can't know it, so the
+    // first client render has to match the server's (the hidden, animated markup).
+    const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
+    useEffect(() => {
+        setShouldReduceMotion(Boolean(prefersReducedMotion));
+    }, [prefersReducedMotion]);
     const { phase } = useLoaderTransition();
     const triggerRef = useRef<HTMLDivElement>(null);
     const [isInView, setIsInView] = useState(false);
@@ -42,14 +48,6 @@ export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevea
         return () => observer.disconnect();
     }, [phase]);
 
-    if (shouldReduceMotion) {
-        return (
-            <div id={id} className={className}>
-                {children}
-            </div>
-        );
-    }
-
     /*
      * Transform + opacity only. The previous version animated `clip-path` from
      * inset(8% 12%) to inset(0%) together with a 12px blur, which made every
@@ -64,12 +62,17 @@ export function ScrollReveal({ children, className, id, delay = 0 }: ScrollRevea
         <div ref={triggerRef} id={id} className={className}>
             <motion.div
                 initial={hidden}
-                animate={isInView ? visible : hidden}
-                transition={{
-                    duration: 0.7,
-                    delay,
-                    ease: [0.25, 1, 0.5, 1],
-                }}
+                animate={shouldReduceMotion || isInView ? visible : hidden}
+                // Reduced motion: shown at once, same markup (no separate branch to mismatch).
+                transition={
+                    shouldReduceMotion
+                        ? { duration: 0 }
+                        : {
+                              duration: 0.7,
+                              delay,
+                              ease: [0.25, 1, 0.5, 1],
+                          }
+                }
             >
                 {children}
             </motion.div>

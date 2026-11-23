@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "../../lib/utils";
 import type { CSSProperties } from "react";
 
 // Deterministic pseudo-random number generator
@@ -73,11 +72,15 @@ export const CommitsGrid = ({ text }: { text: string }) => {
     };
 
     const getRandomDelay = (index: number) => `${(pseudoRandom(index + 1000) * 0.6).toFixed(1)}s`;
-    const getRandomFlash = (index: number) => +(pseudoRandom(index + 2000) < 0.3);
+    const getRandomFlash = (index: number) => pseudoRandom(index + 2000) < 0.3;
 
+    // Square cells on a faint lattice, framed like the other rows of the About
+    // record. Lit cells spell the word; a few others flicker now and then.
     return (
-        <section
-            className="w-full max-w-xl bg-black border border-white/5 grid p-1.5 sm:p-3 gap-0.5 sm:gap-1 rounded-[10px] sm:rounded-[15px]"
+        <div
+            role="img"
+            aria-label={text}
+            className="grid w-full gap-[3px] border border-white/8 bg-white/[0.02] p-3"
             style={{
                 gridTemplateColumns: `repeat(${gridWidth}, minmax(0, 1fr))`,
                 gridTemplateRows: `repeat(${gridHeight}, minmax(0, 1fr))`,
@@ -86,26 +89,17 @@ export const CommitsGrid = ({ text }: { text: string }) => {
             {Array.from({ length: gridWidth * gridHeight }).map((_, index) => {
                 const isHighlighted = highlightedCells.includes(index);
                 const shouldFlash = !isHighlighted && getRandomFlash(index);
+                const style = { animationDelay: getRandomDelay(index), "--highlight": getRandomColor(index) } as CSSProperties;
 
-                return (
-                    <div
-                        key={index}
-                        className={cn(
-                            `border-white/5 h-full w-full aspect-square rounded-[4px] sm:rounded-[3px]`,
-                            isHighlighted ? "animate-highlight border-blue-400/20" : "",
-                            shouldFlash ? "animate-flash" : "",
-                            !isHighlighted && !shouldFlash ? "bg-black" : ""
-                        )}
-                        style={
-                            {
-                                animationDelay: getRandomDelay(index),
-                                "--highlight": getRandomColor(index),
-                            } as CSSProperties
-                        }
-                    />
+                return isHighlighted ? (
+                    <span key={index} className="aspect-square animate-highlight motion-reduce:animate-none" style={style} />
+                ) : (
+                    <span key={index} className="relative aspect-square bg-white/[0.05]">
+                        {shouldFlash && <span className="absolute inset-0 animate-flash motion-reduce:hidden" style={style} />}
+                    </span>
                 );
             })}
-        </section>
+        </div>
     );
 };
 

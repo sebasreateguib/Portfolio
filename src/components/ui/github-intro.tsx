@@ -3,6 +3,7 @@ import { useRef, useState, useEffect, type ReactNode } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { CommitsGrid } from './commits-grid';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 import { SectionDivider } from './section-divider';
@@ -83,26 +84,6 @@ function LocalTime() {
                 {DAY_NAMES[lima.getDay()]} · {isWorking ? 'Working hours' : 'Off hours'}
             </span>
         </dd>
-    );
-}
-
-/* ─── Bullet Row ─────────────────────────────────────────────── */
-/**
- * The copy marks its key phrase with one <span>…</span>; split on it and
- * render the phrase as an element instead of injecting the markup.
- */
-function BulletRow({ index, html }: { index: string; html: string }) {
-    const match = html.match(/^(.*?)<span[^>]*>(.*?)<\/span>(.*)$/);
-    const [before, key, after] = match ? [match[1], match[2], match[3]] : [html, '', ''];
-    return (
-        <li className="flex items-baseline gap-4 border border-white/8 bg-white/[0.02] px-4 py-3">
-            <span className="shrink-0 font-mono text-[10px] tracking-widest text-blue-300/80">{index}</span>
-            <span className="text-sm leading-relaxed text-white/55">
-                {before}
-                {key && <span className="font-medium text-blue-100">{key}</span>}
-                {after}
-            </span>
-        </li>
     );
 }
 
@@ -198,10 +179,22 @@ export default function GithubIntro() {
                                 </h3>
                                 <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/55 md:text-base">{t.intro.bio}</p>
 
-                                <ul className="mt-8 grid gap-2">
-                                    <BulletRow index="01" html={t.intro.bullet2} />
-                                    <BulletRow index="02" html={t.intro.bullet4} />
-                                </ul>
+                                {/* Activity: the commit grid, spelling UTEC */}
+                                <div className="mt-8">
+                                    <div className="mb-4 flex items-center gap-3">
+                                        <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase">{t.intro.activity}</span>
+                                        <div className="h-px flex-1 bg-white/6" />
+                                    </div>
+                                    <CommitsGrid text="UTEC" />
+                                    <div className="mt-3 flex items-center justify-end gap-[3px] font-mono text-[10px] text-white/25">
+                                        <span className="mr-1.5">{t.intro.less}</span>
+                                        {/* the same tones the grid lights its cells with */}
+                                        {['bg-white/[0.05]', 'bg-blue-700', 'bg-blue-600', 'bg-blue-500', 'bg-blue-400'].map((tone) => (
+                                            <span key={tone} className={`h-2.5 w-2.5 ${tone}`} aria-hidden="true" />
+                                        ))}
+                                        <span className="ml-1.5">{t.intro.more}</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="grid gap-2 sm:grid-cols-2">
