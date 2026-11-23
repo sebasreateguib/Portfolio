@@ -33,7 +33,7 @@ const RAGGED_PAD_TOP = 6
 const RAGGED_PAD_SIDE = 10
 const RAGGED_TOP_ROWS = 8
 /** Ragged mode: the field starts at least this far (CSS px) above the glyph's box, whatever size the art came out. */
-const RAGGED_ABOVE_GLYPH = 18
+const RAGGED_ABOVE_GLYPH = 14
 /** Ragged mode: the field reaches left behind the copy to this far (CSS px) from the section's left edge. */
 const RAGGED_LEFT_GAP = 0
 /** Ragged mode: columns the left edge frays over, short enough to leave solid field left of the copy. */

@@ -102,6 +102,14 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
         }, canFly ? FLIGHT_MS : 0);
     };
 
+    // The intro always opens on the hero: a reload part-way down the page would
+    // otherwise restore that scroll behind the overlay, and the header logo the
+    // intro flies to would move when the page settles.
+    useEffect(() => {
+        if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+        window.scrollTo(0, 0);
+    }, []);
+
     useEffect(() => {
         const delay = prefersReducedMotion ? REDUCED_MOTION_DELAY_MS : LOADER_DISPLAY_MS;
         const timer = window.setTimeout(beginReveal, delay);
@@ -128,9 +136,8 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
         };
     }, [phase]);
 
-    // After landing, check where the header logo really is (once the unlock has laid
-    // out, and again a little later) and, if it moved, slide the landed logo onto it
-    // before the swap, so it parks exactly in its place.
+    // After landing, keep checking where the header logo really is and, if it moved,
+    // slide the landed logo onto it before the swap, so it parks exactly in its place.
     useEffect(() => {
         if (phase !== "transitioning") return;
         const settle = () =>
@@ -143,13 +150,16 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                 if (Math.abs(x - f.x) < 0.5 && Math.abs(y - f.y) < 0.5 && Math.abs(scale - f.scale) < 0.002) return f;
                 return { ...f, x, y, scale, settling: true };
             });
-        // Last check at 300ms: its short slide is done well before the swap (TRANSITION_DURATION_MS).
-        const frame = requestAnimationFrame(settle);
-        const checks = [120, 300].map((ms) => window.setTimeout(settle, ms));
-        return () => {
-            cancelAnimationFrame(frame);
-            checks.forEach((check) => window.clearTimeout(check));
+        // Every frame until just before the swap (it only re-renders when the header logo
+        // actually moved), so whatever shifts it, the landed logo follows.
+        const until = performance.now() + TRANSITION_DURATION_MS - 60;
+        let frame = 0;
+        const track = () => {
+            settle();
+            if (performance.now() < until) frame = requestAnimationFrame(track);
         };
+        frame = requestAnimationFrame(track);
+        return () => cancelAnimationFrame(frame);
     }, [phase]);
 
     const showOverlay = phase === "loading" || phase === "transitioning";
@@ -229,7 +239,7 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
                             }
                             transition={
                                 flight?.settling
-                                    ? { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
+                                    ? { duration: 0.12, ease: [0.22, 1, 0.36, 1] }
                                     : { duration: FLIGHT_MS / 1000, ease: [0.76, 0, 0.24, 1] }
                             }
                             className="relative z-10"

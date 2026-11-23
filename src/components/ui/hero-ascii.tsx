@@ -350,7 +350,7 @@ export default function HeroAscii() {
                             {/* Below md the logo is drawn in the avatar's field (PixelAvatar's glyph) to fill
                                 this fixed box, so its size, and the room it takes above the whoami, don't
                                 depend on the fallback font a phone uses for the ASCII art's block characters. */}
-                            <div data-thermal-glyph aria-hidden="true" className="mt-2.5 mb-6 h-14 w-44 md:hidden" />
+                            <div data-thermal-glyph aria-hidden="true" className="mt-4 mb-6 h-14 w-44 md:hidden" />
                             <div className="mb-6 md:mb-7 w-fit max-md:hidden text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
                                 {asciiLines.map((line, i) => {
                                     const isScanning = i === scanRow;
