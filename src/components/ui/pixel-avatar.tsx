@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { cn } from '../../lib/utils'
-import { createThermalAvatar, glyphFromAscii, type ThermalLayout, type ThermalRect } from './thermal-avatar'
+import { createThermalAvatar, glyphFromAscii, SEAM_MIN_CSS, type ThermalLayout, type ThermalRect } from './thermal-avatar'
 
 /** Logical size of the pixel art: 96x96, one cell per pixel. */
 const ART_SIZE = 96
@@ -153,8 +153,8 @@ export function PixelAvatar({
             const dpr = window.devicePixelRatio || 1
             const block = MOSAIC_BLOCKS[gridLevel]
             const cell = (pixelDevice * block) / dpr
-            // the art's seams: one device pixel at the right and bottom of each cell
-            const seam = pixelDevice * block >= 4 ? 1 / dpr : 0
+            // the art's seams (when its cells are big enough): one device pixel at the right and bottom of each cell
+            const seam = pixelDevice / dpr >= SEAM_MIN_CSS ? 1 / dpr : 0
             const size = canvas.offsetWidth
             // the layer reaches well past the box; the hero clips it
             const reach = Math.max(window.innerWidth, window.innerHeight) * 1.5

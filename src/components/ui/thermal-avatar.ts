@@ -63,8 +63,13 @@ const GLYPH_BLUE = '#60a5fa'
 const GLYPH_SHADOW = '#1e3a8a'
 /** Dimmed areas (setDim): the field's bright grey drops to its dim one there, dithered over this many cells around. */
 const DIM_FEATHER = 8
-/** Below this many device pixels per cell there's no room for a seam between cells. */
-const SEAM_MIN = 4
+/**
+ * Seams between cells only from this cell size up, in CSS px (not device px): on
+ * phones a cell is under 2 CSS px and a seam would cover a third of it on a 3x
+ * screen, griding the art over, while a 2x screen had none, so the same phone
+ * layout looked different from device to device. Desktop cells (~6 CSS px) keep them.
+ */
+export const SEAM_MIN_CSS = 3
 const FPS = 30
 
 /**
@@ -550,7 +555,7 @@ export function createThermalAvatar(canvas: HTMLCanvasElement, { motion }: { mot
         ctx.drawImage(off, 0, 0, canvas.width, canvas.height)
 
         // Seams between cells (or blocks), cleared so the page shows through like the reference's grid.
-        if (pixel >= SEAM_MIN) {
+        if (pixel / (window.devicePixelRatio || 1) >= SEAM_MIN_CSS) {
             const step = pixel * block
             for (let s = (startX + block) * pixel; s < canvas.width; s += step) ctx.clearRect(s - 1, 0, 1, canvas.height)
             for (let s = (startY + block) * pixel; s < canvas.height; s += step) ctx.clearRect(0, s - 1, canvas.width, 1)
