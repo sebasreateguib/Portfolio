@@ -9,7 +9,8 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useLoaderTransition } from '../../context/LoaderTransitionContext';
 import { translations } from '../../data/translations';
 import { FrameButton } from './frame-button';
-import { PixelAvatar } from './pixel-avatar';
+import { ReachHand } from './reach-hand';
+import { ViewportVideo } from './viewport-video';
 import { Waveform } from './audiovisualizer';
 
 export default function HeroAscii() {
@@ -18,7 +19,17 @@ export default function HeroAscii() {
     const copyRef = useRef<HTMLDivElement>(null);
     // Where the left-hand copy block ("001" rule down to the SYS.ACT rule) sits
     // inside the copy layer, so on desktop the avatar spans the same height.
-    const [copyBox, setCopyBox] = useState<{ top: number; height: number } | null>(null);
+    const [copyBox, setCopyBox] = useState<{ top: number; height: number; right: number } | null>(null);
+    // md and up get the pixel avatar; phones keep the original hero (video + stars).
+    // Null until mounted, so neither the avatar nor the video loads on the wrong side.
+    const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+    useEffect(() => {
+        const query = window.matchMedia('(min-width: 768px)');
+        const update = () => setIsDesktop(query.matches);
+        update();
+        query.addEventListener('change', update);
+        return () => query.removeEventListener('change', update);
+    }, []);
     const { language, setLanguage } = useLanguage();
     const { phase, skipHeroTypewriter } = useLoaderTransition();
     const t = translations[language];
@@ -104,12 +115,14 @@ export default function HeroAscii() {
         // animations don't skew the measurement.
         const measure = () => {
             let top = 0;
+            let left = 0;
             let el: HTMLElement | null = copy;
             while (el && el !== content) {
                 top += el.offsetTop;
+                left += el.offsetLeft;
                 el = el.offsetParent as HTMLElement | null;
             }
-            if (el === content) setCopyBox({ top, height: copy.offsetHeight });
+            if (el === content) setCopyBox({ top, height: copy.offsetHeight, right: left + copy.offsetWidth });
         };
 
         // The copy is vertically centred, so it moves whenever any block
@@ -148,14 +161,16 @@ export default function HeroAscii() {
 
     useEffect(() => {
         const hero = heroRef.current;
-        if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // No parallax on phones (the original mobile hero).
+        if (
+            !hero ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            window.matchMedia('(max-width: 767.98px)').matches
+        ) {
             return;
         }
 
         gsap.registerPlugin(ScrollTrigger);
-        // Phones too: the hero closes as it scrolls away. Mobile browsers resize the
-        // viewport when the address bar hides; don't re-measure on that, or it jumps.
-        ScrollTrigger.config({ ignoreMobileResize: true });
 
         const context = gsap.context(() => {
             const timeline = gsap.timeline({
@@ -183,6 +198,27 @@ export default function HeroAscii() {
 
     return (
         <main ref={heroRef} id="hero" className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
+            {/* Mobile only: the original hero video background and stars */}
+            {isDesktop === false && (
+                <>
+                    <motion.div
+                        initial={false}
+                        animate={{ opacity: heroVisible ? 1 : 0 }}
+                        transition={{ duration: 0.55, ease: "easeOut" }}
+                        className="absolute inset-0 z-0 flex h-full w-full items-center justify-center p-4 md:hidden"
+                    >
+                        <div className="h-full w-full opacity-[0.40]">
+                            <ViewportVideo
+                                eager
+                                src="/main-hero-compressed.mp4"
+                                wrapperClassName="w-full h-full"
+                                className="h-full w-full object-cover object-center scale-115"
+                            />
+                        </div>
+                    </motion.div>
+                    <div className="absolute inset-0 w-full h-full md:hidden stars-bg"></div>
+                </>
+            )}
 
             {/* Top Header */}
             <motion.div
@@ -295,32 +331,25 @@ export default function HeroAscii() {
             <div data-hero-parallax="detail" className="absolute left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
             <div data-hero-parallax="detail" className="absolute right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
 
-            <div ref={contentRef} data-hero-parallax="content" className="relative z-10 flex flex-col md:flex-row min-h-[70vh] md:min-h-[90vh] justify-center md:justify-start items-center pt-16 pb-10 lg:pt-0 md:pb-0" style={{ marginTop: '2vh' }}>
-                {/* Hero pixel-art avatar (Rive). It lives in the same parallax
-                    layer as the copy so it stays level with it while scrolling.
-                    On desktop it sits to the right of the copy, three quarters of
-                    its height, centred on the copy block (the "001" rule down to
-                    the SYS.ACT rule).
-                    Below md it is a small portrait in the empty corner beside the
-                    logo: hung from the "001" rule, flush with the copy's right
-                    edge, its field fraying away on every side. */}
-                <motion.div
+            <div ref={contentRef} data-hero-parallax="content" className="relative z-10 flex md:flex-row min-h-[70vh] md:min-h-[90vh] md:justify-start items-center pt-16 lg:pt-0" style={{ marginTop: '2vh' }}>
+                {/* Desktop only: a dot-drawn arm reaching in from the right edge toward
+                    the copy. It lives in the same parallax layer as the copy so it
+                    stays level with it while scrolling, three quarters of the copy
+                    block's height (the "001" rule down to the SYS.ACT rule), centred on it. */}
+                {isDesktop && <motion.div
                     initial={false}
                     animate={{ opacity: heroVisible ? 1 : 0 }}
                     transition={{ duration: 0.55, ease: "easeOut" }}
                     className="pointer-events-none absolute inset-x-0 top-0 bottom-0 md:-bottom-12"
-                    style={copyBox === null ? undefined : ({ '--hero-copy-top': `${copyBox.top}px`, '--hero-copy-height': `${copyBox.height}px` } as React.CSSProperties)}
+                    style={copyBox === null ? undefined : ({ '--hero-copy-top': `${copyBox.top}px`, '--hero-copy-height': `${copyBox.height}px`, '--hero-copy-right': `${copyBox.right}px` } as React.CSSProperties)}
                 >
-                    <PixelAvatar
-                        revealed={heroVisible}
-                        fitArtQuery="(min-width: 768px)"
-                        fieldQuery="(min-width: 768px)"
-                        raggedQuery="(max-width: 767.98px)"
-                        glyph={LOGO}
-                        backdropGrid
-                        className="absolute right-4 top-[calc(var(--hero-copy-top,6rem)+1.5rem)] size-40 items-end opacity-90 md:items-start md:-right-[3%] md:top-[calc(var(--hero-copy-top,18%)_+_var(--hero-copy-height,64%)_*_0.125)] md:h-[calc(var(--hero-copy-height,64%)_*_0.75)] md:w-[56%]"
+                    <ReachHand
+                        revealed={phase === "revealed"}
+                        aimAt="[data-hero-aim]"
+                        fit={0.75}
+                        className="absolute -right-[3%] left-[calc(var(--hero-copy-right,48%)_+_2rem)] top-[var(--hero-copy-top,18%)] h-[var(--hero-copy-height,64%)]"
                     />
-                </motion.div>
+                </motion.div>}
 
                 <div className="container mx-auto px-6 md:px-8 md:ml-[2%] xl:ml-[5%]">
                     <motion.div
@@ -347,11 +376,7 @@ export default function HeroAscii() {
                         {/* Title with dithered accent */}
                         <div className="relative">
                             <div className="hidden md:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
-                            {/* Below md the logo is drawn in the avatar's field (PixelAvatar's glyph) to fill
-                                this fixed box, so its size, and the room it takes above the whoami, don't
-                                depend on the fallback font a phone uses for the ASCII art's block characters. */}
-                            <div data-thermal-glyph aria-hidden="true" className="mt-4 mb-6 h-14 w-44 md:hidden" />
-                            <div className="mb-6 md:mb-7 w-fit max-md:hidden text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
+                            <div data-hero-aim className="mb-7 w-fit text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
                                 {asciiLines.map((line, i) => {
                                     const isScanning = i === scanRow;
                                     const rowColor = 'text-blue-400';
@@ -381,7 +406,7 @@ export default function HeroAscii() {
                                 {/* Below md these lines sit on the avatar's field: a crisp 1px black outline
                                     (eight offsets) plus a soft dark halo keeps them readable on the greys,
                                     and data-thermal-dim drops the field a tone behind them. */}
-                                <span data-thermal-dim className="text-white font-bold block w-fit mb-[30px] md:mb-2 [text-shadow:1px_0_0_#000,-1px_0_0_#000,0_1px_0_#000,0_-1px_0_#000,1px_1px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,0_0_6px_rgb(0_0_0/90%)] md:[text-shadow:none]">
+                                <span className="text-white font-bold block w-fit mb-2">
                                     <span className="text-blue-400">guest@sreategui:~$ </span>
                                     <span>{commandText}</span>
                                     {!showResponse && (
@@ -405,7 +430,7 @@ export default function HeroAscii() {
 
                         <div className="flex flex-col gap-8 md:gap-10">
                             {/* Quick Metrics */}
-                            <div className="order-2 md:order-1 flex items-center gap-4 md:gap-8 opacity-90 md:max-w-max border-t border-white/10 pt-6 md:border-t-0 md:pt-0">
+                            <div className="order-2 md:order-1 flex items-center gap-4 md:gap-8 opacity-90 max-w-max border-t border-white/10 pt-6 md:border-t-0 md:pt-0">
                                 <div className="flex flex-col">
                                     <span className="text-white font-extrabold text-xl md:text-3xl tracking-tight">{t.hero.metrics.metric1.value}</span>
                                     <span className="text-[9px] md:text-[10px] text-white/50 tracking-widest font-mono uppercase mt-1">{t.hero.metrics.metric1.label}</span>
@@ -423,7 +448,7 @@ export default function HeroAscii() {
                             </div>
 
                             {/* Buttons with technical accents */}
-                            <div className="order-1 md:order-2 grid w-full grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3 md:w-full md:max-w-none md:gap-3">
+                            <div className="order-1 md:order-2 grid w-[min(100%,19rem)] grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3 md:w-full md:max-w-none md:gap-3">
                                 <a
                                     href="https://www.linkedin.com/in/sebasreateguib"
                                     target="_blank"
@@ -511,6 +536,21 @@ export default function HeroAscii() {
             repeating-linear-gradient(0deg, transparent 0px, transparent 1px, white 1px, white 2px),
             repeating-linear-gradient(90deg, transparent 0px, transparent 1px, white 1px, white 2px);
           background-size: 3px 3px;
+        }
+
+        .stars-bg {
+          background-image:
+            radial-gradient(1px 1px at 20% 30%, white, transparent),
+            radial-gradient(1px 1px at 60% 70%, white, transparent),
+            radial-gradient(1px 1px at 50% 50%, white, transparent),
+            radial-gradient(1px 1px at 80% 10%, white, transparent),
+            radial-gradient(1px 1px at 90% 60%, white, transparent),
+            radial-gradient(1px 1px at 33% 80%, white, transparent),
+            radial-gradient(1px 1px at 15% 60%, white, transparent),
+            radial-gradient(1px 1px at 70% 40%, white, transparent);
+          background-size: 200% 200%, 180% 180%, 250% 250%, 220% 220%, 190% 190%, 240% 240%, 210% 210%, 230% 230%;
+          background-position: 0% 0%, 40% 40%, 60% 60%, 20% 20%, 80% 80%, 30% 30%, 70% 70%, 50% 50%;
+          opacity: 0.3;
         }
       `}</style>
         </main>
