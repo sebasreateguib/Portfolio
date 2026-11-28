@@ -9,9 +9,28 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useLoaderTransition } from '../../context/LoaderTransitionContext';
 import { translations } from '../../data/translations';
 import { FrameButton } from './frame-button';
-import { ReachHand } from './reach-hand';
-import { ViewportVideo } from './viewport-video';
+import { PixelAvatar } from './pixel-avatar';
 import { Waveform } from './audiovisualizer';
+import { DotFieldBackground } from './dot-field-background';
+import { AsciiGlobe } from './ascii-globe';
+import { AsciiThinker } from './ascii-thinker';
+
+// What sits to the right of the copy on desktop: Rodin's Thinker in text looking
+// at a laptop, the turning ASCII globe it replaced, or the pixel avatar before
+// that (all 2026-11-27). Switch by changing this one value.
+const HERO_FIGURE = 'thinker' as 'thinker' | 'globe' | 'avatar';
+
+// The copy's SYS.ACT rule: the row is 9px type on the default line height, so its
+// 1px line sits ~7px above the copy block's bottom edge.
+const COPY_FLOOR = 'calc(var(--hero-copy-top, 18%) + var(--hero-copy-height, 64%) - 7px)';
+// The Thinker's top: level with the top of the >_ SR logo, so the figure spans
+// the copy from its logo down to its SYS.ACT floor.
+const THINKER_TOP = 'var(--hero-logo-top, var(--hero-copy-top, 18%))';
+// Horizontal extent of the Thinker and its floor line. Left: 36px past the copy.
+// Right: 28px from the edge below 1440px; from 1440px the right margin mirrors the
+// copy's left margin, and the box is capped at ~900px wide so on very wide screens
+// the figure stays with the copy instead of drifting to the far edge.
+const THINKER_X = 'right-[28px] min-[1440px]:right-[max(var(--hero-copy-left,111px),calc(100%_-_var(--hero-copy-right,44%)_-_936px))]';
 
 export default function HeroAscii() {
     const heroRef = useRef<HTMLElement>(null);
@@ -19,9 +38,9 @@ export default function HeroAscii() {
     const copyRef = useRef<HTMLDivElement>(null);
     // Where the left-hand copy block ("001" rule down to the SYS.ACT rule) sits
     // inside the copy layer, so on desktop the avatar spans the same height.
-    const [copyBox, setCopyBox] = useState<{ top: number; height: number; right: number } | null>(null);
-    // md and up get the pixel avatar; phones keep the original hero (video + stars).
-    // Null until mounted, so neither the avatar nor the video loads on the wrong side.
+    const [copyBox, setCopyBox] = useState<{ top: number; height: number; left: number; right: number; logoTop: number } | null>(null);
+    // Only md and up get the hero figure beside the copy. Null until mounted, so it
+    // never loads on phones.
     const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
     useEffect(() => {
         const query = window.matchMedia('(min-width: 768px)');
@@ -122,7 +141,11 @@ export default function HeroAscii() {
                 left += el.offsetLeft;
                 el = el.offsetParent as HTMLElement | null;
             }
-            if (el === content) setCopyBox({ top, height: copy.offsetHeight, right: left + copy.offsetWidth });
+            // The logo's offset inside the copy (both share the copy's transform, so the
+            // difference of their rects is unaffected by the entrance animation).
+            const logo = copy.querySelector<HTMLElement>('[data-hero-logo-ascii]');
+            const logoOffset = logo ? logo.getBoundingClientRect().top - copy.getBoundingClientRect().top : 0;
+            if (el === content) setCopyBox({ top, height: copy.offsetHeight, left, right: left + copy.offsetWidth, logoTop: top + logoOffset });
         };
 
         // The copy is vertically centred, so it moves whenever any block
@@ -198,28 +221,19 @@ export default function HeroAscii() {
 
     return (
         <main ref={heroRef} id="hero" className="relative min-h-[70vh] lg:min-h-[90vh] overflow-hidden bg-black pb-12">
-            {/* Mobile only: the original hero video background and stars */}
-            {isDesktop === false && (
-                <>
-                    <motion.div
-                        initial={false}
-                        animate={{ opacity: heroVisible ? 1 : 0 }}
-                        transition={{ duration: 0.55, ease: "easeOut" }}
-                        className="absolute inset-0 z-0 flex h-full w-full items-center justify-center p-4 md:hidden"
-                    >
-                        <div className="h-full w-full opacity-[0.40]">
-                            <ViewportVideo
-                                eager
-                                src="/main-hero-compressed.mp4"
-                                wrapperClassName="w-full h-full"
-                                className="h-full w-full object-cover object-center scale-115"
-                            />
-                        </div>
-                    </motion.div>
-                    <div className="absolute inset-0 w-full h-full md:hidden stars-bg"></div>
-                </>
+            {/* Drifting dot-field background */}
+            {isDesktop !== null && (
+                <motion.div
+                    initial={false}
+                    animate={{ opacity: heroVisible ? 1 : 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    // Ends at the footer's bottom edge, like the corner frames.
+                    className="absolute inset-x-0 top-0 z-0"
+                    style={{ bottom: '2vh' }}
+                >
+                    <DotFieldBackground spacing={18} scale={0.125} />
+                </motion.div>
             )}
-
             {/* Top Header */}
             <motion.div
                 initial={false}
@@ -332,23 +346,53 @@ export default function HeroAscii() {
             <div data-hero-parallax="detail" className="absolute right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" style={{ bottom: '2vh' }}></div>
 
             <div ref={contentRef} data-hero-parallax="content" className="relative z-10 flex md:flex-row min-h-[70vh] md:min-h-[90vh] md:justify-start items-center pt-16 lg:pt-0" style={{ marginTop: '2vh' }}>
-                {/* Desktop only: a dot-drawn arm reaching in from the right edge toward
-                    the copy. It lives in the same parallax layer as the copy so it
-                    stays level with it while scrolling, three quarters of the copy
-                    block's height (the "001" rule down to the SYS.ACT rule), centred on it. */}
+                {/* Desktop only: the hero figure (see HERO_FIGURE). It lives in the same
+                    parallax layer as the copy so it stays level with it while scrolling,
+                    and is laid out from the copy block's measured box (the "001" rule
+                    down to the SYS.ACT rule). */}
                 {isDesktop && <motion.div
                     initial={false}
                     animate={{ opacity: heroVisible ? 1 : 0 }}
                     transition={{ duration: 0.55, ease: "easeOut" }}
                     className="pointer-events-none absolute inset-x-0 top-0 bottom-0 md:-bottom-12"
-                    style={copyBox === null ? undefined : ({ '--hero-copy-top': `${copyBox.top}px`, '--hero-copy-height': `${copyBox.height}px`, '--hero-copy-right': `${copyBox.right}px` } as React.CSSProperties)}
+                    style={copyBox === null ? undefined : ({ '--hero-copy-top': `${copyBox.top}px`, '--hero-copy-height': `${copyBox.height}px`, '--hero-copy-left': `${copyBox.left}px`, '--hero-copy-right': `${copyBox.right}px`, '--hero-logo-top': `${copyBox.logoTop}px` } as React.CSSProperties)}
                 >
-                    <ReachHand
-                        revealed={phase === "revealed"}
-                        aimAt="[data-hero-aim]"
-                        fit={0.75}
-                        className="absolute -right-[3%] left-[calc(var(--hero-copy-right,48%)_+_2rem)] top-[var(--hero-copy-top,18%)] h-[var(--hero-copy-height,64%)]"
-                    />
+                    {HERO_FIGURE === 'thinker' ? (
+                        <>
+                            {/* The Thinker and his laptop stand on the copy's SYS.ACT rule: the
+                                box runs from the top of the >_ SR logo down to that line, and the
+                                art's floor row sits on its bottom edge. Starts just past the copy
+                                so the laptop never runs under it. */}
+                            <AsciiThinker
+                                revealed={heroVisible}
+                                className={`absolute left-[calc(var(--hero-copy-right,44%)_+_36px)] ${THINKER_X}`}
+                                style={{
+                                    top: THINKER_TOP,
+                                    height: `calc(${COPY_FLOOR} - ${THINKER_TOP})`,
+                                }}
+                            />
+                            {/* The SYS.ACT rule carried on to the right as the floor they stand on. */}
+                            <div
+                                aria-hidden
+                                className={`absolute left-[calc(var(--hero-copy-right,44%)_+_12px)] h-px bg-white opacity-40 ${THINKER_X}`}
+                                style={{ top: COPY_FLOOR }}
+                            />
+                        </>
+                    ) : HERO_FIGURE === 'globe' ? (
+                        <AsciiGlobe
+                            revealed={heroVisible}
+                            remoteLabel={language === 'es' ? 'REMOTO' : 'REMOTE'}
+                            className="absolute right-[3%] top-[calc(var(--hero-copy-top,18%)_-_var(--hero-copy-height,64%)_*_0.06)] h-[calc(var(--hero-copy-height,64%)_*_1.12)] w-[54%]"
+                        />
+                    ) : (
+                        <PixelAvatar
+                            revealed={heroVisible}
+                            fitArtQuery="(min-width: 768px)"
+                            fieldQuery="(min-width: 768px)"
+                            backdropGrid
+                            className="absolute items-start -right-[3%] top-[calc(var(--hero-copy-top,18%)_+_var(--hero-copy-height,64%)_*_0.125)] h-[calc(var(--hero-copy-height,64%)_*_0.75)] w-[56%] opacity-90"
+                        />
+                    )}
                 </motion.div>}
 
                 <div className="container mx-auto px-6 md:px-8 md:ml-[2%] xl:ml-[5%]">
@@ -363,20 +407,30 @@ export default function HeroAscii() {
                             ease: [0.22, 1, 0.36, 1],
                             delay: phase === "transitioning" ? 0.16 : 0,
                         }}
-                        className="max-w-lg md:max-w-[44vw] lg:max-w-lg relative"
+                        className="max-w-lg md:max-w-[44vw] lg:max-w-lg lg:max-[1439px]:max-w-[460px] relative"
                         ref={copyRef}
                     >
+                        {/* Mobile only: the pixel avatar in the top-right corner, from the 001
+                            rule down beside the logo and the whoami line. */}
+                        {isDesktop === false && (
+                            <PixelAvatar
+                                revealed={heroVisible}
+                                field={false}
+                                className="pointer-events-none absolute -right-4 top-0 h-36 w-36"
+                            />
+                        )}
+
                         {/* Top decorative line */}
                         <div className="flex items-center gap-2 mb-3 opacity-60">
                             <div className="w-8 h-px bg-white"></div>
                             <span className="text-white text-[10px] font-mono tracking-wider">001</span>
-                            <div className="flex-1 h-px bg-white"></div>
+                            {/* On phones the rule stops short of the avatar's head. */}
+                            <div className="flex-1 h-px bg-white mr-[140px] md:mr-0"></div>
                         </div>
 
                         {/* Title with dithered accent */}
                         <div className="relative">
-                            <div className="hidden md:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
-                            <div data-hero-aim className="mb-7 w-fit text-[9px] md:text-[15px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
+                            <div className="hidden md:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>                            <div data-hero-logo-ascii className="mb-7 [@media(max-height:850px)]:mb-5 w-fit text-[9px] md:text-[15px] md:[@media(max-height:850px)]:text-[13px] leading-none whitespace-pre drop-shadow-[0_0_15px_rgba(96,165,250,0.8)] flex flex-col font-bold">
                                 {asciiLines.map((line, i) => {
                                     const isScanning = i === scanRow;
                                     const rowColor = 'text-blue-400';
@@ -394,7 +448,7 @@ export default function HeroAscii() {
                         </div>
 
                         {/* Decorative dots pattern - desktop only */}
-                        <div className="hidden md:flex gap-1 mb-8 opacity-40 flex-wrap max-w-max">
+                        <div className="hidden md:flex gap-1 mb-8 [@media(max-height:850px)]:mb-5 opacity-40 flex-wrap max-w-max">
                             {Array.from({ length: 52 }).map((_, i) => (
                                 <div key={i} className="w-0.5 h-0.5 bg-white rounded-full shrink-0"></div>
                             ))}
@@ -403,9 +457,6 @@ export default function HeroAscii() {
                         {/* Description with subtle grid pattern */}
                         <div className="relative">
                             <p className="text-xs md:text-base text-gray-200 mb-5 md:mb-6 leading-relaxed font-mono opacity-100 max-w-md [text-shadow:_0_2px_4px_rgb(0_0_0_/_100%),_0_0_10px_rgb(0_0_0_/_100%)] md:[text-shadow:_none]">
-                                {/* Below md these lines sit on the avatar's field: a crisp 1px black outline
-                                    (eight offsets) plus a soft dark halo keeps them readable on the greys,
-                                    and data-thermal-dim drops the field a tone behind them. */}
                                 <span className="text-white font-bold block w-fit mb-2">
                                     <span className="text-blue-400">guest@sreategui:~$ </span>
                                     <span>{commandText}</span>
@@ -422,13 +473,9 @@ export default function HeroAscii() {
                                 {t.hero.description}
                             </p>
 
-                            {/* Technical corner accent - desktop only */}
-                            <div className="hidden md:block absolute -right-4 top-1/2 w-3 h-3 border border-white opacity-30" style={{ transform: 'translateY(-50%)' }}>
-                                <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-white" style={{ transform: 'translate(-50%, -50%)' }}></div>
-                            </div>
                         </div>
 
-                        <div className="flex flex-col gap-8 md:gap-10">
+                        <div className="flex flex-col gap-8 md:gap-10 md:[@media(max-height:850px)]:gap-7">
                             {/* Quick Metrics */}
                             <div className="order-2 md:order-1 flex items-center gap-4 md:gap-8 opacity-90 max-w-max border-t border-white/10 pt-6 md:border-t-0 md:pt-0">
                                 <div className="flex flex-col">
@@ -453,7 +500,7 @@ export default function HeroAscii() {
                                     href="https://www.linkedin.com/in/sebasreateguib"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="relative col-span-2 md:col-span-1 flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-blue-500/20 text-white font-mono text-xs md:text-xs lg:text-sm border border-blue-400/70 hover:bg-blue-500/35 hover:border-blue-300 transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+                                    className="relative col-span-2 md:col-span-1 flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 md:px-6 lg:max-[1439px]:px-3 md:py-3 bg-blue-500/20 text-white font-mono text-xs md:text-xs lg:text-sm border border-blue-400/70 hover:bg-blue-500/35 hover:border-blue-300 transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
                                 >
                                     <span className="hidden md:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <span className="hidden md:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -470,14 +517,14 @@ export default function HeroAscii() {
                                     {t.hero.downloadResume}
                                 </a>
 
-                                <a href="https://github.com/sebasreateguib" target="_blank" rel="noopener noreferrer" className="relative col-span-2 md:col-span-1 flex min-h-11 items-center justify-center gap-2 px-3 py-2 md:px-6 md:py-2.5 bg-transparent border border-white text-white font-mono text-xs md:text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200">
+                                <a href="https://github.com/sebasreateguib" target="_blank" rel="noopener noreferrer" className="relative col-span-2 md:col-span-1 flex min-h-11 items-center justify-center gap-2 px-3 py-2 md:px-6 lg:max-[1439px]:px-3 md:py-2.5 bg-transparent border border-white text-white font-mono text-xs md:text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200">
                                     <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
                                     GitHub
                                 </a>
 
-                                <a href="#contact" className="relative col-span-2 md:col-span-1 hidden md:flex min-h-11 items-center justify-center gap-2 px-3 py-2 md:px-6 md:py-2.5 bg-transparent border border-white text-white font-mono text-xs md:text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200 group">
+                                <a href="#contact" className="relative col-span-2 md:col-span-1 hidden md:flex min-h-11 items-center justify-center gap-2 whitespace-nowrap px-3 py-2 md:px-6 lg:max-[1439px]:px-3 md:py-2.5 bg-transparent border border-white text-white font-mono text-xs md:text-xs lg:text-sm hover:bg-white hover:text-black transition-all duration-200 group">
                                     <span className="hidden md:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <span className="hidden md:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                                     <MessageSquare className="w-4 h-4" />
@@ -487,7 +534,7 @@ export default function HeroAscii() {
                         </div>
 
                         {/* Bottom technical notation - desktop only */}
-                        <div className="hidden md:flex items-center gap-2 mt-8 opacity-40">
+                        <div className="hidden md:flex items-center gap-2 mt-8 [@media(max-height:850px)]:mt-5 opacity-40">
                             <span className="text-white text-[9px] font-mono">∞</span>
                             <div className="flex-1 h-px bg-white"></div>
                             <span className="text-white text-[9px] font-mono">SYS.ACT</span>
@@ -536,23 +583,7 @@ export default function HeroAscii() {
             repeating-linear-gradient(0deg, transparent 0px, transparent 1px, white 1px, white 2px),
             repeating-linear-gradient(90deg, transparent 0px, transparent 1px, white 1px, white 2px);
           background-size: 3px 3px;
-        }
-
-        .stars-bg {
-          background-image:
-            radial-gradient(1px 1px at 20% 30%, white, transparent),
-            radial-gradient(1px 1px at 60% 70%, white, transparent),
-            radial-gradient(1px 1px at 50% 50%, white, transparent),
-            radial-gradient(1px 1px at 80% 10%, white, transparent),
-            radial-gradient(1px 1px at 90% 60%, white, transparent),
-            radial-gradient(1px 1px at 33% 80%, white, transparent),
-            radial-gradient(1px 1px at 15% 60%, white, transparent),
-            radial-gradient(1px 1px at 70% 40%, white, transparent);
-          background-size: 200% 200%, 180% 180%, 250% 250%, 220% 220%, 190% 190%, 240% 240%, 210% 210%, 230% 230%;
-          background-position: 0% 0%, 40% 40%, 60% 60%, 20% 20%, 80% 80%, 30% 30%, 70% 70%, 50% 50%;
-          opacity: 0.3;
-        }
-      `}</style>
+        }      `}</style>
         </main>
     );
 }

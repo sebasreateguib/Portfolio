@@ -58,6 +58,18 @@ const DRIP_SPEED = 0.8
 /** Ragged layouts also fray at the top (rows) and at both sides (columns). */
 const RAGGED_ROWS = 12
 const RAGGED_COLS = 20
+/**
+ * Dissolving layouts: instead of an edge, the field thins out into the page's
+ * backdrop lattice. Measured out from the portrait's centre in units of half
+ * the art (an ellipse, so no corners show), it's whole up to DISSOLVE_FROM,
+ * then by DISSOLVE_TO its cells have dropped out (dithered, a few twinkling)
+ * and stepped down, also dithered, to DISSOLVE_FAINT, the tone just above the
+ * lattice. It's gone within DISSOLVE_EDGE cells of the canvas's top and sides.
+ */
+const DISSOLVE_FROM = 0.8
+const DISSOLVE_TO = 1.7
+const DISSOLVE_EDGE = 8
+const DISSOLVE_FAINT = '#1c1c1f'
 /** Glyph (setGlyph): one flat blue (the hero's blue-400, like the ASCII logo) and its shadow. */
 const GLYPH_BLUE = '#60a5fa'
 const GLYPH_SHADOW = '#1e3a8a'
@@ -194,6 +206,10 @@ export type ThermalLayout = {
     ragged?: boolean
     /** Fray the field's left edge (over `raggedLeftCols`) like the bottom drips, without the rest of `ragged`. */
     frayLeft?: boolean
+    /** Let the field thin out into the backdrop lattice around the art (see DISSOLVE_SPAN) instead of fraying. */
+    dissolve?: boolean
+    /** Draw the figure alone, without the field of clouds around it. */
+    noField?: boolean
     /** Ragged layouts: how many rows the top frays over (default RAGGED_ROWS). */
     raggedRows?: number
     /** Ragged and frayLeft layouts: how many columns the left edge frays over (default RAGGED_COLS). */
@@ -262,6 +278,7 @@ export function createThermalAvatar(canvas: HTMLCanvasElement, { motion }: { mot
     const palette = PALETTE.map(pack)
     const glyphBlue = pack(GLYPH_BLUE)
     const glyphShadow = pack(GLYPH_SHADOW)
+    const faint = pack(DISSOLVE_FAINT)
     let dim: ThermalRect[] = []
     /** Whether the field drops a tone here: inside a dimmed area, or dithered in its feather. */
     const dimmed = (x: number, y: number) => {
@@ -508,6 +525,13 @@ export function createThermalAvatar(canvas: HTMLCanvasElement, { motion }: { mot
 
                 let h = -1
                 let field = false
+                // How much of the field is left here (dissolving layouts): 1 near the art, 0 far out.
+                let left = 1
+                if (layout.dissolve) {
+                    const r = Math.hypot(cx - (ox + N / 2), cy - (oy + N / 2)) / (N / 2)
+                    const edge = Math.min(cx, cy, cols - cx) / DISSOLVE_EDGE
+                    left = Math.max(0, Math.min(1, (DISSOLVE_TO - r) / (DISSOLVE_TO - DISSOLVE_FROM), edge))
+                }
                 if (dripped) {
                     // a hole
                 } else if (count / cells >= (block === 1 ? 1 : 0.3)) {
@@ -521,7 +545,7 @@ export function createThermalAvatar(canvas: HTMLCanvasElement, { motion }: { mot
                     h = (tone + 0.5) / bands + (cloud * 2 * CLOUD_AMP + grain) * lift
                     h += CORE_STRENGTH * lift * Math.exp(-(dx * dx + dy * dy) * coreInv)
                     h = Math.max(0, h + warm)
-                } else if (block > 1 || nearAt(bx - ox, by - oy) > RING) {
+                } else if (!layout.noField && (block > 1 || nearAt(bx - ox, by - oy) > RING)) {
                     // The field: cooler clouds, denser at the top, with holes where they thin out,
                     // dissolving at its left edge when it reaches past the art.
                     h = FIELD_WARMTH + cloud * FIELD_CONTRAST + FIELD_BODY * (1 - cy / rows) + grain
@@ -530,6 +554,11 @@ export function createThermalAvatar(canvas: HTMLCanvasElement, { motion }: { mot
                     h = Math.min(FIELD_CAP, h) + warm
                     if (h < FIELD_FLOOR) h = -1
                     field = true
+                    // Dissolving: drop cells as the field runs out, a few twinkling at its fringe.
+                    if (left < 1) {
+                        const twinkle = 0.08 * Math.sin(time * 0.9 + hash2(bx, by, seed + 5) * 6.283)
+                        if (hash2(bx, by, seed + 91) > smooth(left) + twinkle) h = -1
+                    }
                 }
 
                 let colour = 0
@@ -542,8 +571,16 @@ export function createThermalAvatar(canvas: HTMLCanvasElement, { motion }: { mot
                 } else if (g === -1) {
                     // the ring around the glyph stays empty
                 } else if (h >= 0) {
-                    const band = Math.max(0, Math.min(bands - 1, Math.floor(h * bands)))
-                    colour = palette[band === 2 && field && dim.length > 0 && dimmed(bx, by) ? 1 : band]
+                    let band = Math.max(0, Math.min(bands - 1, Math.floor(h * bands)))
+                    // the thinning field steps down toward the lattice's tone, dithered
+                    // so no line shows where it does (the pointer's heat still lights it)
+                    let fade = false
+                    if (field && left < 1 && warm < 0.05) {
+                        const keepBright = smooth(Math.max(0, Math.min(1, (left - 0.3) / 0.6)))
+                        if (hash2(bx, by, seed + 33) > keepBright) band = Math.min(band, 1)
+                        fade = hash2(bx, by, seed + 47) > smooth(Math.min(1, left / 0.5))
+                    }
+                    colour = fade ? faint : palette[band === 2 && field && dim.length > 0 && dimmed(bx, by) ? 1 : band]
                 }
                 for (let y = y0; y < y1; y++) pixels.fill(colour, y * cols + x0, y * cols + x1)
             }

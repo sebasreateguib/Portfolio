@@ -26,8 +26,8 @@ const PIXELATE_AT = [0.15, 0.35, 0.55, 0.75]
 /** The entrance as [ms after reveal, level]: 12px, 6px, 4px, 2px blocks, then sharp. */
 const INTRO_STEPS: [number, number][] = [[0, 4], [233, 3], [367, 2], [483, 1], [583, 0]]
 
-/** Panel mode: columns of field kept left of the art, over which its left edge frays. */
-const FIELD_LEFT_CELLS = 16
+/** Panel mode: columns of field kept left of the art, for it to thin out over into the lattice. */
+const FIELD_LEFT_CELLS = 28
 /** Ragged mode: cells of field added above and beside the art for the edges to fray into, and how many rows the top frays over (short of the hair). */
 const RAGGED_PAD_TOP = 6
 const RAGGED_PAD_SIDE = 10
@@ -61,7 +61,7 @@ interface PixelAvatarProps {
      * While this media query matches, the field is a panel rather than the art's
      * square: it runs from just left of the face to the section's right edge, and
      * from under the element marked `data-thermal-field-top` (else the section's
-     * top) down to the shoulders. Its left edge frays; top and right stay straight.
+     * top) down to the shoulders, thinning out into the backdrop lattice.
      */
     fieldQuery?: string
     /**
@@ -78,6 +78,8 @@ interface PixelAvatarProps {
      * fixed-size box, so the result doesn't depend on fonts), shadow included.
      */
     glyph?: string
+    /** False: the figure alone, without the field of clouds around it (the art-square layout only). */
+    field?: boolean
 }
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
@@ -99,6 +101,7 @@ export function PixelAvatar({
     fieldQuery,
     raggedQuery,
     glyph,
+    field = true,
 }: PixelAvatarProps) {
     const boxRef = useRef<HTMLDivElement>(null)
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -257,7 +260,7 @@ export function PixelAvatar({
         }
         const fieldTop = section.querySelector<HTMLElement>('[data-thermal-field-top]')
         const fitThermal = (cell: number, pixel: number, cssSize: number) => {
-            let layout: ThermalLayout = { cols: ART_SIZE, rows: ART_SIZE, ox: 0, oy: 0 }
+            let layout: ThermalLayout = { cols: ART_SIZE, rows: ART_SIZE, ox: 0, oy: 0, noField: !field }
             if (wideField?.matches) {
                 const boxLeft = pageLeft(box)
                 const boxTop = pageTop(box)
@@ -273,15 +276,14 @@ export function PixelAvatar({
                 const ox = FIELD_LEFT_CELLS
                 const oy = Math.max(0, Math.floor((slot.offsetTop - top) / cell))
                 const extra = Math.max(0, Math.ceil((right - slot.offsetLeft - cssSize) / cell))
-                // The panel's left edge frays away like its bottom drips; the edges against
-                // the page's frame (top, under the header, and right) stay straight.
+                // The field has no edge: it thins out into the backdrop lattice around
+                // the art, so the portrait reads as lit up in the hero's own grid.
                 layout = {
                     cols: ox + ART_SIZE + extra,
                     rows: oy + ART_SIZE,
                     ox,
                     oy,
-                    frayLeft: true,
-                    raggedLeftCols: FIELD_LEFT_CELLS,
+                    dissolve: true,
                 }
             } else if (ragged?.matches) {
                 const left = pageLeft(section) - pageLeft(box) + RAGGED_LEFT_GAP
@@ -408,7 +410,7 @@ export function PixelAvatar({
             ragged?.removeEventListener('change', fitCanvas)
             engine.destroy()
         }
-    }, [fitArtQuery, backdropGrid, fieldQuery, raggedQuery, glyph])
+    }, [fitArtQuery, backdropGrid, fieldQuery, raggedQuery, glyph, field])
 
     return (
         <div ref={boxRef} className={cn('relative flex items-center justify-center', className)}>

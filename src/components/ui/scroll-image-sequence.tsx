@@ -198,7 +198,6 @@ export default function ScrollImageSequence() {
     };
   }, [loaded, drawFrame, syncSize, scrollScreens]);
 
-  const pct = Math.round(scrollPct * 100);
 
   return (
     <>
@@ -336,15 +335,6 @@ export default function ScrollImageSequence() {
                 </div>
               </div>
 
-              {/* Scroll progress indicator — bottom right */}
-              <div className="absolute top-24 right-4 md:top-auto md:bottom-20 md:right-8 z-[15] hidden md:flex flex-col items-end gap-1.5">
-                <div className="seq-hud text-white/20 text-[10px] tracking-[0.2em]">
-                  PROGRESS
-                </div>
-                <div className="seq-hud text-white/70 text-3xl">
-                  {String(pct).padStart(3, "0")}<span className="text-sm opacity-40">%</span>
-                </div>
-              </div>
             </>
           )}
         </div>

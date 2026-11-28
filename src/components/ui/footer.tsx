@@ -38,7 +38,7 @@ export default function Footer() {
             &copy; {currentYear} Sebastian Reategui. {language === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}
           </p>
           <p className="mt-1 text-xs text-gray-500 flex items-center gap-1 md:justify-start justify-center">
-            {language === 'en' ? 'Made with ❤️ & ☕' : 'Hecho con ❤️ & ☕'}
+            {language === 'en' ? 'built with Next.js & too much coffee' : 'hecho con Next.js y demasiado café'}
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export default function Footer() {
             href="https://github.com/sebasreateguib"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white md:text-gray-400 md:hover:text-white transition-colors duration-200"
+            className="text-gray-400 md:hover:text-white transition-colors duration-200"
             aria-label="GitHub"
           >
             <GithubIcon size={20} />
@@ -57,7 +57,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/sebasreateguib"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#0A66C2] md:text-gray-400 md:hover:text-[#0A66C2] transition-colors duration-200"
+            className="text-gray-400 md:hover:text-[#0A66C2] transition-colors duration-200"
             aria-label="LinkedIn"
           >
             <LinkedInIcon size={20} />
@@ -66,14 +66,14 @@ export default function Footer() {
             href="https://wa.me/51947546421?text=Hola%20Sebastián,%20vi%20tu%20portfolio..."
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#25D366] md:text-gray-400 md:hover:text-[#25D366] transition-colors duration-200"
+            className="text-gray-400 md:hover:text-[#25D366] transition-colors duration-200"
             aria-label="WhatsApp"
           >
             <WhatsAppIcon size={20} />
           </a>
           <a
             href="mailto:reateguisebastian1@gmail.com"
-            className="text-red-500 md:text-gray-400 md:hover:text-red-500 transition-colors duration-200"
+            className="text-gray-400 md:hover:text-red-500 transition-colors duration-200"
             aria-label="Email"
           >
             <Mail size={20} />

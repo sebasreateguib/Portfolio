@@ -64,7 +64,8 @@ export default function LogoCloudMarquee({ className }: LogoCloudMarqueeProps) {
             </div>
 
             {/* Exactly as requested in the reference code */}
-            <div className="relative -mt-16 h-96 w-full overflow-hidden mask-[radial-gradient(50%_50%,white,transparent)] flex flex-col items-center">
+            {/* Taller on phones (horizon in the same place) so the glow reaches the second row of logos. */}
+            <div className="relative -mt-48 h-[40rem] md:-mt-16 md:h-96 w-full overflow-hidden mask-[radial-gradient(50%_50%,white,transparent)] flex flex-col items-center">
                 <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,rgba(59,130,246,1),transparent_70%)] before:opacity-40" />
                 <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20 bg-zinc-950" />
             </div>

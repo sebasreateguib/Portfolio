@@ -16,6 +16,8 @@ import {
     DialogTitle,
 } from './dialog';
 import { ArchiveBrowser } from './archive-browser';
+import { ProjectsReach, type ProjectsReachControl } from './projects-reach';
+import { useSmoothScroll } from '../smooth-scroll-provider';
 
 
 const projectDetails = {
@@ -140,6 +142,50 @@ export default function ProjectsSection() {
     const [expandedProject, setExpandedProject] = useState<number | null>(null);
     const [archiveOpen, setArchiveOpen] = useState(false);
     const trackRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const introRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const reachControl = useRef<ProjectsReachControl | null>(null);
+    const { lenis, setGate } = useSmoothScroll();
+    // Until the folder is opened the rest of the section stays hidden.
+    const [opened, setOpened] = useState(false);
+
+    // The page stops with the intro centred on screen until its folder is
+    // clicked (or a menu sends you further down, which opens it too).
+    useEffect(() => {
+        setGate({
+            getY: () => {
+                const intro = introRef.current;
+                if (!intro) return Infinity;
+                const box = intro.getBoundingClientRect();
+                return Math.max(0, box.top + window.scrollY + box.height / 2 - window.innerHeight / 2);
+            },
+            onBlocked: () => reachControl.current?.nudge(),
+            onRelease: () => setOpened(true),
+        });
+        return () => setGate(null);
+    }, [setGate]);
+
+    // The folder opens the section once its terminal has run `ls`: lift
+    // the gate, glide down to the title, and bring the title and the cards up one
+    // after another as they arrive.
+    const openProjects = useCallback(() => {
+        setGate(null);
+        setOpened(true);
+        const header = headerRef.current;
+        if (!header) return;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (lenis) lenis.scrollTo(header, { offset: -40, duration: 1.1, immediate: reduced, force: true });
+        else header.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        if (reduced) return;
+        contentRef.current?.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el, i) => {
+            el.animate(
+                [{ opacity: 0, transform: 'translateY(32px)' }, { opacity: 1, transform: 'translateY(0)' }],
+                { duration: 700, delay: 380 + Math.min(i, 7) * 90, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'backwards' },
+            );
+        });
+    }, [lenis, setGate]);
+
     const [rail, setRail] = useState({ first: 0, visible: 1, atStart: true, atEnd: false });
     const total = t.projects.list.length;
 
@@ -193,11 +239,31 @@ export default function ProjectsSection() {
 
     return (
         <section id="projects" className="bg-transparent py-16 lg:py-24 relative overflow-hidden">
-            <div className="absolute inset-x-0 top-1/3 h-56 bg-blue-500/10 blur-[120px] pointer-events-none"></div>
+            <div className={`absolute inset-x-0 top-1/3 h-56 bg-blue-500/10 blur-[120px] pointer-events-none transition-opacity duration-700 ${opened ? 'opacity-100' : 'opacity-0'}`}></div>
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
+                {/* Intro: two hands reaching for the projects folder; the folder opens the section */}
+                <div ref={introRef} className="mx-[calc(50%-50vw)] mb-6 md:mb-10">
+                    <ProjectsReach
+                        label={language === 'es' ? 'proyectos' : 'projects'}
+                        openLabel={language === 'es' ? 'Abrir proyectos' : 'Open projects'}
+                        hint={language === 'es' ? 'click para abrir' : 'click to open'}
+                        touchHint={language === 'es' ? 'toca para abrir' : 'tap to open'}
+                        onOpen={openProjects}
+                        controlRef={reachControl}
+                        className="h-[clamp(300px,52vh,460px)] md:h-[clamp(420px,62vh,640px)]"
+                    />
+                </div>
+
+                {/* Everything after the intro: hidden (and out of the tab order) until the folder opens it */}
+                <div
+                    ref={contentRef}
+                    inert={!opened}
+                    aria-hidden={!opened}
+                    className={`transition-opacity duration-700 ease-out ${opened ? 'opacity-100' : 'opacity-0'}`}
+                >
                 {/* Section Header */}
-                <div className="mb-10 md:mb-16">
+                <div ref={headerRef} data-reveal className="mb-10 md:mb-16">
                     <div className="mb-4">
                         <SectionTitle index="02">{t.projects.title}</SectionTitle>
                     </div>
@@ -205,7 +271,7 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Carousel hint: position counter and arrows */}
-                <div className="mb-2 flex items-center gap-3 font-mono text-[10px] md:text-[11px] tracking-[0.18em] text-white/30 select-none">
+                <div data-reveal className="mb-2 flex items-center gap-3 font-mono text-[10px] md:text-[11px] tracking-[0.18em] text-white/30 select-none">
                     <span>
                         <span className="text-white/60">{last - rail.first > 1 ? `${pad(rail.first + 1)}–${pad(last)}` : pad(rail.first + 1)}</span> / {pad(total)}
                     </span>
@@ -236,6 +302,7 @@ export default function ProjectsSection() {
                         return (
                             <div
                                 key={project.id}
+                                data-reveal
                                 className="group relative flex w-[88vw] shrink-0 snap-center flex-col overflow-hidden border border-white/5 bg-[#030303] md:snap-start shadow-[0_0_0_1px_rgba(255,255,255,0.01),0_24px_80px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:shadow-[0_0_0_1px_rgba(96,165,250,0.18),0_28px_100px_rgba(37,99,235,0.16)] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-16px)]"
                             >
                                 <div className="absolute top-0 left-0 z-30 h-3 w-3 border-l border-t border-white/30 transition-colors duration-300 group-hover:border-blue-300"></div>
@@ -368,6 +435,7 @@ export default function ProjectsSection() {
                         </svg>
                         {t.projects.archiveCta}
                     </button>
+                </div>
                 </div>
             </div>
 

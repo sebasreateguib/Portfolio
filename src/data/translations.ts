@@ -13,7 +13,7 @@ export const translations = {
       downloadResume: "Download Resume",
       letsTalk: "Let's talk",
       role: "CS Student @ UTEC.",
-      description: "Passionate about AI Engineering, Full Stack Development, Systems Optimization, Cloud-Native & Data Infrastructure.",
+      description: "Passionate about AI Engineering, Full Stack Development, Systems Optimization, Cloud‑Native & Data Infrastructure.",
       metrics: {
         metric1: { value: "3rd", label: "YEAR CS" },
         metric2: { value: "10+", label: "PROJECTS" },
@@ -294,7 +294,7 @@ export const translations = {
       downloadResume: "Descargar CV",
       letsTalk: "Hablemos",
       role: "Estudiante de CS @ UTEC.",
-      description: "Apasionado por Ingeniería de IA, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud-Native y de Datos.",
+      description: "Apasionado por Ingeniería de IA, Desarrollo Full Stack, Optimización de Sistemas e Infraestructura Cloud‑Native y de Datos.",
       metrics: {
         metric1: { value: "3er", label: "AÑO CS" },
         metric2: { value: "10+", label: "PROYECTOS" },
